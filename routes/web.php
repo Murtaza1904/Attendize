@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\ClientLoginController;
 use App\Http\Controllers\EventAccessCodesController;
 use App\Http\Controllers\EventAttendeesController;
 use App\Http\Controllers\EventCheckInController;
@@ -83,9 +84,13 @@ Route::group(
             [UserLoginController::class, 'showLogin']
         )->name('login')->middleware('throttle:10,1');
         
-        Route::get('/login-check',
-            [UserLoginController::class, 'checkLogin']
-        )->name('check-login')->middleware('throttle:10,1');
+        Route::get('/client-login',
+            [ClientLoginController::class, 'showLoginForm']
+        )->name('client-login.show')->middleware('throttle:10,1');
+
+        Route::get('/client-login-check',
+            [ClientLoginController::class, 'checkLogin']
+        )->name('client-login.check')->middleware('throttle:10,1');
 
         Route::post('/login',
             [UserLoginController::class, 'postLogin']

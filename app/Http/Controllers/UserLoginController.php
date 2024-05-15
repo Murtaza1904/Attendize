@@ -47,27 +47,6 @@ class UserLoginController extends Controller
         return View::make('Public.LoginAndRegister.Login');
     }
 
-    public function checkLogin(Request $request)
-    {
-        $user = User::where('email', $request->email)->first();
-
-        if($user) {
-            if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                return redirect()->route('showEventPage', [3,'test-event-1']);
-            }
-        } else {
-            $newUser = User::create([
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            ]);
-
-            auth()->login($newUser);
-            return redirect()->route('showEventPage', [3,'test-event-1']);
-        }
-
-        return view('Public.LoginAndRegister.Login');
-    }
-
     /**
      * Handles the login request.
      *
