@@ -88,7 +88,7 @@ Route::group(
             [ClientLoginController::class, 'showLoginForm']
         )->name('client-login.show')->middleware('throttle:10,1');
 
-        Route::get('/client-login-check',
+        Route::match(['get','post'],'/client-login-check',
             [ClientLoginController::class, 'checkLogin']
         )->name('client-login.check')->middleware('throttle:10,1');
 

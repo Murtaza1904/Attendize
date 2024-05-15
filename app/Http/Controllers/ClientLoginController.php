@@ -23,6 +23,17 @@ class ClientLoginController extends Controller
     
     public function checkLogin(Request $request)
     {
+        $validator = $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('client-login.show')->withErrors([
+                'failed' => $validator->errors(),
+            ]);
+        }
+
         $client = Client::where('email', $request->email)->first();
 
         if($client) {
