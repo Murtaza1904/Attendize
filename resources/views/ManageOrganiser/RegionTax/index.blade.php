@@ -41,6 +41,7 @@
                         <thead>
                             <tr>
                                 <th>Region</th>
+                                <th>Type</th>
                                 <th>Tax</th>
                                 <th>Action</th>
                             </tr>
@@ -52,16 +53,24 @@
                                         <strong>{{ $regionTax->region }}</strong>
                                     </td>
                                     <td>
+                                        <strong>{{ $regionTax->tax_type }}</strong>
+                                    </td>
+                                    <td>
                                         <strong>{{ $regionTax->tax }}</strong>
                                     </td>
                                     <td>
-                                        <form action="{{ route('region-taxes.destroy', $regionTax->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="border-0 bg-transparent">
-                                                <i class="ico ico-trash text-danger"></i>
-                                            </button>
-                                        </form>
+                                        <div style="display:flex">
+                                            <a href="{{ route('region-taxes.edit', [$organiser->id,$regionTax->id]) }}">
+                                                <i class="ico ico-edit"></i>
+                                            </a>
+                                            <form action="{{ route('region-taxes.destroy', $regionTax->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" style="border: none; background-color: transparent">
+                                                    <i class="ico ico-trash text-danger"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

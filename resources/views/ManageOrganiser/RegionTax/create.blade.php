@@ -19,12 +19,29 @@
                                 <div class="form-group">
                                     <label for="region" class="control-label required">Region</label>
                                     <input type="text" class="form-control" placeholder="Enter region name"
-                                        name="region" id="region">
+                                        name="region" id="region" required>
+                                        @error('region')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="tax_type" class="control-label required">Tax Type</label>
+                                    <select class="form-control"
+                                        name="tax_type" id="tax_type" required>
+                                        <option value="fixed">Fixed</option>
+                                        <option value="percentage">Percentage</option>
+                                    </select>
+                                    @error('tax_type')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="tax" class="control-label required">Tax</label>
                                     <input type="number" class="form-control" placeholder="Enter tax value"
-                                        name="tax" id="tax">
+                                        step="any" name="tax" id="tax">
+                                    @error('tax')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

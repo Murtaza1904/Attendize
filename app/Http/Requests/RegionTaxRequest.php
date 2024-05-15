@@ -15,7 +15,8 @@ class RegionTaxRequest extends FormRequest
     {
         return [
             'region' => ['required', 'string', 'max:255'],
-            'tax' => ['required', 'numeric', 'digits_between:1,8'],
+            'tax_type' => ['required', 'string', 'in:fixed,percentage'],
+            'tax' => ['required', 'numeric'],
         ];
     }
 }

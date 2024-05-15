@@ -82,6 +82,10 @@ Route::group(
         Route::get('/login',
             [UserLoginController::class, 'showLogin']
         )->name('login')->middleware('throttle:10,1');
+        
+        Route::get('/login-check',
+            [UserLoginController::class, 'checkLogin']
+        )->name('check-login')->middleware('throttle:10,1');
 
         Route::post('/login',
             [UserLoginController::class, 'postLogin']
@@ -270,6 +274,10 @@ Route::group(
             ->name('region-taxes.index');
             Route::post('{organiser_id}/region-taxes', [RegionTaxController::class, 'store'])
             ->name('region-taxes.store');
+            Route::get('{organiser_id}/region-taxes/{regionTax}', [RegionTaxController::class, 'edit'])
+            ->name('region-taxes.edit');
+            Route::put('{organiser_id}/region-taxes/{regionTax}', [RegionTaxController::class, 'update'])
+            ->name('region-taxes.update');
             Route::delete('region-taxes/{region_tax}', [RegionTaxController::class, 'destroy'])
             ->name('region-taxes.destroy');
 

@@ -96,7 +96,7 @@
                                                 'rows' => 4
                                                 ))  !!}
                     </div>
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <p class="control-label">{!! trans("Organiser.organiser_tax_prompt") !!}</p>
@@ -128,7 +128,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         {!! Form::label('google_analytics_code', trans("Organiser.google_analytics_code"), array('class'=>'control-label')) !!}
                         {!!  Form::text('google_analytics_code', old('google_analytics_code'),

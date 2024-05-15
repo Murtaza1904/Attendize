@@ -136,10 +136,14 @@ class EventController extends MyBaseController
          * Set the event defaults.
          * @todo these could do mass assigned
          */
-        $regionTax = RegionTax::where('id',$request->region_tax_id)->pluck('tax')->first();        
+        $regionTax = RegionTax::where('id',$request->region_tax_id)->first();        
         
         $defaults = $event->organiser->event_defaults;
-        $event->organiser_fee_fixed = $regionTax;
+        if ($regionTax->tax_type == 'fixed') {
+            $event->organiser_fee_fixed = $regionTax->tax;
+        } else {
+            $event->organiser_fee_percentage = $regionTax->tax;
+        }
         if ($defaults) {
             $event->organiser_fee_percentage = $defaults->organiser_fee_percentage;
             $event->pre_order_display_message = $defaults->pre_order_display_message;

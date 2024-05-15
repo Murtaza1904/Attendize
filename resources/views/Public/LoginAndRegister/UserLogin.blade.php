@@ -29,17 +29,17 @@
                         {!! Form::password('password',  ['class' => 'form-control']) !!}
                     </div>
 
-                    {{-- @include('Public.LoginAndRegister.Partials.CaptchaSection') --}}
+                    @include('Public.LoginAndRegister.Partials.CaptchaSection')
 
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <p><input class="btn btn-block btn-success" type="submit" value="@lang('User.login')"></p>
-                    </div> --}}
+                    </div>
 
-                    {{-- @if(Utils::isAttendize())
+                    @if(Utils::isAttendize())
                     <div class="signup">
                         <span>@lang("User.dont_have_account_button", ["url"=> route('showSignup')])</span>
                     </div>
-                    @endif --}}
+                    @endif
                 </div>
             </div>
         </div>

@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class RegionTax extends Model
 {
-    protected $fillable = ['region', 'tax'];
+    protected $fillable = ['region', 'tax_type', 'tax'];
 }

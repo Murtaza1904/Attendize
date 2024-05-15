@@ -36,10 +36,10 @@ class OrganiserCustomizeController extends MyBaseController
     {
         $organiser = Organiser::scope()->find($organiser_id);
 
-        $chargeTax = $request->get('charge_tax');
-        if ($chargeTax == 1) {
-            $organiser->addExtraValidationRules();
-        }
+        // $chargeTax = $request->get('charge_tax');
+        // if ($chargeTax == 1) {
+        //     $organiser->addExtraValidationRules();
+        // }
 
         if (!$organiser->validate($request->all())) {
             return response()->json([
@@ -57,10 +57,10 @@ class OrganiserCustomizeController extends MyBaseController
         $organiser->facebook = $request->get('facebook');
         $organiser->twitter = $request->get('twitter');
 
-        $organiser->tax_name = $request->get('tax_name');
-        $organiser->tax_value = round($request->get('tax_value'), 2);
-        $organiser->tax_id = $request->get('tax_id');
-        $organiser->charge_tax = ($request->get('charge_tax') == 1) ? 1 : 0;
+        // $organiser->tax_name = $request->get('tax_name');
+        // $organiser->tax_value = round($request->get('tax_value'), 2);
+        // $organiser->tax_id = $request->get('tax_id');
+        // $organiser->charge_tax = ($request->get('charge_tax') == 1) ? 1 : 0;
 
         if ($request->get('remove_current_image') == '1') {
             $organiser->logo_path = '';

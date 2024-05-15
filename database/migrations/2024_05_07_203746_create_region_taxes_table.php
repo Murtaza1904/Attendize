@@ -11,6 +11,7 @@ class CreateRegionTaxesTable extends Migration
         Schema::create('region_taxes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('region')->unique();
+            $table->enum('tax_type', ['fixed', 'percentage']);
             $table->double('tax');
             $table->timestamps();
         });
