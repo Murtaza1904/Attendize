@@ -229,7 +229,7 @@
                                                                     <option value="{{$i}}">{{$i}}</option>
                                                                 @endfor
                                                             </select> --}}
-                                                            <input type="number" class="form-control" placeholder="Qty">
+                                                            <input type="number" name="ticket_{{$ticket->id}}" class="form-control" placeholder="Qty">
                                                         @endif
         
                                                     @endif
