@@ -78,8 +78,23 @@ class EventViewController extends Controller
                 Cookie::queue('affiliate_' . $event_id, $affiliate_ref, 60 * 24 * 60);
             }
         }
-
         return view('Public.ViewEvent.EventPage', $data);
+    }
+
+    public function events()
+    {
+        return view('Public.ViewEvent.NewEventPage', [
+            'events' => Event::latest()->whereDate('end_date', '>=', date('Y-m-d'))->where('is_live', 1)->get(),
+        ]);
+    }
+    
+    public function eventTickets(Event $event)
+    {
+        return view('Public.ViewEvent.NewTicketPage', [
+            'event' => $event,
+            'tickets' => $event->tickets()->orderBy('sort_order', 'asc')->get(),
+            'is_embedded' => 0,
+        ]);
     }
 
     /**

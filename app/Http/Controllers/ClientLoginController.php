@@ -3,27 +3,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Client;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
 use Auth;
+use App\Models\Client;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class ClientLoginController extends Controller
 {
-    use AuthenticatesUsers;
-
-    protected $redirectTo = '/client/dashboard';
-
-    public function __construct()
+    public function showLoginForm()
     {
-        $this->middleware('guest:client')->except('logout');
+        return view('Public.LoginAndRegister.Client-Login');
     }
 
     
     public function checkLogin(Request $request)
     {
-        $validator = $request->validate([
+        $validator = Validator::make($request->all(),[
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string'],
         ]);
@@ -38,7 +34,7 @@ class ClientLoginController extends Controller
 
         if($client) {
             if (Auth::guard('client')->attempt(['email' => $request->email, 'password' => $request->password])) {
-                return redirect()->route('showEventPage', [3,'test-event-1']);
+                return redirect()->route('events.index');
             }
         } else {
             $newUser = Client::create([
@@ -47,28 +43,9 @@ class ClientLoginController extends Controller
             ]);
 
             Auth::guard('client')->login($newUser);
-            return redirect()->route('showEventPage', [3,'test-event-1']);
+            return redirect()->route('events.index');
         }
 
         return redirect()->route('client-login.show');
-    }
-
-    public function showLoginForm()
-    {
-        return view('Public.LoginAndRegister.Client-Login');
-    }
-
-    protected function guard()
-    {
-        return Auth::guard('client');
-    }
-
-    public function logout(Request $request)
-    {
-        Auth::guard('client')->logout();
-
-        $request->session()->invalidate();
-
-        return redirect('/');
     }
 }

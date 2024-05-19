@@ -150,6 +150,15 @@ Route::group(
     /*
      * Public event page routes
      */
+
+    Route::get('events',
+        [EventViewController::class, 'events']
+    )->name('events.index');
+    
+    Route::get('events/{event}/tickets',
+        [EventViewController::class, 'eventTickets']
+    )->name('events.tickets.index');
+
     Route::group(['prefix' => 'e'], function () {
 
         /*
