@@ -97,7 +97,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <div onclick="window.location='{{$event->event_url}}#organiser'" class="event_organizer">
+                        <div onclick="window.location='#organiser'" class="event_organizer">
                             <b>{{$event->organiser->name}}</b> @lang("Public_ViewEvent.presents")
                         </div>
                     </div>
@@ -126,17 +126,21 @@
                             <meta property="address" content="{{ urldecode($event->venue_name) }}">
                         </span>
                     </div>
-
+                    <style>
+                        .h-black:hover, .btn-black {
+                            background: #000 !important;
+                        }
+                    </style>
                     <div class="event_buttons">
                         <div class="row">
                             <div class="col-md-4 col-sm-4">
-                                <a class="btn btn-event-link btn-lg" href="{{{$event->event_url}}}#tickets">@lang("Public_ViewEvent.TICKETS")</a>
+                                <a class="btn btn-event-link btn-lg h-black" href="#tickets">@lang("Public_ViewEvent.TICKETS")</a>
                             </div>
                             <div class="col-md-4 col-sm-4">
-                                <a class="btn btn-event-link btn-lg" href="{{{$event->event_url}}}#details">@lang("Public_ViewEvent.DETAILS")</a>
+                                <a class="btn btn-event-link btn-lg h-black" href="#details">@lang("Public_ViewEvent.DETAILS")</a>
                             </div>
                             <div class="col-md-4 col-sm-4">
-                                <a class="btn btn-event-link btn-lg" href="{{{$event->event_url}}}#location">@lang("Public_ViewEvent.LOCATION")</a>
+                                <a class="btn btn-event-link btn-lg h-black" href="#location">@lang("Public_ViewEvent.LOCATION")</a>
                             </div>
                         </div>
                     </div>
@@ -277,7 +281,7 @@
                                                     </div>
         
                                                 @endif
-                                                {!!Form::submit(trans("Public_ViewEvent.register"), ['class' => 'btn btn-lg btn-primary pull-right'])!!}
+                                                {!!Form::submit(trans("Public_ViewEvent.register"), ['class' => 'btn btn-lg btn-black pull-right'])!!}
                                             </td>
                                         </tr>
                                     </table>
@@ -446,7 +450,7 @@
                 <div class="col-md-12">
                     <div class="event_organiser_details" property="organizer" typeof="Organization">
                         <div class="logo">
-                            <h1>Halal Rib Fest</h1>
+                            <h1>Halal Ribfest</h1>
                         </div>
                             @if($event->organiser->enable_organiser_page)
                             <a href="{{route('showOrganiserHome', [$event->organiser->id, Str::slug($event->organiser->name)])}}" title="Organiser Page">

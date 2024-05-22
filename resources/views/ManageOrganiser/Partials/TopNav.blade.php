@@ -9,7 +9,12 @@
     </li>
     <!--/ Show Side Menu -->
     <li class="nav-button ">
-        <a target="_blank" href="{{ route('showOrganiserHome',[$organiser->id]) }}">
+        {{-- <a target="_blank" href="{{ route('showOrganiserHome',[$organiser->id]) }}">
+            <span>
+                <i class="ico-eye2"></i>&nbsp;@lang("Organiser.organiser_page")
+            </span>
+        </a> --}}
+        <a target="_blank" href="{{ route('events.index') }}">
             <span>
                 <i class="ico-eye2"></i>&nbsp;@lang("Organiser.organiser_page")
             </span>
