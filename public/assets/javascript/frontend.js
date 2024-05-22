@@ -4834,10 +4834,14 @@ function toggleSubmitDisabled($submitButton) {
         return;
     }
 
+    // $submitButton.data('original-text', $submitButton.val())
+    //         .attr('disabled', true)
+    //         .addClass('disabled')
+    //         .val(lang("processing"));
     $submitButton.data('original-text', $submitButton.val())
             .attr('disabled', true)
             .addClass('disabled')
-            .val(lang("processing"));
+            .val("processing");
 }
 
 /**

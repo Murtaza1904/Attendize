@@ -129,6 +129,7 @@
                     <style>
                         .h-black:hover, .btn-black {
                             background: #000 !important;
+                            color: #fc2222 !important;
                         }
                     </style>
                     <div class="event_buttons">
@@ -233,7 +234,7 @@
                                                                     <option value="{{$i}}">{{$i}}</option>
                                                                 @endfor
                                                             </select> --}}
-                                                            <input type="number" name="ticket_{{$ticket->id}}" class="form-control" placeholder="Qty">
+                                                            <input type="number" name="ticket_{{$ticket->id}}" class="form-control" placeholder="Qty" required>
                                                         @endif
         
                                                     @endif
@@ -281,7 +282,7 @@
                                                     </div>
         
                                                 @endif
-                                                {!!Form::submit(trans("Public_ViewEvent.register"), ['class' => 'btn btn-lg btn-black pull-right'])!!}
+                                                {!!Form::submit(trans("Public_ViewEvent.register"), ['class' => 'btn btn-lg btn-event-link pull-right h-black'])!!}
                                             </td>
                                         </tr>
                                     </table>
@@ -538,7 +539,7 @@
     <a href="#intro" style="display:none;" class="totop"><i class="ico-angle-up"></i>
         <span style="font-size:11px;">TOP</span></a>
 
-    <script src="http://127.0.0.1:8000/assets/javascript/frontend.js"></script>
+    <script src="{{ asset('assets/javascript/frontend.js') }}"></script>
 
 </body>
 
