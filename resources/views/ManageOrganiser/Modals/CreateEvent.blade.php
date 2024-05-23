@@ -65,6 +65,11 @@
                             {!! Form::styledFile('event_image') !!}
 
                         </div>
+                        <div class="form-group">
+                            {!! Form::label('card_bg_image', 'Card Background Image', ['class' => 'control-label required']) !!}
+                            {!! Form::styledFile('card_bg_image') !!}
+
+                        </div>
                         <div class="mb-3">
                             <label for="region_tax_id" class="form-label required">Region</label>
                             <select name="region_tax_id" id="region_tax_id" class="form-control">

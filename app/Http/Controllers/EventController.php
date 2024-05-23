@@ -54,6 +54,7 @@ class EventController extends MyBaseController
         $event->title = $request->get('title');
         $event->description = prepare_markdown($request->get('description'));
         $event->start_date = $request->get('start_date');
+        $event->card_bg_image = $request->file('card_bg_image')->store('events-bg-card', 'public');
 
         /*
          * Venue location info (Usually auto-filled from google maps)
@@ -233,6 +234,7 @@ class EventController extends MyBaseController
         $event->title = $request->get('title');
         $event->description = prepare_markdown($request->get('description'));
         $event->start_date = $request->get('start_date');
+        $event->card_bg_image = $request->file('card_bg_image') ? $request->file('card_bg_image')->store('events-bg-card', 'public') : $event->card_bg_image;
         $event->google_tag_manager_code = $request->get('google_tag_manager_code');
 
         /*

@@ -49,6 +49,7 @@ class Event extends MyBaseModel
             'end_date'            => 'required|date_format:"' . $format . '"',
             'organiser_name'      => 'required_without:organiser_id',
             'event_image'         => 'nullable|mimes:jpeg,jpg,png|max:3000',
+            'card_bg_image'         => 'nullable|mimes:jpeg,jpg,png|max:3000',
         ];
     }
 

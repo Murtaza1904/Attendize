@@ -52,7 +52,9 @@
             <div class="north-america-cards">
                 @forelse ($events as $event)
                     <a href="{{ route('events.tickets.index', $event->id) }}" data-w-id="fdec3628-e13c-ee0b-7b79-716a88359aaa" class="north-card-wrapper">
-                        <div id="w-node-_6b0c7410-5259-2007-602a-88929d5bdb2c-56a96a26" class="res-city-card virginia-city">
+                        {{-- <div id="w-node-_6b0c7410-5259-2007-602a-88929d5bdb2c-56a96a26" class="res-city-card virginia-city"> --}}
+                        <div id="w-node-_6b0c7410-5259-2007-602a-88929d5bdb2c-56a96a26" class="res-city-card" 
+                        style="background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)), url({{ $event->card_bg_image ? Storage::url($event->card_bg_image) : 'https://assets-global.website-files.com/62a4ae1a77029b4f2e631a4e/662fa85a743c2322855153f6_virgnia.jpg' }});">
                             <div id="w-node-_6b0c7410-5259-2007-602a-88929d5bdb2d-56a96a26" class="res-card-content">
                                 <div class="title-res">{{ $event->title }}</div>
                                 <div class="month-res">{{ date('d M Y',strtotime($event->start_date)) }}</div>

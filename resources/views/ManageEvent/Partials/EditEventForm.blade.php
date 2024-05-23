@@ -35,6 +35,11 @@
                                         ))  !!}
         </div>
 
+        <div class="form-group">
+            {!! Form::label('card_bg_image', "Card Background Image", array('class'=>'control-label')) !!}
+            {!! Form::styledFile('card_bg_image', 1) !!}
+         </div>
+
         <div class="form-group address-automatic" style="display:{{$event->location_is_manual ? 'none' : 'block'}};">
             {!! Form::label('name', trans("Event.venue_name"), array('class'=>'control-label required ')) !!}
             {!!  Form::text('venue_name_full', old('venue_name_full'),
