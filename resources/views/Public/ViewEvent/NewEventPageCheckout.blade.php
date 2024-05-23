@@ -372,7 +372,7 @@
                         @endif
         
                        {!! Form::hidden('is_embedded', $is_embedded) !!}
-                       {!! Form::submit(trans("Public_ViewEvent.checkout_order"), ['class' => 'btn btn-lg btn-event-link card-submit', 'style' => 'width:100%;', 'disabled']) !!}
+                       {!! Form::submit(trans("Public_ViewEvent.checkout_order"), ['class' => 'btn btn-lg btn-event-link card-submit', 'style' => 'width:100%;']) !!}
                        {!! Form::close() !!}
         
                     </div>
