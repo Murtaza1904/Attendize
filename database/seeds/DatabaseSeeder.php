@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call('QuestionTypesSeeder');
         $this->call('TicketStatusSeeder');
         $this->call('TimezoneSeeder');
-        $this->call('RefundPloicySeeder');
+        $this->call('RefundPolicySeeder');
 
     }
 }
