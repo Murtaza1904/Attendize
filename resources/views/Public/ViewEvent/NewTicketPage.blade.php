@@ -477,7 +477,7 @@
                                         <i class="ico-twitter"></i>&nbsp; @lang("Public_ViewEvent.Twitter")
                                     </a>
                                 @endif
-                            <button onclick="$(function(){ $('.contact_form').slideToggle(); });" type="button" class="btn btn-event-link">
+                            <button onclick="$(function(){ $('.contact_form').slideToggle(); });" type="button" class="btn btn-event-link h-black">
                                 <i class="ico-envelop"></i>&nbsp; @lang("Public_ViewEvent.Contact")
                             </button>
                         </p>
