@@ -325,6 +325,7 @@ h2 {
 .city {
     background-position: 0 0, 50%;
     background-size: auto, auto;
+    background-repeat: no-repeat;
     border-radius: 10px;
 }
 /* .res-city-card.virginia-city {
