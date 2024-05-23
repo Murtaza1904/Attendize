@@ -282,7 +282,7 @@
                                                     </div>
         
                                                 @endif
-                                                {!!Form::submit(trans("Public_ViewEvent.register"), ['class' => 'btn btn-lg btn-event-link pull-right h-black'])!!}
+                                                {!!Form::submit('Add To Cart', ['class' => 'btn btn-lg btn-event-link pull-right h-black'])!!}
                                             </td>
                                         </tr>
                                     </table>
