@@ -13,8 +13,15 @@
                 <a href="{{ route('region-taxes.index', array('organiser_id' => $organiser->id)) }}">
                     <span class="figure"><i class="ico-calendar"></i></span>
                     <span class="text">
-                        {{-- @lang("Organiser.event") --}}
                         Region Tax
+                    </span>
+                </a>
+            </li>
+            <li class="{{ Request::is('*refund-policy*') ? 'active' : '' }}">
+                <a href="{{ route('refund-policy.index', array('organiser_id' => $organiser->id)) }}">
+                    <span class="figure"><i class="ico-calendar"></i></span>
+                    <span class="text">
+                        Refund Policy
                     </span>
                 </a>
             </li>

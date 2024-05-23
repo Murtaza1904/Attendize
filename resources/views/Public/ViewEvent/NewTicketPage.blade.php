@@ -73,7 +73,7 @@
         }
 
         #organiserHead, #footer {
-            background: #fc2222 !important;
+            background: #000 !important;
         }
     </style>
 
@@ -135,13 +135,13 @@
                     <div class="event_buttons">
                         <div class="row">
                             <div class="col-md-4 col-sm-4">
-                                <a class="btn btn-event-link btn-lg h-black" href="#tickets">@lang("Public_ViewEvent.TICKETS")</a>
+                                <a class="btn btn-event-link btn-black btn-lg h-black" href="#tickets">@lang("Public_ViewEvent.TICKETS")</a>
                             </div>
                             <div class="col-md-4 col-sm-4">
-                                <a class="btn btn-event-link btn-lg h-black" href="#details">@lang("Public_ViewEvent.DETAILS")</a>
+                                <a class="btn btn-event-link btn-black btn-lg h-black" href="#details">@lang("Public_ViewEvent.DETAILS")</a>
                             </div>
                             <div class="col-md-4 col-sm-4">
-                                <a class="btn btn-event-link btn-lg h-black" href="#location">@lang("Public_ViewEvent.LOCATION")</a>
+                                <a class="btn btn-event-link btn-black btn-lg h-black" href="#location">@lang("Public_ViewEvent.LOCATION")</a>
                             </div>
                         </div>
                     </div>

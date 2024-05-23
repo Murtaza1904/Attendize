@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegionTaxRequest extends FormRequest
+class RefundPolicyRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,9 +14,8 @@ class RegionTaxRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'region' => ['required', 'string', 'max:191'],
-            'tax_type' => ['required', 'string', 'in:fixed,percentage'],
-            'tax' => ['required', 'numeric'],
+            'first_checkbox_text' => ['required', 'string'],
+            'second_checkbox_text' => ['required', 'string'],
         ];
     }
 }

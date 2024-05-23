@@ -34,6 +34,7 @@ use App\Http\Controllers\OrganiserCustomizeController;
 use App\Http\Controllers\OrganiserDashboardController;
 use App\Http\Controllers\OrganiserEventsController;
 use App\Http\Controllers\OrganiserViewController;
+use App\Http\Controllers\RefundPolicyController;
 use App\Http\Controllers\RegionTaxController;
 use App\Http\Controllers\RemindersController;
 use App\Http\Controllers\UserController;
@@ -297,6 +298,13 @@ Route::group(
             ->name('region-taxes.update');
             Route::delete('region-taxes/{region_tax}', [RegionTaxController::class, 'destroy'])
             ->name('region-taxes.destroy');
+
+            // Refund Policy
+            Route::get('{organiser_id}/refund-policy', [RefundPolicyController::class, 'index'])
+            ->name('refund-policy.index');
+            Route::put('{organiser_id}/refund-policy/update', [RefundPolicyController::class, 'update'])
+            ->name('refund-policy.update');
+
 
             Route::get('{organiser_id}/events',
                 [OrganiserEventsController::class, 'showEvents']
