@@ -57,8 +57,9 @@
                         style="background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)), url({{ $event->card_bg_image ? Storage::url($event->card_bg_image) : 'https://assets-global.website-files.com/62a4ae1a77029b4f2e631a4e/662fa85a743c2322855153f6_virgnia.jpg' }});">
                             <div id="w-node-_6b0c7410-5259-2007-602a-88929d5bdb2d-56a96a26" class="res-card-content">
                                 <div class="title-res">{{ $event->title }}</div>
-                                <div class="month-res">{{ date('d M Y',strtotime($event->start_date)) }}</div>
-                                <div class="venue-res">{{ Str::limit($event->description, 70) }}</div>
+                                <div class="month-res">{{ date('F',strtotime($event->start_date)) }}</div>
+                                <div class="date-res">{{ date('d',strtotime($event->start_date)) .' - '.date('d',strtotime($event->end_date)) }}</div>
+                                <div class="venue-res">{{ $event->venue_name }}</div>
                             </div>
                         </div>
                         <div data-w-id="7bcbc3d8-7fae-6155-0381-79504df12daa" class="north-form-button style-D6xjH"
