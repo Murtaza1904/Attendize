@@ -129,7 +129,7 @@
                     <style>
                         .h-black:hover, .btn-black {
                             background: #000 !important;
-                            color: #fc2222 !important;
+                            color: #fff !important;
                         }
                     </style>
                     <div class="event_buttons">
@@ -477,7 +477,7 @@
                                         <i class="ico-twitter"></i>&nbsp; @lang("Public_ViewEvent.Twitter")
                                     </a>
                                 @endif
-                            <button onclick="$(function(){ $('.contact_form').slideToggle(); });" type="button" class="btn btn-primary">
+                            <button onclick="$(function(){ $('.contact_form').slideToggle(); });" type="button" class="btn btn-event-link">
                                 <i class="ico-envelop"></i>&nbsp; @lang("Public_ViewEvent.Contact")
                             </button>
                         </p>
