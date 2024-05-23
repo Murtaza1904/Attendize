@@ -69,6 +69,7 @@ class EventViewController extends Controller
                     'name'       => $request->get('ref'),
                     'event_id'   => $event_id,
                     'account_id' => $event->account_id,
+                    'last_visit' => now(),
                 ]);
 
                 ++$affiliate->visits;
@@ -78,7 +79,7 @@ class EventViewController extends Controller
                 Cookie::queue('affiliate_' . $event_id, $affiliate_ref, 60 * 24 * 60);
             }
         }
-        return view('Public.ViewEvent.EventPage', $data);
+        return view('Public.ViewEvent.NewTicketPage', $data);
     }
 
     public function events()

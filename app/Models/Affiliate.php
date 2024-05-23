@@ -19,7 +19,8 @@ class Affiliate extends \Illuminate\Database\Eloquent\Model
         'tickets_sold',
         'event_id',
         'account_id',
-        'sales_volume'
+        'sales_volume',
+        'last_visit',
     ];
 
     /**

@@ -24,17 +24,14 @@
             </div>
         </div>
         <div class="html-embed-6">
-            <div data-poster-url="https://assets.website-files.com/62a4ae1a77029b4f2e631a4e/6437fb733194683345a22e13_videoplayback-poster-00001.jpg"
-                data-video-urls="https://s3.amazonaws.com/webflow-prod-assets/62a4ae1a77029b4f2e631a4e/64ee3fc66253b53d24e94f05_6437fb733194683345a22e13_videoplayback-transcode.mp4"
+            <div data-poster-url="{{ asset('assets/images/events/black-background.jpg') }}"
+                data-video-urls="{{ asset('assets/videos/events/hero.mp4') }}"
                 data-autoplay="true" data-loop="true" data-wf-ignore="true" class="background-video-5">
                 <video id="6e7d8527-4ffe-48b3-2b9e-90251a4d7023-video" autoplay="" loop=""
-                    style="background-image:url(&quot;https://assets.website-files.com/62a4ae1a77029b4f2e631a4e/6437fb733194683345a22e13_videoplayback-poster-00001.jpg&quot;)"
+                    style="background-image:url(&quot;{{ asset('assets/images/events/black-background.jpg') }}&quot;)"
                     muted="" playsinline="" data-wf-ignore="true" data-object-fit="cover">
                     <source
-                        src="https://assets.website-files.com/62a4ae1a77029b4f2e631a4e/6437fb733194683345a22e13_videoplayback-transcode.mp4"
-                        data-wf-ignore="true">
-                    <source
-                        src="https://assets.website-files.com/62a4ae1a77029b4f2e631a4e/6437fb733194683345a22e13_videoplayback-transcode.webm"
+                        src="{{ asset('assets/videos/events/hero.mp4') }}"
                         data-wf-ignore="true">
                 </video>
             </div>
