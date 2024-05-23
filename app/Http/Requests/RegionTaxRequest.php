@@ -17,6 +17,7 @@ class RegionTaxRequest extends FormRequest
             'region' => ['required', 'string', 'max:191'],
             'tax_type' => ['required', 'string', 'in:fixed,percentage'],
             'tax' => ['required', 'numeric'],
+            'payment_gateway' => ['required', 'string', 'in: stripe-ca,stripe-usa'],
         ];
     }
 }

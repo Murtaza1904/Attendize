@@ -43,6 +43,7 @@
                                 <th>Region</th>
                                 <th>Type</th>
                                 <th>Tax</th>
+                                <th>Payment Gateway</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -57,6 +58,9 @@
                                     </td>
                                     <td>
                                         <strong>{{ $regionTax->tax }}</strong>
+                                    </td>
+                                    <td>
+                                        <strong>{{ $regionTax->payment_gateway }}</strong>
                                     </td>
                                     <td>
                                         <div style="display:flex">

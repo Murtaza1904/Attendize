@@ -38,8 +38,19 @@
                                 <div class="form-group">
                                     <label for="tax" class="control-label required">Tax</label>
                                     <input type="number" class="form-control" placeholder="Enter tax value"
-                                        step="any" name="tax" id="tax">
+                                        step="any" name="tax" id="tax" required>
                                     @error('tax')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="payment_gateway" class="control-label required">Payment Gateway</label>
+                                    <select class="form-control" name="payment_gateway" id="payment_gateway" required>
+                                        <option value="" selected disabled>Select payment gateway</option>
+                                        <option value="stripe-ca">Stripe CA</option>
+                                        <option value="stripe-usa">Stripe USA</option>
+                                    </select>
+                                    @error('payment_gateway')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
