@@ -1,4 +1,6 @@
-<?php namespace Tests\Features;
+<?php 
+
+namespace Tests\Feature\Utils;
 
 use App\Attendize\Utils;
 use Tests\TestCase;

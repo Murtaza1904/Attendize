@@ -41,6 +41,9 @@ use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\UserLogoutController;
 use App\Http\Controllers\UserSignupController;
 
+
+Route::get('/', [EventViewController::class,'events'])->name('home');
+
 Route::group(
     [
         'prefix'     => LaravelLocalization::setLocale(),
@@ -688,7 +691,7 @@ Route::group(
         });
     });
 
-    Route::get('/',
-        [IndexController::class, 'showIndex']
-    )->name('index');
+    // Route::get('/',
+    //     [IndexController::class, 'showIndex']
+    // )->name('index');
 });
