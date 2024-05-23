@@ -172,20 +172,52 @@
                                 @lang("Public_ViewEvent.order_summary")
                             </h3>
                         </div>
-        
+                        <hr>
                         <div class="panel-body pt0">
-                            <table class="table mb0 table-condensed">
+                            <table class="table mb0">
                                 @foreach($tickets as $ticket)
-                                <tr>
-                                    <td class="pl0">{{{$ticket['ticket']['title']}}} X <b>{{$ticket['qty']}}</b></td>
-                                    <td style="text-align: right;">
+                                <tr style="padding: 0">
+                                    <td style="border: none; padding: 0">
+                                        {{ $ticket['ticket']['title'] }}
+                                    </td>
+                                    <td style="text-align: right; border: none; padding: 0">
+                                        ({{$ticket['qty']}})
+                                    </td>
+                                </tr>
+                                <tr style="padding: 0">
+                                    <td style="border: none; padding: 0">Ticket Fee</td>
+                                    <td style="text-align: right; border: none; padding: 0">
+                                        {{ money($ticket['price'], $event->currency) }}
+                                    </td>
+                                </tr>
+                                <tr style="padding: 0">
+                                    <td style="border: none; padding: 0">Booking Fee</td>
+                                    <td style="text-align: right; border: none; padding: 0">
+                                        {{ money($ticket['booking_fee'], $event->currency) }}
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 2px solid black; padding: 0">
+                                    <td style="border: none; padding: 0">Tax</td>
+                                    <td style="text-align: right; border: none; padding: 0">
+                                        {{ money($ticket['organiser_booking_fee'], $event->currency) }}
+                                    </td>
+                                </tr>
+                                <tr style="padding: 5px">
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                {{-- <tr>
+                                    <td class="pl0" style="border: none">
+                                        {{{$ticket['ticket']['title']}}} X <b>{{$ticket['qty']}}</b>
+                                    </td>
+                                    <td style="text-align: right; border: none">
                                         @isFree($ticket['full_price'])
                                             @lang("Public_ViewEvent.free")
                                         @else
                                         {{ money($ticket['full_price'], $event->currency) }}
                                         @endif
                                     </td>
-                                </tr>
+                                </tr> --}}
                                 @endforeach
                             </table>
                         </div>

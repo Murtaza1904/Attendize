@@ -191,7 +191,11 @@
                                                             <?php
                                                             $is_free_event = false;
                                                             ?>
-                                                            <span title='{{money($ticket->price, $event->currency)}} @lang("Public_ViewEvent.ticket_price") + {{money($ticket->total_booking_fee, $event->currency)}} @lang("Public_ViewEvent.booking_fees")'>{{money($ticket->total_price, $event->currency)}} </span>
+                                                            {{-- <span title='{{money($ticket->price, $event->currency)}} @lang("Public_ViewEvent.ticket_price") + {{money($ticket->total_booking_fee, $event->currency)}} @lang("Public_ViewEvent.booking_fees")'>{{money($ticket->total_price, $event->currency)}} 
+                                                            </span> --}}
+                                                            <span title='{{money($ticket->price, $event->currency)}} @lang("Public_ViewEvent.ticket_price") + {{money($ticket->total_booking_fee, $event->currency)}} @lang("Public_ViewEvent.booking_fees")'>{{money($ticket->price, $event->currency)}} Ticket Price 
+                                                            </span>
+                                                            <div> + Booking Fees</div>
                                                             <span class="tax-amount text-muted text-smaller">{{ ($event->organiser->tax_name && $event->organiser->tax_value) ? '(+'.money(($ticket->total_price*($event->organiser->tax_value)/100), $event->currency).' '.$event->organiser->tax_name.')' : '' }}</span>
                                                             <meta property="priceCurrency"
                                                                   content="{{ $event->currency->code }}">
@@ -234,7 +238,7 @@
                                                                     <option value="{{$i}}">{{$i}}</option>
                                                                 @endfor
                                                             </select> --}}
-                                                            <input type="number" name="ticket_{{$ticket->id}}" class="form-control" placeholder="Qty" required>
+                                                            <input type="number" name="ticket_{{$ticket->id}}" class="form-control" placeholder="Qty" value="0" required>
                                                         @endif
         
                                                     @endif
