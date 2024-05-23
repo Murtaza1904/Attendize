@@ -19,7 +19,7 @@
                 <div data-w-id="467137cc-d9cc-7e3c-9c90-6667c27a2278"
                     style="opacity: 1; transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"
                     class="new-hero_text-wrap">
-                    <div class="regular-text">Sponsor &amp; Vendor Bookings for 2024 Open Now! Sign Up Here.</div>
+                    <!-- <div class="regular-text">Sponsor &amp; Vendor Bookings for 2024 Open Now! Sign Up Here.</div> -->
                 </div>
             </div>
         </div>
