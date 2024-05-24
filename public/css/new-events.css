@@ -263,6 +263,14 @@ html {
     display: grid;
 }
 
+
+@media only screen and (max-width: 768px) {
+    .north-america-cards {
+        grid-column-gap: 0px;
+        
+        grid-template-columns: 1fr;
+    }
+}
 h2 {
     margin-bottom: 10px;
     font-weight: 700;
