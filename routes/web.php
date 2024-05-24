@@ -84,7 +84,7 @@ Route::group(
         /*
          * Login
          */
-        Route::get('/login',
+        Route::get('/admin/login',
             [UserLoginController::class, 'showLogin']
         )->name('login')->middleware('throttle:10,1');
         
@@ -96,7 +96,7 @@ Route::group(
             [ClientLoginController::class, 'checkLogin']
         )->name('client-login.check')->middleware('throttle:10,1');
 
-        Route::post('/login',
+        Route::post('/admin/login',
             [UserLoginController::class, 'postLogin']
         );
 

@@ -1,25 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!--
-                  _   _                 _ _
-             /\  | | | |               | (_)
-            /  \ | |_| |_ ___ _ __   __| |_ _______   ___ ___  _ __ ___
-           / /\ \| __| __/ _ \ '_ \ / _` | |_  / _ \ / __/ _ \| '_ ` _ \
-          / ____ \ |_| ||  __/ | | | (_| | |/ /  __/| (_| (_) | | | | | |
-         /_/    \_\__|\__\___|_| |_|\__,_|_/___\___(_)___\___/|_| |_| |_|
-
-        -->
         <title>{{{$event->title}}} - Attendize.com</title>
-
-
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
         <link rel="canonical" href="{{$event->event_url}}" />
-
-
-        <!-- Open Graph data -->
         <meta property="og:title" content="{{{$event->title}}}" />
         <meta property="og:type" content="article" />
         <meta property="og:url" content="{{$event->event_url}}?utm_source=fb" />
@@ -28,14 +14,8 @@
         @endif
         <meta property="og:description" content="{{{Str::words(md_to_str($event->description), 20)}}}" />
         <meta property="og:site_name" content="Attendize.com" />
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
         @yield('head')
-
        {!!Html::style(config('attendize.cdn_url_static_assets').'/assets/stylesheet/frontend.css')!!}
-
         <!--Bootstrap placeholder fix-->
         <style>
             ::-webkit-input-placeholder { /* WebKit browsers */
@@ -74,7 +54,41 @@
                 }
             </style>
         @endif
+        <style>
+        @font-face {
+            font-family: 'American captain';
+            src: url('https://uploads-ssl.webflow.com/62a4ae1a77029b4f2e631a4e/6467af776ff8c8010f263c48_American%20Captain.otf') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
 
+        body {
+            background-image: url(https://assets-global.website-files.com/62a4ae1a77029b4f2e631a4e/649096276c987f8deefd0a57_eat.png), url(https://assets-global.website-files.com/62a4ae1a77029b4f2e631a4e/646ef4d502eaff757e319436_Layer%2049%20\(1\).png);
+            background-position: 100% 30px, 0 30px;
+            background-repeat: no-repeat, no-repeat, no-repeat;
+            background-size: auto, auto, auto;
+        }
+
+        #event_page_wrap {
+            background: none;
+        }
+
+        h1 {
+            font-family: 'American captain';
+            font-size: 70px;
+            letter-spacing: 5px;
+            color: #fc2222;
+        }
+
+        .btn-event-link, .btn-success {
+            background-color: #fc2222 !important;
+            border: none;
+        }
+        .btn-event-link:hover, .btn-success:hover {
+            background-color: #000 !important;
+        }
+        </style>
     </head>
     <body class="attendize">
         <div id="event_page_wrap" vocab="http://schema.org/" typeof="Event">

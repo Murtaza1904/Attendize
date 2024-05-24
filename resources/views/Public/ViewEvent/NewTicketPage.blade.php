@@ -81,73 +81,7 @@
 
 <body class="attendize">
     <div id="event_page_wrap" vocab="http://schema.org/" typeof="Event">
-        @if(!$event->is_live)
-            <section id="goLiveBar">
-                <div class="container">
-                    @if(!$event->is_live)
-                        {{ @trans("ManageEvent.event_not_live") }}
-                        {!! Form::open(['url' => route('MakeEventLive', ['event_id' => $event->id]), 'id' => 'make-event-live-form', 'style' => 'display:inline-block;']) !!}
-                            {!! Form::submit(trans('ManageEvent.publish_it'), ['class' => 'btn btn-success']) !!}
-                        {!! Form::close() !!}
-                    @endif
-                </div>
-            </section>
-        @endif
-        <section id="organiserHead" class="container-fluid">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div onclick="window.location='#organiser'" class="event_organizer">
-                            <b>{{$event->organiser->name}}</b> @lang("Public_ViewEvent.presents")
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="intro" class="container">
-            <div class="row">
-                <div class="col-md-12" style="color: black">
-                    <h1 property="name">{{$event->title}}</h1>
-                    <div class="event_venue">
-                        <span property="startDate" content="{{ $event->start_date->toIso8601String() }}">
-                            {{ $event->startDateFormatted() }}
-                        </span>
-                        -
-                        <span property="endDate" content="{{ $event->end_date->toIso8601String() }}">
-                            @if($event->start_date->diffInDays($event->end_date) == 0)
-                                {{ $event->end_date->format('H:i') }}
-                            @else
-                                {{ $event->endDateFormatted() }}
-                            @endif
-                        </span>
-                        @lang("Public_ViewEvent.at")
-                        <span property="location" typeof="Place">
-                            <b property="name">{{$event->venue_name}}</b>
-                            <meta property="address" content="{{ urldecode($event->venue_name) }}">
-                        </span>
-                    </div>
-                    <style>
-                        .h-black:hover, .btn-black {
-                            background: #000 !important;
-                            color: #fff !important;
-                        }
-                    </style>
-                    <div class="event_buttons">
-                        <div class="row">
-                            <div class="col-md-4 col-sm-4">
-                                <a class="btn btn-event-link btn-black btn-lg h-black" href="#tickets">@lang("Public_ViewEvent.TICKETS")</a>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <a class="btn btn-event-link btn-black btn-lg h-black" href="#details">@lang("Public_ViewEvent.DETAILS")</a>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <a class="btn btn-event-link btn-black btn-lg h-black" href="#location">@lang("Public_ViewEvent.LOCATION")</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        @include('Public.ViewEvent.Partials.EventHeaderSection')
         <section id="tickets" class="container">
             <div class="row">
                 <h1 class='section_head'>
@@ -523,21 +457,7 @@
                 </div>
             </div>
         </section>
-        <footer id="footer" class="container-fluid">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        @if(Utils::userOwns($event))
-                        &bull;
-                        <a class="adminLink " href="{{route('showEventDashboard' , ['event_id' => $event->id])}}">@lang("Public_ViewEvent.event_dashboard")</a>
-                        &bull;
-                        <a class="adminLink "
-                           href="{{route('showOrganiserDashboard' , ['organiser_id' => $event->organiser->id])}}">@lang("Public_ViewEvent.organiser_dashboard")</a>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </footer>
+        @include('Public.ViewEvent.Partials.EventFooterSection')
     </div>
 
     <a href="#intro" style="display:none;" class="totop"><i class="ico-angle-up"></i>

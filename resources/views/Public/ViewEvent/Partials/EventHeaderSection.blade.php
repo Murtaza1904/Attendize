@@ -1,3 +1,14 @@
+<style>
+    #organiserHead
+    {
+        background-color: #000 !important;
+        opacity: 1 !important;
+    }
+
+    .btn-black {
+        background-color: #000 !important;
+    }
+</style>
 @if(!$event->is_live)
 <section id="goLiveBar">
     <div class="container">
@@ -47,13 +58,13 @@
             <div class="event_buttons">
                 <div class="row">
                     <div class="col-md-4 col-sm-4">
-                        <a class="btn btn-event-link btn-lg" href="{{{$event->event_url}}}#tickets">@lang("Public_ViewEvent.TICKETS")</a>
+                        <a class="btn btn-event-link btn-black btn-lg" href="#tickets">@lang("Public_ViewEvent.TICKETS")</a>
                     </div>
                     <div class="col-md-4 col-sm-4">
-                        <a class="btn btn-event-link btn-lg" href="{{{$event->event_url}}}#details">@lang("Public_ViewEvent.DETAILS")</a>
+                        <a class="btn btn-event-link btn-black btn-lg" href="#details">@lang("Public_ViewEvent.DETAILS")</a>
                     </div>
                     <div class="col-md-4 col-sm-4">
-                        <a class="btn btn-event-link btn-lg" href="{{{$event->event_url}}}#location">@lang("Public_ViewEvent.LOCATION")</a>
+                        <a class="btn btn-event-link btn-black btn-lg" href="#location">@lang("Public_ViewEvent.LOCATION")</a>
                     </div>
                 </div>
             </div>

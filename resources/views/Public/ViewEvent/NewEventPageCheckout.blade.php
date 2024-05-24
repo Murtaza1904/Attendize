@@ -71,76 +71,13 @@
         .btn-event-link {
             background-color: #fc2222 !important;
         }
-
-        #organiserHead,
-        #footer {
-            background: #000 !important;
-        }
     </style>
 
 </head>
 
 <body class="attendize">
     <div id="event_page_wrap" vocab="http://schema.org/" typeof="Event">
-        @if (!$event->is_live)
-            <section id="goLiveBar">
-                <div class="container">
-                    @if (!$event->is_live)
-                        {{ @trans('ManageEvent.event_not_live') }}
-                        {!! Form::open([
-                            'url' => route('MakeEventLive', ['event_id' => $event->id]),
-                            'id' => 'make-event-live-form',
-                            'style' => 'display:inline-block;',
-                        ]) !!}
-                        {!! Form::submit(trans('ManageEvent.publish_it'), ['class' => 'btn btn-success']) !!}
-                        {!! Form::close() !!}
-                    @endif
-                </div>
-            </section>
-        @endif
-        <section id="organiserHead" class="container-fluid">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div onclick="window.location='#organiser'" class="event_organizer">
-                            <b>{{ $event->organiser->name }}</b> @lang('Public_ViewEvent.presents')
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="intro" class="container">
-            <div class="row">
-                <div class="col-md-12" style="color: black">
-                    <h1 property="name">{{ $event->title }}</h1>
-                    <div class="event_venue">
-                        <span property="startDate" content="{{ $event->start_date->toIso8601String() }}">
-                            {{ $event->startDateFormatted() }}
-                        </span>
-                        -
-                        <span property="endDate" content="{{ $event->end_date->toIso8601String() }}">
-                            @if ($event->start_date->diffInDays($event->end_date) == 0)
-                                {{ $event->end_date->format('H:i') }}
-                            @else
-                                {{ $event->endDateFormatted() }}
-                            @endif
-                        </span>
-                        @lang('Public_ViewEvent.at')
-                        <span property="location" typeof="Place">
-                            <b property="name">{{ $event->venue_name }}</b>
-                            <meta property="address" content="{{ urldecode($event->venue_name) }}">
-                        </span>
-                    </div>
-                    <style>
-                        .h-black:hover,
-                        .btn-black {
-                            background: #000 !important;
-                            color: #fc2222 !important;
-                        }
-                    </style>
-                </div>
-            </div>
-        </section>
+        @include('Public.ViewEvent.Partials.EventHeaderSection')
         <section id='order_form' class="container">
             <div class="row">
                 <h1 class="section_head">
@@ -406,16 +343,19 @@
                         @endif
                         <div>
                             @php
-                            $refundPolicy = \App\RefundPolicy::first();
-                        @endphp
-                        <div class="form-group">
-                            <input class="form-check-input" type="checkbox" value="1" id="first_checkbox" required />
-                            <label for="first_checkbox" style="display: inline">{!! $refundPolicy->first_checkbox_text !!}</label>
-                        </div>
-                        <div class="form-group">
-                            <input class="form-check-input" type="checkbox" value="1" id="second_checkbox" required />
-                            <label for="second_checkbox" style="display: inline">{{ $refundPolicy->second_checkbox_text }}</label>
-                        </div>
+                                $refundPolicy = \App\RefundPolicy::first();
+                            @endphp
+                            <div class="form-group">
+                                <input class="form-check-input" type="checkbox" value="1" id="first_checkbox"
+                                    required />
+                                <label for="first_checkbox" style="display: inline">{!! $refundPolicy->first_checkbox_text !!}</label>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-check-input" type="checkbox" value="1" id="second_checkbox"
+                                    required />
+                                <label for="second_checkbox"
+                                    style="display: inline">{{ $refundPolicy->second_checkbox_text }}</label>
+                            </div>
                         </div>
                         {!! Form::hidden('is_embedded', $is_embedded) !!}
                         {!! Form::submit(trans('Public_ViewEvent.checkout_order'), [
@@ -437,22 +377,7 @@
         <script>
             var OrderExpires = {{ strtotime($expires) }};
         </script>
-        <footer id="footer" class="container-fluid">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        @if (Utils::userOwns($event))
-                            &bull;
-                            <a class="adminLink "
-                                href="{{ route('showEventDashboard', ['event_id' => $event->id]) }}">@lang('Public_ViewEvent.event_dashboard')</a>
-                            &bull;
-                            <a class="adminLink "
-                                href="{{ route('showOrganiserDashboard', ['organiser_id' => $event->organiser->id]) }}">@lang('Public_ViewEvent.organiser_dashboard')</a>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </footer>
+        @include('Public.ViewEvent.Partials.EventFooterSection')
     </div>
 </body>
 

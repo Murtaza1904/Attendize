@@ -336,18 +336,13 @@ class EventCheckoutController extends Controller
             ]);
         }
 
-        // return response()->json([
-        //     'status'      => 'success',
-        //     'redirectUrl' => route('showEventPayment', [
-        //             'event_id'    => $event_id,
-        //             'is_embedded' => $this->is_embedded
-        //         ])
-        // ]);
-        return redirect()->route('showEventPayment', [
-            'event_id'    => $event_id,
-            'is_embedded' => $this->is_embedded
-        ])->with('status','success');
-
+        return response()->json([
+            'status'      => 'success',
+            'redirectUrl' => route('showEventPayment', [
+                    'event_id'    => $event_id,
+                    'is_embedded' => $this->is_embedded
+                ])
+        ]);
     }
 
     public function showEventPayment(Request $request, $event_id)
