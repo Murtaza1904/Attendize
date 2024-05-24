@@ -39,6 +39,15 @@
             {!! Form::label('card_bg_image', "Card Background Image", array('class'=>'control-label')) !!}
             {!! Form::styledFile('card_bg_image', 1) !!}
          </div>
+        
+         <div class="form-group">
+                <label for="region_tax_id" class="form-label required">Region Tax</label>
+                <select class="form-control" name="region_tax_id" id="region_tax_id">
+                    @foreach (\App\RegionTax::orderBy('region')->get() as $regionTax)
+                        <option value="{{ $regionTax->id }}" {{ $regionTax->id == $event->region_tax_id ? 'selected' : '' }}>{{ $regionTax->region }}</option>
+                    @endforeach
+                </select>
+         </div>
 
         <div class="form-group address-automatic" style="display:{{$event->location_is_manual ? 'none' : 'block'}};">
             {!! Form::label('name', trans("Event.venue_name"), array('class'=>'control-label required ')) !!}

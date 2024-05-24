@@ -30,6 +30,7 @@ class Event extends MyBaseModel
         'event_image.max'                      => 'Please ensure the image is not larger then 3MB',
         'location_venue_name.required_without' => 'Please enter a venue for your event',
         'venue_name_full.required_without'     => 'Please enter a venue for your event',
+        'region_tax_id.required'               => 'Please select the region tax',
     ];
 
     /**
@@ -50,6 +51,7 @@ class Event extends MyBaseModel
             'organiser_name'      => 'required_without:organiser_id',
             'event_image'         => 'nullable|mimes:jpeg,jpg,png|max:3000',
             'card_bg_image'         => 'nullable|mimes:jpeg,jpg,png|max:3000',
+            'region_tax_id'         => 'required|integer',
         ];
     }
 

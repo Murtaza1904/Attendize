@@ -195,7 +195,7 @@ class EventCheckoutController extends Controller
         }
 
         $paymentGateway = $activeAccountPaymentGateway ? $activeAccountPaymentGateway->payment_gateway : false;
-
+        $account_payment_gateway = AccountPaymentGateway::whereHas('payment_gateway', fn($q) => $q->where('provider_name', $event->payment_gateway))->first();
         /*
          * The 'ticket_order_{event_id}' session stores everything we need to complete the transaction.
          */
@@ -215,7 +215,8 @@ class EventCheckoutController extends Controller
             'order_requires_payment'  => PaymentUtils::requiresPayment($order_total),
             'account_id'              => $event->account->id,
             'affiliate_referral'      => Cookie::get('affiliate_' . $event_id),
-            'account_payment_gateway' => $activeAccountPaymentGateway,
+            // 'account_payment_gateway' => $activeAccountPaymentGateway,
+            'account_payment_gateway' => $account_payment_gateway,
             'payment_gateway'         => $paymentGateway
         ]);
 
