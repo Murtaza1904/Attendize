@@ -9,7 +9,7 @@ class AddRegionTaxIdInEventsTable extends Migration
     public function up()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->unsignedBigInteger('region_tax_id')->default(1)->after('organiser_fee_percentage');
+            $table->unsignedBigInteger('region_tax_id')->default(2)->after('organiser_fee_percentage');
             $table->foreign('region_tax_id')->references('id')->on('region_taxes')->onDelete('cascade');
         });
     }
