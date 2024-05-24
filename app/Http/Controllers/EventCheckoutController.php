@@ -273,7 +273,7 @@ class EventCheckoutController extends Controller
             return view('Public.ViewEvent.Embedded.EventPageCheckout', $data);
         }
 
-        return view('Public.ViewEvent.NewEventPageCheckout', $data);
+        return view('Public.ViewEvent.EventPageCheckout', $data);
 
     }
 

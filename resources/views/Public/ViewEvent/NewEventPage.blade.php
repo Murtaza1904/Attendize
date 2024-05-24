@@ -19,7 +19,6 @@
                 <div data-w-id="467137cc-d9cc-7e3c-9c90-6667c27a2278"
                     style="opacity: 1; transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"
                     class="new-hero_text-wrap">
-                    <!-- <div class="regular-text">Sponsor &amp; Vendor Bookings for 2024 Open Now! Sign Up Here.</div> -->
                 </div>
             </div>
         </div>
@@ -51,8 +50,7 @@
             </div>
             <div class="north-america-cards">
                 @forelse ($events as $event)
-                    <a href="{{ route('events.tickets.index', $event->id) }}" data-w-id="fdec3628-e13c-ee0b-7b79-716a88359aaa" class="north-card-wrapper">
-                        {{-- <div id="w-node-_6b0c7410-5259-2007-602a-88929d5bdb2c-56a96a26" class="res-city-card virginia-city"> --}}
+                    <a href="{{ route('showEventPage', [$event->id, Str::slug($event->title)]) }}" data-w-id="fdec3628-e13c-ee0b-7b79-716a88359aaa" class="north-card-wrapper">
                         <div id="w-node-_6b0c7410-5259-2007-602a-88929d5bdb2c-56a96a26" class="res-city-card city" 
                         style="background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)), url({{ $event->card_bg_image ? Storage::url($event->card_bg_image) : 'https://assets-global.website-files.com/62a4ae1a77029b4f2e631a4e/662fa85a743c2322855153f6_virgnia.jpg' }});">
                             <div id="w-node-_6b0c7410-5259-2007-602a-88929d5bdb2d-56a96a26" class="res-card-content">

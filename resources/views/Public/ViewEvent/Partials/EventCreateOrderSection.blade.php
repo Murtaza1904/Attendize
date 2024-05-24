@@ -20,7 +20,7 @@
                 <div class="panel-body pt0">
                     <table class="table mb0 table-condensed">
                         @foreach($tickets as $ticket)
-                        <tr>
+                        {{-- <tr>
                             <td class="pl0">{{{$ticket['ticket']['title']}}} X <b>{{$ticket['qty']}}</b></td>
                             <td style="text-align: right;">
                                 @isFree($ticket['full_price'])
@@ -29,6 +29,33 @@
                                 {{ money($ticket['full_price'], $event->currency) }}
                                 @endif
                             </td>
+                        </tr> --}}
+                        <tr style="padding: 0">
+                            <td style="border: none; padding: 0">
+                                <b>{{ $ticket['ticket']['title'] }}</b> X {{ $ticket['qty'] }}
+                            </td>
+                        </tr>
+                        <tr style="padding: 0">
+                            <td style="border: none; padding: 0">Ticket Fee</td>
+                            <td style="text-align: right; border: none; padding: 0">
+                                {{ money($ticket['price'], $event->currency) }}
+                            </td>
+                        </tr>
+                        <tr style="padding: 0">
+                            <td style="border: none; padding: 0">Booking Fee</td>
+                            <td style="text-align: right; border: none; padding: 0">
+                                {{ money($ticket['booking_fee'], $event->currency) }}
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 2px solid black; padding: 0">
+                            <td style="border: none; padding: 0">Tax</td>
+                            <td style="text-align: right; border: none; padding: 0">
+                                {{ money($ticket['organiser_booking_fee'], $event->currency) }}
+                            </td>
+                        </tr>
+                        <tr style="padding: 5px">
+                            <td></td>
+                            <td></td>
                         </tr>
                         @endforeach
                     </table>
@@ -90,12 +117,12 @@
                 <div class="row"><div class="col-md-12">&nbsp;</div></div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <div class="custom-checkbox">
                                 {!! Form::checkbox('is_business', 1, null, ['data-toggle' => 'toggle', 'id' => 'is_business']) !!}
                                 {!! Form::label('is_business', trans("Public_ViewEvent.is_business"), ['class' => 'control-label']) !!}
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="row"><div class="col-md-12">&nbsp;</div></div>
@@ -155,23 +182,23 @@
                 </div>
                 <div class="row"><div class="col-md-12">&nbsp;</div></div>
                 <div class="p20 pl0">
-                    <a href="javascript:void(0);" class="btn btn-primary btn-xs" id="mirror_buyer_info">
+                    <a href="javascript:void(0);" class="btn btn-primary btn-event-link btn-xs" id="mirror_buyer_info">
                         @lang("Public_ViewEvent.copy_buyer")
                     </a>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="ticket_holders_details" >
+                        <div class="ticket_holders_details">
                             <h3>@lang("Public_ViewEvent.ticket_holder_information")</h3>
                             <?php
                                 $total_attendee_increment = 0;
                             ?>
                             @foreach($tickets as $ticket)
                                 @for($i=0; $i<=$ticket['qty']-1; $i++)
-                                <div class="panel panel-primary">
+                                <div class="panel panel-primary" >
 
-                                    <div class="panel-heading">
+                                    <div class="panel-heading" style="background: #fc2222; border: none">
                                         <h3 class="panel-title">
                                             <b>{{$ticket['ticket']['title']}}</b>: @lang("Public_ViewEvent.ticket_holder_n", ["n"=>$i+1])
                                         </h3>
@@ -216,7 +243,7 @@
                 @endif
 
                {!! Form::hidden('is_embedded', $is_embedded) !!}
-               {!! Form::submit(trans("Public_ViewEvent.checkout_order"), ['class' => 'btn btn-lg btn-success card-submit', 'style' => 'width:100%;']) !!}
+               {!! Form::submit(trans("Public_ViewEvent.checkout_order"), ['class' => 'btn btn-lg btn-event-link btn-success card-submit', 'style' => 'width:100%;']) !!}
                {!! Form::close() !!}
 
             </div>

@@ -151,19 +151,19 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>
+                                <th style="background-color: #fc2222 !important; border: none !important">
                                     @lang("Public_ViewEvent.ticket")
                                 </th>
-                                <th>
+                                <th style="background-color: #fc2222 !important; border: none !important">
                                     @lang("Public_ViewEvent.quantity_full")
                                 </th>
-                                <th>
+                                <th style="background-color: #fc2222 !important; border: none !important">
                                     @lang("Public_ViewEvent.price")
                                 </th>
-                                <th>
+                                <th style="background-color: #fc2222 !important; border: none !important">
                                     @lang("Public_ViewEvent.booking_fee")
                                 </th>
-                                <th>
+                                <th style="background-color: #fc2222 !important; border: none !important">
                                     @lang("Public_ViewEvent.total")
                                 </th>
                             </tr>
