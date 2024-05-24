@@ -47,8 +47,8 @@
                                     <label for="payment_gateway" class="control-label required">Payment Gateway</label>
                                     <select class="form-control" name="payment_gateway" id="payment_gateway" required>
                                         <option value="" selected disabled>Select payment gateway</option>
-                                        <option value="stripe-ca">Stripe CA</option>
-                                        <option value="stripe-usa">Stripe USA</option>
+                                        <option value="Stripe CA">Stripe CA</option>
+                                        <option value="Stripe USA">Stripe USA</option>
                                     </select>
                                     @error('payment_gateway')
                                         <div class="text-danger">{{ $message }}</div>

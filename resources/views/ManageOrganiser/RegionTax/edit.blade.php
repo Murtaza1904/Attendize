@@ -63,8 +63,8 @@
                 <label for="payment_gateway" class="control-label required">Payment Gateway</label>
                 <select class="form-control" name="payment_gateway" id="payment_gateway" required>
                     <option value="" selected disabled>Select payment gateway</option>
-                    <option value="stripe-ca" {{ $regionTax->payment_gateway == 'stripe-ca' ? 'selected' : '' }}>Stripe CA</option>
-                    <option value="stripe-usa" {{ $regionTax->payment_gateway == 'stripe-usa' ? 'selected' : '' }}>Stripe USA</option>
+                    <option value="Stripe CA" {{ $regionTax->payment_gateway == 'Stripe CA' ? 'selected' : '' }}>Stripe CA</option>
+                    <option value="Stripe USA" {{ $regionTax->payment_gateway == 'Stripe USA' ? 'selected' : '' }}>Stripe USA</option>
                 </select>
                 @error('payment_gateway')
                     <div class="text-danger">{{ $message }}</div>
