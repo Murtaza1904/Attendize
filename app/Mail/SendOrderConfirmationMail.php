@@ -48,15 +48,24 @@ class SendOrderConfirmationMail extends Mailable
      */
     public function build()
     {
-        $file_name = $this->order->order_reference;
-        $file_path = public_path(config('attendize.event_pdf_tickets_path')) . '/' . $file_name . '.pdf';
+        // $file_name = $this->order->order_reference;
+        // $file_path = public_path(config('attendize.event_pdf_tickets_path')) . '/' . $file_name . '.pdf';
+        
+        $file_name = $this->order->ticket_pdf_path;
+        $file_path = $file_name ? public_path(config('attendize.event_pdf_tickets_path')) . '/' . $file_name . '.pdf' : null;
 
         $subject = trans(
             "Controllers.tickets_for_event",
             ["event" => $this->order->event->title]
         );
-        return $this->subject($subject)
+
+        if ($file_path) {
+            return $this->subject($subject)
                     ->attach($file_path)
                     ->view('Emails.OrderConfirmation');
+        } else {
+            return $this->subject($subject)
+            ->view('Emails.OrderConfirmation');
+        }
     }
 }
