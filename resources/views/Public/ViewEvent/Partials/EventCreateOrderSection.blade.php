@@ -44,13 +44,13 @@
                         <tr style="padding: 0">
                             <td style="border: none; padding: 0">Booking Fee</td>
                             <td style="text-align: right; border: none; padding: 0">
-                                {{ money($ticket['booking_fee'], $event->currency) }}
+                                {{ money($ticket['organiser_booking_fee'], $event->currency) }}
                             </td>
                         </tr>
                         <tr style="border-bottom: 2px solid black; padding: 0">
                             <td style="border: none; padding: 0">Tax</td>
                             <td style="text-align: right; border: none; padding: 0">
-                                {{ money($ticket['organiser_booking_fee'], $event->currency) }}
+                                {{ money($ticket['booking_fee'], $event->currency) }}
                             </td>
                         </tr>
                         <tr style="padding: 5px">
