@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Str;
-use Superbalist\Money\Money;
 use URL;
+use App\RegionTax;
+use Carbon\Carbon;
+use Superbalist\Money\Money;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int start_date
@@ -53,6 +54,11 @@ class Event extends MyBaseModel
             'card_bg_image'         => 'nullable|mimes:jpeg,jpg,png|max:3000',
             'region_tax_id'         => 'required|integer',
         ];
+    }
+
+    public function regionTax()
+    {
+        return $this->belongsTo(RegionTax::class);
     }
 
     /**

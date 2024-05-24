@@ -195,7 +195,8 @@ class EventCheckoutController extends Controller
         }
 
         $paymentGateway = $activeAccountPaymentGateway ? $activeAccountPaymentGateway->payment_gateway : false;
-        $account_payment_gateway = AccountPaymentGateway::whereHas('payment_gateway', fn($q) => $q->where('provider_name', $event->payment_gateway))->first();
+        $account_payment_gateway = AccountPaymentGateway::whereHas('payment_gateway', fn($q) => $q->where('provider_name', $event->regionTax->payment_gateway))->first();
+
         /*
          * The 'ticket_order_{event_id}' session stores everything we need to complete the transaction.
          */
