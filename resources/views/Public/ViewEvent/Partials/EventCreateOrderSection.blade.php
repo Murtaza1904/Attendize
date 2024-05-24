@@ -241,7 +241,22 @@
                     {!! nl2br(e($event->pre_order_display_message)) !!}
                 </div>
                 @endif
-
+                <div>
+                    @php
+                        $refundPolicy = \App\RefundPolicy::first();
+                    @endphp
+                    <div class="form-group">
+                        <input class="form-check-input" type="checkbox" value="1" id="first_checkbox"
+                            required />
+                        <label for="first_checkbox" style="display: inline">{!! $refundPolicy->first_checkbox_text !!}</label>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-check-input" type="checkbox" value="1" id="second_checkbox"
+                            required />
+                        <label for="second_checkbox"
+                            style="display: inline">{{ $refundPolicy->second_checkbox_text }}</label>
+                    </div>
+                </div>
                {!! Form::hidden('is_embedded', $is_embedded) !!}
                {!! Form::submit(trans("Public_ViewEvent.checkout_order"), ['class' => 'btn btn-lg btn-event-link btn-success card-submit', 'style' => 'width:100%;']) !!}
                {!! Form::close() !!}
