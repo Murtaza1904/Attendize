@@ -55,7 +55,7 @@
                 </span>
             </div>
 
-            <div class="event_buttons">
+            <!-- <div class="event_buttons">
                 <div class="row">
                     <div class="col-md-4 col-sm-4">
                         <a class="btn btn-event-link btn-black btn-lg" href="{{{$event->event_url}}}#tickets">@lang("Public_ViewEvent.TICKETS")</a>
@@ -67,7 +67,7 @@
                         <a class="btn btn-event-link btn-black btn-lg" href="{{{$event->event_url}}}#location">@lang("Public_ViewEvent.LOCATION")</a>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </section>
