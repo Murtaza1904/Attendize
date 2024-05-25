@@ -69,7 +69,7 @@ class Order
             $this->taxAmount = $this->event->regionTax->tax;
         }
 
-        $this->grandTotal = $this->orderTotalWithBookingFee + $this->taxAmount;
+        $this->grandTotal = $this->orderTotalWithBookingFee + (($this->orderTotal + $this->totalBookingFee)/100) * $this->event->regionTax->tax;
     }
 
     /**
