@@ -97,7 +97,7 @@ class Order
 
         // return money($this->taxAmount, $this->event->currency);
         $tax = $this->event->regionTax->tax_type == 'fixed' ? $this->event->regionTax->tax : ($this->orderTotal/100) * $this->event->regionTax->tax;
-       return $this->event->regionTax->tax_type;
+       return ($this->orderTotal/100) * $this->event->regionTax->tax;
         if ($currencyFormatted == false) {
             if ($this->event->regionTax->tax_type == 'fixed') {
                 return number_format($tax, 2, '.', '');
