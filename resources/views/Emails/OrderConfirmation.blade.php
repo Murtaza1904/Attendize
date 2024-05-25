@@ -88,17 +88,18 @@ Order Email: <strong>{{$order->email}}</strong><br>
                 {{$orderService->getOrderTotalWithBookingFee(true)}}
             </td>
         </tr>
-        @if($order->event->organiser->charge_tax == 1)
+        {{-- @if($order->event->organiser->charge_tax == 1) --}}
         <tr>
             <td colspan="3"></td>
             <td>
-                <strong>{{$order->event->organiser->tax_name}}</strong><em>({{$order->event->organiser->tax_value}}%)</em>
+                {{-- <strong>{{$order->event->organiser->tax_name}}</strong><em>({{$order->event->organiser->tax_value}}%)</em> --}}
+                <strong>Tax :</strong>
             </td>
             <td colspan="2">
                 {{$orderService->getTaxAmount(true)}}
             </td>
         </tr>
-        @endif
+        {{-- @endif --}}
         <tr>
             <td colspan="3"></td>
             <td><strong>Total</strong></td>

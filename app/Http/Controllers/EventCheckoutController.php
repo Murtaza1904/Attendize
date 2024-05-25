@@ -132,7 +132,6 @@ class EventCheckoutController extends Controller
             $order_total = $order_total + ($current_ticket_quantity * $ticket->price);
             $booking_fee = $booking_fee + ($current_ticket_quantity * $ticket->booking_fee);
             $organiser_booking_fee = $organiser_booking_fee + ($current_ticket_quantity * $ticket->organiser_booking_fee);
-
             $tickets[] = [
                 'ticket'                => $ticket,
                 'qty'                   => $current_ticket_quantity,
@@ -198,7 +197,6 @@ class EventCheckoutController extends Controller
         $account_payment_gateway = AccountPaymentGateway::whereHas('payment_gateway', function($q) use ($event) {
             $q->where('provider_name', $event->regionTax->payment_gateway);
         })->first();
-
         /*
          * The 'ticket_order_{event_id}' session stores everything we need to complete the transaction.
          */
@@ -220,7 +218,8 @@ class EventCheckoutController extends Controller
             'affiliate_referral'      => Cookie::get('affiliate_' . $event_id),
             // 'account_payment_gateway' => $activeAccountPaymentGateway,
             'account_payment_gateway' => $account_payment_gateway,
-            'payment_gateway'         => $paymentGateway
+            // 'payment_gateway'         => $paymentGateway
+            'payment_gateway'         => $account_payment_gateway->payment_gateway,
         ]);
 
         /*

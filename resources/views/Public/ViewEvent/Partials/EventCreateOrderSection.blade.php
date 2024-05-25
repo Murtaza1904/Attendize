@@ -20,16 +20,6 @@
                 <div class="panel-body pt0">
                     <table class="table mb0 table-condensed">
                         @foreach($tickets as $ticket)
-                        {{-- <tr>
-                            <td class="pl0">{{{$ticket['ticket']['title']}}} X <b>{{$ticket['qty']}}</b></td>
-                            <td style="text-align: right;">
-                                @isFree($ticket['full_price'])
-                                    @lang("Public_ViewEvent.free")
-                                @else
-                                {{ money($ticket['full_price'], $event->currency) }}
-                                @endif
-                            </td>
-                        </tr> --}}
                         <tr style="padding: 0">
                             <td style="border: none; padding: 0">
                                 <b>{{ $ticket['ticket']['title'] }}</b> X {{ $ticket['qty'] }}
@@ -48,9 +38,9 @@
                             </td>
                         </tr>
                         <tr style="border-bottom: 2px solid black; padding: 0">
-                            <td style="border: none; padding: 0">Tax</td>
-                            <td style="text-align: right; border: none; padding: 0">
-                                {{ money($ticket['booking_fee'], $event->currency) }}
+                            <td style="border: none; padding: 0; font-weight: bolder">Sub Total : </td>
+                            <td style="text-align: right; border: none; padding: 0; font-weight: bolder">
+                                {{ money($ticket['full_price'], $event->currency) }}
                             </td>
                         </tr>
                         <tr style="padding: 5px">
@@ -65,16 +55,16 @@
                     <h5>
                         @lang("Public_ViewEvent.total"): <span style="float: right;"><b>{{ $orderService->getOrderTotalWithBookingFee(true) }}</b></span>
                     </h5>
-                    @if($event->organiser->charge_tax)
+                    {{-- @if($event->organiser->charge_tax) --}}
                     <h5>
-                        {{ $event->organiser->tax_name }} ({{ $event->organiser->tax_value }}%):
+                        Tax :
                         <span style="float: right;"><b>{{ $orderService->getTaxAmount(true) }}</b></span>
                     </h5>
                     <h5>
                         <strong>@lang("Public_ViewEvent.grand_total")</strong>
-                        <span style="float: right;"><b>{{  $orderService->getGrandTotal(true) }}</b></span>
+                        <span style="float: right;"><b>{{  money($orderService->getGrandTotal(false) , $event->currency) }}</b></span>
                     </h5>
-                    @endif
+                    {{-- @endif --}}
                 </div>
                 @endif
 

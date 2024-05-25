@@ -58,10 +58,15 @@ class Order
     {
         $this->orderTotalWithBookingFee = $this->orderTotal + $this->totalBookingFee;
 
-        if ($this->event->organiser->charge_tax == 1) {
-            $this->taxAmount = ($this->orderTotalWithBookingFee * $this->event->organiser->tax_value)/100;
+        // if ($this->event->organiser->charge_tax == 1) {
+        //     $this->taxAmount = ($this->orderTotalWithBookingFee * $this->event->organiser->tax_value)/100;
+        // } else {
+        //     $this->taxAmount = 0;
+        // }
+        if ($this->event->regionTax->tax_type == 'percentage') {
+            $this->taxAmount = ($this->event->regionTax->tax/100) * $this->event->price; 
         } else {
-            $this->taxAmount = 0;
+            $this->taxAmount = $this->event->regionTax->tax;
         }
 
         $this->grandTotal = $this->orderTotalWithBookingFee + $this->taxAmount;
@@ -86,11 +91,20 @@ class Order
      */
     public function getTaxAmount($currencyFormatted = false) {
 
-        if ($currencyFormatted == false ) {
-            return number_format($this->taxAmount, 2, '.', '');
+        // if ($currencyFormatted == false ) {
+        //     return number_format($this->taxAmount, 2, '.', '');
+        // }
+
+        // return money($this->taxAmount, $this->event->currency);
+        $tax = $this->event->regionTax->tax_type == 'fixed' ? $this->event->regionTax->tax : ($this->event->regionTax->tax/100) * $this->event->price;
+        if ($currencyFormatted == false) {
+            if ($this->event->regionTax->tax_type == 'fixed') {
+                return number_format($tax, 2, '.', '');
+            }
+            return number_format($tax, 2, '.', '');
         }
 
-        return money($this->taxAmount, $this->event->currency);
+        return money($tax, $this->event->currency);
     }
 
     /**

@@ -59,7 +59,7 @@ class SendOrderConfirmationMail extends Mailable
             ["event" => $this->order->event->title]
         );
 
-        if ($file_path) {
+        if (isset($file_path)) {
             return $this->subject($subject)
                     ->attach($file_path)
                     ->view('Emails.OrderConfirmation');

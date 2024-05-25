@@ -219,6 +219,20 @@
                                     {{ $orderService->getOrderTotalWithBookingFee(true) }}
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <b>Tax</b>
+                                </td>
+                                <td colspan="2">
+                                    {{ $orderService->getTaxAmount(true) }}
+                                </td>
+                            </tr>
                             @if($event->organiser->charge_tax)
                             <tr>
                                 <td>
