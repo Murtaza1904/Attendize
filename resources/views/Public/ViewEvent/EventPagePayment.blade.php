@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-@include('Public.ViewEvent.Partials.EventHeaderSection')
+<!-- @include('Public.ViewEvent.Partials.EventHeaderSection') -->
 @include('Public.ViewEvent.Partials.EventPaymentSection')
 @include('Public.ViewEvent.Partials.EventFooterSection')
 @stop
