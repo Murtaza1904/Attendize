@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/new-events.css') }}">
     <title>Events</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.png') }}">
 </head>
 <body>
     <div class="new-header">
