@@ -39,6 +39,10 @@
         .btn {
             color: #fff !important;
         }
+        .rrssb-buttons li a{
+            background-color: #000 !important;
+            margin-block: 10px;
+        }
     </style>
 
     <style>
