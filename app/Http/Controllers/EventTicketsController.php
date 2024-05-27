@@ -154,10 +154,6 @@ class EventTicketsController extends MyBaseController
             ]);
         }
 
-        Log::error('Ticket Failed to pause/resume', [
-            'ticket' => $ticket,
-        ]);
-
         return response()->json([
             'status'  => 'error',
             'id'      => $ticket->id,
@@ -195,10 +191,6 @@ class EventTicketsController extends MyBaseController
                 'id'      => $ticket->id,
             ]);
         }
-
-        Log::error('Ticket Failed to delete', [
-            'ticket' => $ticket,
-        ]);
 
         return response()->json([
             'status'  => 'error',

@@ -144,8 +144,6 @@ class InstallerController extends Controller
             $response = $http_client->get('https://raw.githubusercontent.com/Attendize/Attendize/master/VERSION');
             $data["remote_version"] = Utils::parse_version((string)$response->getBody());
         } catch (\Exception $exception) {
-            \Log::warn("Error retrieving the latest Attendize version. InstallerController.getVersionInfo()");
-            \Log::warn($exception);
         }
 
         $data["local_version"] = trim(file_get_contents(base_path('VERSION')));
@@ -365,7 +363,6 @@ class InstallerController extends Controller
             ]);
             return true;
         } catch (Exception $e) {
-            Log::error('Please enter all app settings. '.$e->getMessage());
         }
         return false;
     }
@@ -393,7 +390,6 @@ class InstallerController extends Controller
                 return true;
             }
         } catch (Exception $e) {
-            Log::error('Database connection details invalid'.$e->getMessage());
         }
 
         return false;

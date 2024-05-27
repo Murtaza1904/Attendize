@@ -450,8 +450,6 @@ class EventCheckoutController extends Controller
                 session()->push('ticket_order_' . $event_id . '.transaction_data',
                                 $gateway->getTransactionData() + $additionalData);
 
-                Log::info("Redirect url: " . $response->getRedirectUrl());
-
                 $return = [
                     'status'       => 'success',
                     'redirectUrl'  => $response->getRedirectUrl(),
@@ -473,7 +471,6 @@ class EventCheckoutController extends Controller
                 ]);
             }
         } catch (\Exeption $e) {
-            Log::error($e);
             $error = 'Sorry, there was an error processing your payment. Please try again.';
         }
 
@@ -701,7 +698,6 @@ class EventCheckoutController extends Controller
             }
 
         } catch (Exception $e) {
-            Log::error($e);
             DB::rollBack();
 
             return response()->json([
@@ -722,16 +718,12 @@ class EventCheckoutController extends Controller
 
         // Queue up some tasks - Emails to be sent, PDFs etc.
         // Send order notification to organizer
-        Log::debug('Queueing Order Notification Job');
         SendOrderNotificationJob::dispatch($order, $orderService);
         // Send order confirmation to ticket buyer
-        Log::debug('Queueing Order Tickets Job');
         SendOrderConfirmationJob::dispatch($order, $orderService);
         // Send tickets to attendees
-        Log::debug('Queueing Attendee Ticket Jobs');
         foreach ($order->attendees as $attendee) {
             SendOrderAttendeeTicketJob::dispatch($attendee);
-            Log::debug('Queueing Attendee Ticket Job Done');
         }
 
         if ($return_json) {

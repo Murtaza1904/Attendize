@@ -39,7 +39,6 @@ class RetrofitFixScriptForStats extends Migration
             $ticketsFound->map(function($ticket) use ($order) {
                 $pivotExists = $order->tickets()->where('ticket_id', $ticket->id)->exists();
                 if (!$pivotExists) {
-                    \Log::debug(sprintf("Attaching Ticket (ID:%d) to Order (ID:%d)", $ticket->id, $order->id));
                     $order->tickets()->attach($ticket);
                 }
             });
@@ -61,12 +60,7 @@ class RetrofitFixScriptForStats extends Migration
 
             // We are checking to see if there is a change from what is stored vs what the order items says
             if ($oldOrderAmount->equals($orderItemsValue) === false) {
-                \Log::debug(sprintf(
-                    "Setting Order (ID:%d, OLD_AMOUNT:%s) amount to match Order Items Amount: %s",
-                    $order->id,
-                    $oldOrderAmount->format(),
-                    $orderItemsValue->format()
-                ));
+                
                 $order->amount = $orderItemsValue->toFloat();
                 $order->save();
             }
@@ -76,12 +70,10 @@ class RetrofitFixScriptForStats extends Migration
                 $order->attendees()->get()->map(function($attendee) {
                     // Mark attendees as cancelled and refunded if the order is cancelled
                     if (!$attendee->is_refunded) {
-                        \Log::debug(sprintf("Marking Attendee (ID:%d) as refunded",$attendee->id));
                         $attendee->is_refunded = true;
                     }
 
                     if (!$attendee->is_cancelled) {
-                        \Log::debug(sprintf("Marking Attendee (ID:%d) as cancelled",$attendee->id));
                         $attendee->is_cancelled = true;
                     }
                     // Update the attendee to reflect the real world
@@ -126,12 +118,6 @@ class RetrofitFixScriptForStats extends Migration
             $oldTicketSalesVolume = (new Money($ticket->sales_volume));
             $orderItemsTicketSalesVolume = (new Money($ticketStringValue));
             if ($oldTicketSalesVolume->equals($orderItemsTicketSalesVolume) === false) {
-                \Log::debug(sprintf(
-                    "Updating Ticket (ID:%d, OLD_AMOUNT:%s) - New Sales Volume (%s)",
-                    $ticket->id,
-                    $oldTicketSalesVolume->format(),
-                    $orderItemsTicketSalesVolume->format()
-                ));
                 $ticket->sales_volume = $orderItemsTicketSalesVolume->toFloat();
                 $ticket->save();
             }
@@ -154,12 +140,6 @@ class RetrofitFixScriptForStats extends Migration
 
             // We need to update the ticket quantity if the order items reflect otherwise
             if ((int)$ticket->quantity_sold !== (int)$ticketQuantity) {
-                \Log::debug(sprintf(
-                    "Updating Ticket (ID:%d, OLD_QUANTITY:%d) - New Quantity (%d)",
-                    $ticket->id,
-                    $ticket->quantity_sold,
-                    $ticketQuantity
-                ));
                 $ticket->quantity_sold = $ticketQuantity;
                 $ticket->save();
             }
@@ -209,12 +189,6 @@ class RetrofitFixScriptForStats extends Migration
                     // Here we are comparing the calculated ticket quantity against the current one and updating if needed
                     $timeBasedQuantity = $orderTimeBasedStats[$eventStat->date]['quantity'];
                     if ($eventStat->tickets_sold !== $timeBasedQuantity) {
-                        \Log::debug(sprintf(
-                            "Updating Event Stat (ID:%d, OLD_QUANTITY:%d) - New Quantity %d",
-                            $eventStat->id,
-                            $eventStat->tickets_sold,
-                            $timeBasedQuantity
-                        ));
                         $eventStat->tickets_sold = $timeBasedQuantity;
                     }
 
@@ -222,12 +196,6 @@ class RetrofitFixScriptForStats extends Migration
                     $oldEventStatsSalesVolume = new Money($eventStat->sales_volume);
                     $timeBasedSalesVolume = $orderTimeBasedStats[$eventStat->date]['sales_volume'];
                     if ($oldEventStatsSalesVolume->equals($timeBasedSalesVolume) === false) {
-                        \Log::debug(sprintf(
-                            "Updating Event Stat (ID:%d, OLD_SALES_VOLUME:%s) - New Sales Volume %s",
-                            $eventStat->id,
-                            $oldEventStatsSalesVolume->format(),
-                            $timeBasedSalesVolume->format()
-                        ));
                         $eventStat->sales_volume = $timeBasedSalesVolume->toFloat();
                     }
                     if ($eventStat->isDirty()) {
@@ -241,12 +209,6 @@ class RetrofitFixScriptForStats extends Migration
                      * existence. Again this is built from the order items as the source of truth.
                      */
                     if ($eventStat->tickets_sold > 0) {
-                        \Log::debug(sprintf(
-                            "Clearing Event Stat (ID:%d, TICKETS_SOLD:%d, SALES_VOLUME:%f) due to no order information",
-                            $eventStat->id,
-                            $eventStat->tickets_sold,
-                            $eventStat->sales_volume
-                        ));
                         $eventStat->tickets_sold = 0;
                         $eventStat->sales_volume = 0.0;
                         $eventStat->save();

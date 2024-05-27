@@ -52,14 +52,11 @@ class HCaptcha
                     ]
                 ]);
                 $responseData = json_decode($response->getBody());
-                \Log::debug([$responseData]);
                 return $responseData->success;
             } catch (\Exception $e) {
-                \Log::debug([$e->getMessage()]);
                 return false;
             }
         }
-        \Log::debug("Captcha config missing");
         return false;
     }
 }

@@ -19,11 +19,9 @@ class AddDefaultGateways extends Migration
 
         $paypal = PaymentGateway::where('name', 'PayPal_Express')->first();
 
-        //Log::info('Removing?');
         if ($paypal) {
             // Set the Paypal gateway relationship to null to avoid errors when removing it
             Order::where('payment_gateway_id', $paypal->id)->update(['payment_gateway_id' => null]);
-            Log::info('Removed');
 
             $paypal->delete();
         }

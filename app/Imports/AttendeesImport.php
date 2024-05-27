@@ -39,8 +39,6 @@ class AttendeesImport implements OnEachRow, WithHeadingRow
         $lastName = $rowArr['last_name'];
         $email = $rowArr['email'];
 
-        \Log::info(sprintf("Importing attendee: %s (%s %s)", $email, $firstName, $lastName));
-
         // Create a new order for the attendee
         $order = Order::create([
             'first_name' => $firstName,

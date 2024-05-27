@@ -226,7 +226,6 @@ class EventOrdersController extends MyBaseController
             // Cancels attendees for an order and attempts to refund
             OrderCancellation::make($order, $attendees)->cancel();
         } catch (OrderRefundException $e) {
-            Log::error($e);
             return response()->json([
                 'status'  => 'error',
                 'message' => $e->getMessage(),

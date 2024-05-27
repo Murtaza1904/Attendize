@@ -225,7 +225,6 @@ class EventAttendeesController extends MyBaseController
 
         } catch (Exception $e) {
 
-            Log::error($e);
             DB::rollBack();
 
             return response()->json([
@@ -447,13 +446,6 @@ class EventAttendeesController extends MyBaseController
         $attendee = Attendee::scope()->findOrFail($attendee_id);
         $attendee_reference = $attendee->getReferenceAttribute();
 
-        Log::debug("Exporting ticket PDF", [
-            'attendee_id' => $attendee_id,
-            'order_reference' => $attendee->order->order_reference,
-            'attendee_reference' => $attendee_reference,
-            'event_id' => $event_id
-        ]);
-
         $pdf_file = public_path(config('attendize.event_pdf_tickets_path')) . '/' . $attendee_reference . '.pdf';
 
         $this->dispatchNow(new GenerateTicketJob($attendee));
@@ -588,7 +580,6 @@ class EventAttendeesController extends MyBaseController
             $orderCancellation->cancel();
             $data['refund_amount'] = $orderCancellation->getRefundAmount();
         } catch (Exception | OrderRefundException $e) {
-            Log::error($e);
             return response()->json([
                 'status'  => 'error',
                 'message' => $e->getMessage(),
@@ -604,7 +595,6 @@ class EventAttendeesController extends MyBaseController
                         ->subject(trans("Email.your_ticket_cancelled"));
                 });
             } catch (\Exception $e) {
-                Log::error($e);
                 // We do not want to kill the flow if the email fails
             }
         }
@@ -618,7 +608,6 @@ class EventAttendeesController extends MyBaseController
                     ->subject(trans("Email.refund_from_name", ["name"=>$attendee->event->organiser->name]));
             });
         } catch (\Exception $e) {
-            Log::error($e);
             // We do not want to kill the flow if the email fails
         }
 

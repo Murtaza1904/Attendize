@@ -169,7 +169,6 @@ class EventController extends MyBaseController
         try {
             $event->save();
         } catch (\Exception $e) {
-            Log::error($e);
 
             return response()->json([
                 'status'   => 'error',

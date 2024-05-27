@@ -36,7 +36,6 @@ class OrderRefund extends OrderRefundAbstract
         try {
             $response = $this->sendRefundRequest();
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
             throw new OrderRefundException(trans("Controllers.refund_exception"));
         }
         if ($response['successful']) { // Successful is a Boolean
@@ -95,11 +94,7 @@ class OrderRefund extends OrderRefundAbstract
             $this->refundAmount->toFloat(),
             floatval($this->order->booking_fee) > 0 ? true : false
         );
-        Log::debug(strtoupper($this->order->payment_gateway->name), [
-            'transactionReference' => $this->order->transaction_id,
-            'amount' => $this->refundAmount->toFloat(),
-            'refundApplicationFee' => floatval($this->order->booking_fee) > 0 ? true : false,
-        ]);
+
         return $response;
     }
 
