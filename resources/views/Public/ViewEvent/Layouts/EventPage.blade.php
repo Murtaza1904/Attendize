@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{{{$event->title}}} - Attendize.com</title>
+        <title>{{{$event->title}}} - {{ config('app.name') }}</title>
+        <link href="{{ asset('assets/images/favicon.png') }}" rel="shortcut icon" type="image/x-icon"/>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
-        <link rel="canonical" href="{{$event->event_url}}" />
+        <link rel="canonical" href="{{ route('home') }}" />
         <meta property="og:title" content="{{{$event->title}}}" />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content="{{$event->event_url}}?utm_source=fb" />
+        <meta property="og:url" content="{{ route('home') }}?utm_source=fb" />
         @if($event->images->count())
         <meta property="og:image" content="{{config('attendize.cdn_url_user_assets').'/'.$event->images->first()['image_path']}}" />
         @endif
