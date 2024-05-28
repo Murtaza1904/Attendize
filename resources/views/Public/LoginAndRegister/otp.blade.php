@@ -75,24 +75,17 @@
                     <div class="logo">
                         {{ config('app.name') }}
                     </div>
-                    @if (Session::has('failed'))
-                        <h4 class="text-danger mt0">@lang('basic.whoops')! </h4>
-                        <ul class="list-group">
-                            <li class="list-group-item">@lang('User.login_fail_msg')</li>
-                        </ul>
-                    @endif
-                    <form action="{{ route('client-login.check') }}" method="POST">
+                    <form action="{{ route('client-login.otp.verify') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="event" value="Ex rerum esse ut ei">
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email <sup class="text-danger">*</sup></label>
-                            <input type="email" name="email" id="email" class="form-control"
-                                placeholder="Enter email address" title="Email Address" />
-                            @error('email')
+                            <label for="otp" class="form-label">OTP Code <sup class="text-danger">*</sup></label>
+                            <input type="otp" name="otp" id="otp" class="form-control"
+                                placeholder="Enter otp code" title="OTP" />
+                            @error('otp')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <button type="submit" class="btn btn-red form-control mt-4">Login</button>
+                        <button type="submit" class="btn btn-red form-control mt-4">Submit</button>
                     </form>
                 </div>
             </div>

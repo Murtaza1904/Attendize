@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,17 @@
     <title>Events</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.png') }}">
 </head>
+
 <body>
+    @if (auth()->guard('client')->user())
+        <div style="position: absolute;z-index: 999; right: 0; margin: 20px">
+            <a href="{{ route('client.profile.index') }}" style="color: #fff">{{ auth()->guard('client')->user()->email }}</a>
+        </div>
+    @else
+        <div style="position: absolute;z-index: 999; right: 0; margin: 20px">
+            <a href="{{ route('client-login.show') }}" style="color: #fff; background: #fc2222; text-decoration: none; padding-inline: 7px; padding-block: 15px; border-radius;text-align: center;">Login</a>
+        </div>
+    @endif
     <div class="new-header">
         <div class="new-hero">
             <div class="hr_container">
@@ -25,14 +36,12 @@
         </div>
         <div class="html-embed-6">
             <div data-poster-url="{{ asset('assets/images/events/black-background.jpg') }}"
-                data-video-urls="{{ asset('assets/videos/events/hero.mp4') }}"
-                data-autoplay="true" data-loop="true" data-wf-ignore="true" class="background-video-5">
+                data-video-urls="{{ asset('assets/videos/events/hero.mp4') }}" data-autoplay="true" data-loop="true"
+                data-wf-ignore="true" class="background-video-5">
                 <video id="6e7d8527-4ffe-48b3-2b9e-90251a4d7023-video" autoplay="" loop=""
                     style="background-image:url(&quot;{{ asset('assets/images/events/black-background.jpg') }}&quot;)"
                     muted="" playsinline="" data-wf-ignore="true" data-object-fit="cover">
-                    <source
-                        src="{{ asset('assets/videos/events/hero.mp4') }}"
-                        data-wf-ignore="true">
+                    <source src="{{ asset('assets/videos/events/hero.mp4') }}" data-wf-ignore="true">
                 </video>
             </div>
         </div>
@@ -46,26 +55,24 @@
             </div>
             <div data-w-id="32bb5536-5a8c-9683-0d9f-4916b4d75dce" class="north-america_text-wrap style-POpmn"
                 id="style-POpmn">
-                <div class="regular-text" style="color: black !important">The Halal Ribfest 2024 Tour lineup will be featured in many cities across
+                <div class="regular-text" style="color: black !important">The Halal Ribfest 2024 Tour lineup will be
+                    featured in many cities across
                     the&nbsp;US&nbsp;and&nbsp;Canada!</div>
             </div>
             <div class="north-america-cards">
                 @forelse ($events as $event)
-                    <a href="{{ route('showEventPage', [$event->id, Str::slug($event->title)]) }}" data-w-id="fdec3628-e13c-ee0b-7b79-716a88359aaa" class="north-card-wrapper">
-                        <div id="w-node-_6b0c7410-5259-2007-602a-88929d5bdb2c-56a96a26" class="res-city-card city" 
-                        style="background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)), url({{ $event->card_bg_image ? Storage::url($event->card_bg_image) : 'https://assets-global.website-files.com/62a4ae1a77029b4f2e631a4e/662fa85a743c2322855153f6_virgnia.jpg' }});">
+                    <a href="{{ route('showEventPage', [$event->id, Str::slug($event->title)]) }}"
+                        data-w-id="fdec3628-e13c-ee0b-7b79-716a88359aaa" class="north-card-wrapper">
+                        <div id="w-node-_6b0c7410-5259-2007-602a-88929d5bdb2c-56a96a26" class="res-city-card city"
+                            style="background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)), url({{ $event->card_bg_image ? Storage::url($event->card_bg_image) : 'https://assets-global.website-files.com/62a4ae1a77029b4f2e631a4e/662fa85a743c2322855153f6_virgnia.jpg' }});">
                             <div id="w-node-_6b0c7410-5259-2007-602a-88929d5bdb2d-56a96a26" class="res-card-content">
                                 <div class="title-res">{{ $event->title }}</div>
-                                <div class="month-res">{{ date('F',strtotime($event->start_date)) }}</div>
-                                <div class="date-res">{{ date('d',strtotime($event->start_date)) .' - '.date('d',strtotime($event->end_date)) }}</div>
+                                <div class="month-res">{{ date('F', strtotime($event->start_date)) }}</div>
+                                <div class="date-res">
+                                    {{ date('d', strtotime($event->start_date)) . ' - ' . date('d', strtotime($event->end_date)) }}
+                                </div>
                                 <div class="venue-res">{{ $event->venue_name }}</div>
                             </div>
-                        </div>
-                        <div data-w-id="7bcbc3d8-7fae-6155-0381-79504df12daa" class="north-form-button style-D6xjH"
-                            id="style-D6xjH">
-                            <div class="card-coming-soon">Join The Waitlist</div><a
-                                data-w-id="2a42bc1c-14dd-fbee-5a93-75224d5648b1" href="#"
-                                class="north-america-form-button w-button">Join The Waitlist</a>
                         </div>
                     </a>
                 @empty
@@ -75,4 +82,5 @@
         </div>
     </div>
 </body>
+
 </html>

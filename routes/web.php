@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\ClientLoginController;
+use App\Http\Controllers\ClientProfileController;
 use App\Http\Controllers\EventAccessCodesController;
 use App\Http\Controllers\EventAttendeesController;
 use App\Http\Controllers\EventCheckInController;
@@ -90,11 +91,32 @@ Route::group(
         
         Route::get('/client-login',
             [ClientLoginController::class, 'showLoginForm']
-        )->name('client-login.show')->middleware('throttle:10,1');
+        )->name('client-login.show');
 
         Route::match(['get','post'],'/client-login-check',
-            [ClientLoginController::class, 'checkLogin']
+            [ClientLoginController::class, 'checkClientEmail']
         )->name('client-login.check')->middleware('throttle:10,1');
+
+        Route::get('/client-login-otp',
+            [ClientLoginController::class, 'showOtpForm']
+        )->name('client-login.otp.show');
+        
+        Route::post('/client-verify-otp',
+            [ClientLoginController::class, 'verifyLoginOtp']
+        )->name('client-login.otp.verify')->middleware('throttle:10,1');
+
+        Route::post('/client-logout',
+            [ClientLoginController::class, 'clientLogout']
+        )->name('client.logout')->middleware('throttle:10,1');
+
+
+        Route::get('/client-profile',
+            [ClientProfileController::class, 'index']
+        )->name('client.profile.index');
+        
+        Route::put('/client-profile/update',
+            [ClientProfileController::class, 'update']
+        )->name('client.profile.update');
 
         Route::post('/admin/login',
             [UserLoginController::class, 'postLogin']

@@ -3,49 +3,66 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use App\Models\Client;
-use Illuminate\Http\Request;
+use Illuminate\View\View;
+use App\Jobs\SendLoginOTP;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\ClientEmailRequest;
+use App\Http\Requests\ClientOtpRequest;
+use App\Models\Event;
+use Illuminate\Support\Facades\Auth;
 
 class ClientLoginController extends Controller
 {
-    public function showLoginForm()
+    public function showLoginForm(): View
     {
         return view('Public.LoginAndRegister.Client-Login');
     }
 
-    
-    public function checkLogin(Request $request)
+    public function checkClientEmail(ClientEmailRequest $request): RedirectResponse
     {
-        $validator = Validator::make($request->all(),[
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['required', 'string'],
+        $client = Client::updateOrCreate([
+            'email' => $request->email,
+        ], [
+            'otp' => Str::random(6),
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->route('client-login.show')->withErrors([
-                'failed' => $validator->errors(),
+        SendLoginOTP::dispatch($client);
+
+        session()->put([
+            'email' => $request->email,
+            'event' => $request->event,
+        ]);
+
+        return redirect()->route('client-login.otp.show');
+    }
+
+    public function showOtpForm(): View
+    {
+        return view('Public.LoginAndRegister.otp');
+    }
+    
+    public function verifyLoginOtp(ClientOtpRequest $request): RedirectResponse
+    {
+        Auth::guard('client')->login(Client::where('email',session('email'))->first());
+
+        if (!empty(session('event'))) {
+            $event = Event::where('title', session('event'))->first();
+            return redirect()->route('showEventPage', [
+                'event_id' => $event->id,
+                'event_slug' => Str::slug($event->title),
             ]);
         }
 
-        $client = Client::where('email', $request->email)->first();
+        return redirect()->route('home');
+    }
 
-        if($client) {
-            if (Auth::guard('client')->attempt(['email' => $request->email, 'password' => $request->password])) {
-                return redirect()->route('events.index');
-            }
-        } else {
-            $newUser = Client::create([
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            ]);
+    public function clientLogout()
+    {
+        Auth::guard('client')->logout();
 
-            Auth::guard('client')->login($newUser);
-            return redirect()->route('events.index');
-        }
-
-        return redirect()->route('client-login.show');
+        return redirect()->route('home');
     }
 }

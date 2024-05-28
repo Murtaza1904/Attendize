@@ -11,16 +11,6 @@ class Client extends Authenticatable
         'last_name',
         'avatar',
         'email',
-        'password',
-        'remember_token'
-    ];
-    
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
+        'otp',
     ];
 }
