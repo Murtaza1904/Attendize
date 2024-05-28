@@ -20,12 +20,12 @@
 
                 <p>
                     @if($event->organiser->facebook)
-                        <a property="sameAs" href="https://fb.com/{{$event->organiser->facebook}}" class="btn btn-facebook">
+                        <a property="sameAs" href="https://fb.com/{{$event->organiser->facebook}}" class="btn btn-facebook" target="__blank">
                             <i class="ico-facebook"></i>&nbsp; @lang("Public_ViewEvent.Facebook")
                         </a>
                     @endif
                         @if($event->organiser->twitter)
-                            <a property="sameAs" href="https://twitter.com/{{$event->organiser->twitter}}" class="btn btn-twitter">
+                            <a property="sameAs" href="https://twitter.com/{{$event->organiser->twitter}}" class="btn btn-twitter" target="__blank">
                                 <i class="ico-twitter"></i>&nbsp; @lang("Public_ViewEvent.Twitter")
                             </a>
                         @endif
