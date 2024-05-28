@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-12">
                 Copyrights &copy; by
-                <a class="adminLink " href="{{ route('home') }}">Halal Ribfest</a>. All rights reserved
+                <a class="adminLink " href="https://www.halalribfest.com/" target="__blank">Halal Ribfest</a>. All rights reserved
             </div>
         </div>
     </div>

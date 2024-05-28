@@ -80,6 +80,7 @@ class EventViewController extends Controller
             }
         }
         return view('Public.ViewEvent.NewTicketPage', $data);
+        // return view('Public.ViewEvent.EventPage', $data);
     }
 
     public function events()
