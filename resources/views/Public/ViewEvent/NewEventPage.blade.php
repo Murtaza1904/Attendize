@@ -81,6 +81,7 @@
             </div>
         </div>
     </div>
+    @include('Public.ViewEvent.Partials.EventFooterSection')
 </body>
 
 </html>

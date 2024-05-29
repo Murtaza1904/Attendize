@@ -7,10 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.png') }}">
-    <title>Client Login</title>
-</head>
-
-<body>
+    <title>Client Login OTP</title>
     <style>
         /* Events */
         @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap');
@@ -21,6 +18,16 @@
             font-weight: 400;
             font-style: normal;
             font-display: swap;
+        }
+
+        html {
+            height: 100vh;
+        }
+
+        body {
+            height: 100vh;
+            position: relative;
+            margin: 0;
         }
 
         .sec_north-america {
@@ -67,7 +74,14 @@
             background-color: #fc2222;
             color: #fff;
         }
+
+        #footer {
+            bottom: 0;
+        }
     </style>
+</head>
+
+<body>
     <div class="sec_north-america">
         <div class="hr_container">
             <div class="card">
@@ -91,6 +105,7 @@
             </div>
         </div>
     </div>
+    @include('Public.ViewEvent.Partials.EventFooterSection')
 </body>
 
 </html>

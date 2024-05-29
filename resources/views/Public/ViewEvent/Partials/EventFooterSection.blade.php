@@ -1,6 +1,13 @@
 <style>
     #footer {
         background: #000 !important;
+        position: absolute;
+        right: 0;
+        left: 0;
+        min-height: 60px;
+        line-height: 60px;
+        color: #fff;
+        text-align: center;
     }
 </style>
 <footer id="footer" class="container-fluid">
@@ -8,7 +15,8 @@
         <div class="row">
             <div class="col-md-12">
                 Copyrights &copy; by
-                <a class="adminLink " href="https://www.halalribfest.com/" target="__blank">Halal Ribfest</a>. All rights reserved
+                <a class="adminLink " href="https://www.halalribfest.com/" target="__blank"
+                style="text-decoration: none; color: #fc2222">Halal Ribfest</a>. All rights reserved
             </div>
         </div>
     </div>
@@ -18,8 +26,6 @@
 
 <script>
     function lang(key, params) {
-        /* Line below will generate localization helpers warning, that it will not be included in search.
-         * It is understandable, but I have no idea how to turn it off.*/
         var data = {
             "processing": "Just a second...",
             "time_run_out": "You have run out of time! You will have to restart the order process.",

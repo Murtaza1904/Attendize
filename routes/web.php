@@ -1,47 +1,37 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-use App\Http\Controllers\ClientLoginController;
-use App\Http\Controllers\ClientProfileController;
-use App\Http\Controllers\EventAccessCodesController;
-use App\Http\Controllers\EventAttendeesController;
-use App\Http\Controllers\EventCheckInController;
-use App\Http\Controllers\EventCheckoutController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\EventCustomizeController;
-use App\Http\Controllers\EventDashboardController;
-use App\Http\Controllers\EventOrdersController;
-use App\Http\Controllers\EventPromoteController;
-use App\Http\Controllers\EventSurveyController;
-use App\Http\Controllers\EventTicketsController;
 use App\Http\Controllers\EventViewController;
-use App\Http\Controllers\EventViewEmbeddedController;
-use App\Http\Controllers\EventWidgetsController;
-use App\Http\Controllers\IndexController;
 use App\Http\Controllers\InstallerController;
-use App\Http\Controllers\ManageAccountController;
 use App\Http\Controllers\OrganiserController;
-use App\Http\Controllers\OrganiserCustomizeController;
-use App\Http\Controllers\OrganiserDashboardController;
-use App\Http\Controllers\OrganiserEventsController;
-use App\Http\Controllers\OrganiserViewController;
-use App\Http\Controllers\RefundPolicyController;
 use App\Http\Controllers\RegionTaxController;
 use App\Http\Controllers\RemindersController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\UserLogoutController;
 use App\Http\Controllers\UserSignupController;
+use App\Http\Controllers\ClientLoginController;
+use App\Http\Controllers\EventOrdersController;
+use App\Http\Controllers\EventSurveyController;
+use App\Http\Controllers\EventCheckInController;
+use App\Http\Controllers\EventPromoteController;
+use App\Http\Controllers\EventTicketsController;
+use App\Http\Controllers\EventWidgetsController;
+use App\Http\Controllers\RefundPolicyController;
+use App\Http\Controllers\ClientProfileController;
+use App\Http\Controllers\EventCheckoutController;
+use App\Http\Controllers\ManageAccountController;
+use App\Http\Controllers\OrganiserViewController;
+use App\Http\Controllers\EventAttendeesController;
+use App\Http\Controllers\EventCustomizeController;
+use App\Http\Controllers\EventDashboardController;
+use App\Http\Controllers\OrganiserEventsController;
+use App\Http\Controllers\EventAccessCodesController;
+use App\Http\Controllers\EventViewEmbeddedController;
+use App\Http\Controllers\OrganiserCustomizeController;
+use App\Http\Controllers\OrganiserDashboardController;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
 Route::get('/', [EventViewController::class,'events'])->name('home');
@@ -176,10 +166,6 @@ Route::group(
     /*
      * Public event page routes
      */
-
-    Route::get('events',
-        [EventViewController::class, 'events']
-    )->name('events.index');
     
     Route::get('events/{event}/tickets',
         [EventViewController::class, 'eventTickets']
