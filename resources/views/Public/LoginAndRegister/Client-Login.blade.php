@@ -82,8 +82,6 @@
                         </ul>
                     @endif
                     <form action="{{ route('client-login.check') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="event" value="Ex rerum esse ut ei">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email <sup class="text-danger">*</sup></label>
                             <input type="email" name="email" id="email" class="form-control"

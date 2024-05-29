@@ -50,10 +50,15 @@ class ClientLoginController extends Controller
 
         if (!empty(session('event'))) {
             $event = Event::where('title', session('event'))->first();
+            session()->forget('event');
             return redirect()->route('showEventPage', [
                 'event_id' => $event->id,
                 'event_slug' => Str::slug($event->title),
             ]);
+        } else if(!empty(session('redirect_url'))) {
+            $redirectUrl = session('redirect_url');
+            session()->forget('redirect_url');
+            return redirect($redirectUrl);
         }
 
         return redirect()->route('home');

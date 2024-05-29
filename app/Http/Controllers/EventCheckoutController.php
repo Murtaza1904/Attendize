@@ -25,6 +25,7 @@ use Config;
 use Cookie;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Log;
 use Mail;
 use Omnipay;
@@ -269,11 +270,19 @@ class EventCheckoutController extends Controller
                 'event'           => $event,
                 'secondsToExpire' => $secondsToExpire,
                 'is_embedded'     => $this->is_embedded,
-                'orderService'    => $orderService
+                'orderService'    => $orderService,
+                'user'            => Auth::guard('client')->user(),
                 ];
 
         if ($this->is_embedded) {
             return view('Public.ViewEvent.Embedded.EventPageCheckout', $data);
+        }
+        
+        if (empty(Auth::guard('client')->user())) {
+            session()->put([
+                'redirect_url' => request()->url(),
+            ]);
+            return redirect()->route('client-login.show');
         }
 
         return view('Public.ViewEvent.EventPageCheckout', $data);
