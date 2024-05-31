@@ -228,7 +228,7 @@ class EventOrdersController extends MyBaseController
         } catch (OrderRefundException $e) {
             return response()->json([
                 'status'  => 'error',
-                'message' => $e->getMessage(),
+                'messages' => [$e->getMessage()],
             ]);
         }
 

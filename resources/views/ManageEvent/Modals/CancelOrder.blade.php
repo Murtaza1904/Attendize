@@ -3,6 +3,7 @@
         Form::open([
             'url' => route('postCancelOrder', ['order_id' => $order->id]),
             'class' => 'closeModalAfter ajax',
+            'id' => 'cancel-order',
         ])
     !!}
     <div class="modal-dialog">
@@ -20,7 +21,6 @@
                         @lang("ManageEvent.cancelling_order_will_refund_attendees", ['type' => 'order'])
                     </div>
                     @endif
-                    <div class="form-errors hidden"></div>
                     <div class="help-block">
                         @lang("ManageEvent.select_attendee_to_cancel")
                     </div>
@@ -68,6 +68,7 @@
                             </table>
                         </div>
                     </div>
+                    <div class="form-errors text-danger"></div>
                 @else
                     <div class="alert alert-info cancelOrderOption">
                         @lang("ManageEvent.all_attendees_cancelled")
