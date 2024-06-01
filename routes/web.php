@@ -19,7 +19,7 @@ use App\Http\Controllers\EventPromoteController;
 use App\Http\Controllers\EventTicketsController;
 use App\Http\Controllers\EventWidgetsController;
 use App\Http\Controllers\RefundPolicyController;
-use App\Http\Controllers\ClientProfileController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EventCheckoutController;
 use App\Http\Controllers\ManageAccountController;
 use App\Http\Controllers\OrganiserViewController;
@@ -99,14 +99,16 @@ Route::group(
             [ClientLoginController::class, 'clientLogout']
         )->name('client.logout')->middleware('throttle:10,1');
 
+        // Client
 
-        Route::get('/client-profile',
-            [ClientProfileController::class, 'index']
-        )->name('client.profile.index');
+        Route::get('/client-profile',[ClientController::class, 'profile'])->name('client.profile.index');
         
-        Route::put('/client-profile/update',
-            [ClientProfileController::class, 'update']
-        )->name('client.profile.update');
+        Route::put('/client-profile/update',[ClientController::class, 'profileUpdate'])->name('client.profile.update');
+
+        Route::get('/client-my-orders',[ClientController::class, 'myOrders'])->name('client.my-orders.index');
+        Route::get('/client-my-orders/{order}/details',[ClientController::class, 'myOrderDetails'])->name('client.my-orders.details');
+
+        // Admin Login
 
         Route::post('/admin/login',
             [UserLoginController::class, 'postLogin']
