@@ -99,7 +99,7 @@
             <h4 style="margin-bottom: 25px;margin-top: 20px;">@lang("Order.recent_orders")</h4>
             @if($organiser->orders->count())
                 <ul class="list-group">
-                    @foreach($organiser->orders()->orderBy('created_at', 'desc')->take(5)->get() as $order)
+                    @foreach($organiser->orders()->orderBy('created_at', 'desc')->take(30)->get() as $order)
                         <li class="list-group-item">
                             <h6 class="ellipsis">
                                 <a href="{{ route('showEventDashboard', ['event_id' => $order->event->id]) }}">
