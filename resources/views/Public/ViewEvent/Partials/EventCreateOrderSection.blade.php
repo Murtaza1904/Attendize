@@ -97,11 +97,21 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-8">
                         <div class="form-group">
                             {!! Form::label("order_email", trans("Public_ViewEvent.email")) !!}
                             {!! Form::text("order_email", $user->email ?? null, ['required' => 'required', 'class' => 'form-control']) !!}
+                            <div id="email-required" class="text-danger"></div>
                         </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-black" style="margin-top: 25px" onclick="sendOTP()">Send OTP</button>
+                        <div class="text-success" id="success-message"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group" id="otp-field"></div>
                     </div>
                 </div>
                 <div class="row"><div class="col-md-12">&nbsp;</div></div>
@@ -256,6 +266,30 @@
     </div>
     <img src="https://cdn.attendize.com/lg.png" />
 </section>
+<script>
+    function sendOTP() {
+        var email = $("input[name='order_email']").val();
+        if (email) {
+            $("#email-required").text('');
+            $.ajax({
+                type: "POST",
+                url: "/client-login-check",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    email: email,
+                },
+                dataType: "json",
+            });
+            $("#otp-field").html(`
+                <label for="otp">OTP</label>
+                <input required="required" class="form-control" name="otp" type="text" id="otp">
+            `);
+            $("#success-message").text(response.message);
+        } else {
+            $("#email-required").text('Please enter email address');
+        }
+    }
+</script>
 @if(session()->get('message'))
     <script>showMessage('{{session()->get('message')}}');</script>
 @endif

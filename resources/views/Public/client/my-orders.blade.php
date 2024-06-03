@@ -1,7 +1,7 @@
 @extends('Public.client.layout')
 
 @section('content')
-    <section class="container">
+    <section class="container" style="height: 80vh">
         <div class="row">
             <h1 class='section_head'>
                 My Orders

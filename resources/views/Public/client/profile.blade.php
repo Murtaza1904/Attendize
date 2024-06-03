@@ -3,16 +3,6 @@
 @section('content')
     <section class="container">
         <div class="row">
-            <div class="col-md-12">
-                <form action="{{ route('client.logout') }}" method="POST" style="float: right">
-                    @csrf
-                    <button type="submit" class="btn" style="background: #000">
-                        Logout
-                    </button>
-                </form>
-            </div>
-        </div>
-        <div class="row">
             <h1 class='section_head'>
                 Profile
             </h1>

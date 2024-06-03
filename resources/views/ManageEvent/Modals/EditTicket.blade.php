@@ -93,7 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row more-options">
+                {{-- <div class="row more-options">
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="custom-checkbox">
@@ -106,12 +106,12 @@
                         <div class="col-md-12">
                             <h4>{{ __('AccessCodes.select_access_code') }}</h4>
                             @if($ticket->event->access_codes->count())
-                                <?php
+                                <!--?php
                                 $isSelected = false;
                                 $selectedAccessCodes = $ticket->event_access_codes()->get()->map(function($accessCode) {
                                     return $accessCode->pivot->event_access_code_id;
                                 })->toArray();
-                                ?>
+                                ?-->
                                 @foreach($ticket->event->access_codes as $access_code)
                                     <div class="row">
                                         <div class="col-md-12">
@@ -129,7 +129,7 @@
                             @endif
                         </div>
                     @endif
-                </div>
+                </div> --}}
                 <a href="javascript:void(0);" class="show-more-options">
                     @lang("ManageEvent.more_options")
                 </a>

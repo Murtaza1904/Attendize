@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Attendize\PaymentUtils;
+use App\Jobs\SendLoginOTP;
 use App\Jobs\SendOrderNotificationJob;
 use App\Jobs\SendOrderConfirmationJob;
 use App\Jobs\SendOrderAttendeeTicketJob;
@@ -10,6 +11,7 @@ use App\Models\Account;
 use App\Models\AccountPaymentGateway;
 use App\Models\Affiliate;
 use App\Models\Attendee;
+use App\Models\Client;
 use App\Models\Event;
 use App\Models\EventStats;
 use App\Models\Order;
@@ -25,6 +27,7 @@ use Config;
 use Cookie;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Log\Logger;
 use Illuminate\Support\Facades\Auth;
 use Log;
 use Mail;
@@ -278,12 +281,12 @@ class EventCheckoutController extends Controller
             return view('Public.ViewEvent.Embedded.EventPageCheckout', $data);
         }
         
-        if (empty(Auth::guard('client')->user())) {
-            session()->put([
-                'redirect_url' => request()->url(),
-            ]);
-            return redirect()->route('client-login.show');
-        }
+        // if (empty(Auth::guard('client')->user())) {
+        //     session()->put([
+        //         'redirect_url' => request()->url(),
+        //     ]);
+        //     return redirect()->route('client-login.show');
+        // }
 
         return view('Public.ViewEvent.EventPageCheckout', $data);
 
@@ -301,6 +304,23 @@ class EventCheckoutController extends Controller
                 ])
             ]);
         }
+        $client = Client::where('email', $request->order_email)->where('otp', $request->otp)->first();
+
+        if (!$client) {
+            return response()->json([
+                'status'      => 'error',
+                'message'     => 'Invalid otp.',
+                'redirectUrl' => route('showEventPage', [
+                    'event_id' => $event_id,
+                ])
+            ]);
+        }
+        $client->update([
+            'first_name' => $request->order_first_name,
+            'last_name' => $request->order_last_name,
+        ]);
+
+        Auth::guard('client')->login(Client::where('email',$request->order_email)->first());
 
         $request_data = session()->get('ticket_order_' . $event_id . ".request_data");
         $request_data = (!empty($request_data[0])) ? array_merge($request_data[0], $request->all())

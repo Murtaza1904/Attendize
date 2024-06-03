@@ -20,6 +20,12 @@
         <nav role="navigation" class="nav-menu-5 w-nav-menu">
             <a href="{{ route('client.my-orders.index') }}" class="hr_nav-link w-nav-link">My orders</a>
             <a href="{{ route('client.profile.index') }}" class="hr_nav-link w-nav-link">Profile</a>
+            <form action="{{ route('client.logout') }}" method="POST" style="float: right; display: inline;">
+                @csrf
+                <button type="submit" class="btn" style="background: #fc2222">
+                    Logout
+                </button>
+            </form>
         </nav>
     </div>
     <main>

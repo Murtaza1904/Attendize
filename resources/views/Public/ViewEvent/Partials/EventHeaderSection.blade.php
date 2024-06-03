@@ -8,6 +8,10 @@
     .btn-black {
         background-color: #000 !important;
     }
+
+    .text-black {
+        color: #000;
+    }
 </style>
 @if(!$event->is_live)
 <section id="goLiveBar">
@@ -34,7 +38,7 @@
 </section>
 <section id="intro" class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 text-black">
             <h1 property="name">{{$event->title}}</h1>
             <div class="event_venue">
                 <span property="startDate" content="{{ $event->start_date->toIso8601String() }}">

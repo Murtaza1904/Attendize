@@ -8,9 +8,16 @@
     <link rel="stylesheet" href="{{ asset('css/new-events.css') }}">
     <title>Events</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.png') }}">
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-KBQ8RTT');</script>
 </head>
 
 <body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KBQ8RTT"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @if (auth()->guard('client')->user())
         <div style="position: absolute;z-index: 999; right: 0; margin: 20px">
             <a href="{{ route('client.profile.index') }}" style="color: #fff">{{ auth()->guard('client')->user()->email }}</a>

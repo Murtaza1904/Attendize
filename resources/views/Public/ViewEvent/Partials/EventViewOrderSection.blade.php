@@ -326,7 +326,16 @@
                     </table>
                 </div>
 
-
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="display: flex; justify-content: center">
+                            <a href="{{ route('home') }}" style="color:#fc2222;">
+                                <ico class="ico-arrow-left"></ico>
+                                Back To Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
