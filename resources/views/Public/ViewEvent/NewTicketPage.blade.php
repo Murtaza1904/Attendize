@@ -184,7 +184,7 @@
                                                                 @endfor
                                                             </select> --}}
                                                             <input type="number" name="ticket_{{$ticket->id}}" id="digitInput" class="form-control" placeholder="Qty" value="0"
-                                                             required>
+                                                            min="0" required>
                                                         @endif
         
                                                     @endif
