@@ -86,7 +86,11 @@ class EventViewController extends Controller
     public function events()
     {
         return view('Public.ViewEvent.NewEventPage', [
-            'events' => Event::latest()->whereDate('end_date', '>=', date('Y-m-d'))->where('is_live', 1)->get(),
+            'events' => Event::query()
+                            ->orderBy('start_date')
+                            ->whereDate('end_date', '>=', date('Y-m-d'))
+                            ->where('is_live', 1)
+                            ->get(),
         ]);
     }
     
