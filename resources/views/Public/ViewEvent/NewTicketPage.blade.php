@@ -170,7 +170,7 @@
                                                 </td>
                                             </tr>
                                         @endforeach
-                                        @if ($tickets->where('is_hidden', true)->count() > 0)
+                                        {{-- @if ($tickets->where('is_hidden', true)->count() > 0)
                                         <tr class="has-access-codes" data-url="{{route('postShowHiddenTickets', ['event_id' => $event->id])}}">
                                             <td colspan="3"  style="text-align: left">
                                                 @lang("Public_ViewEvent.has_unlock_codes")
@@ -190,7 +190,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        @endif
+                                        @endif --}}
                                         @if ($tickets->where('is_hidden', false)->where('is_paused', false)->count() > 0)
                                             <tr>
                                                 <td colspan="3" style="text-align: center">

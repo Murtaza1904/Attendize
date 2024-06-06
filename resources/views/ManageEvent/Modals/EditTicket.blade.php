@@ -93,7 +93,7 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="row more-options">
+                <div class="row more-options">
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="custom-checkbox">
@@ -102,7 +102,7 @@
                             </div>
                         </div>
                     </div>
-                    @if ($ticket->is_hidden)
+                    {{-- @if ($ticket->is_hidden)
                         <div class="col-md-12">
                             <h4>{{ __('AccessCodes.select_access_code') }}</h4>
                             @if($ticket->event->access_codes->count())
