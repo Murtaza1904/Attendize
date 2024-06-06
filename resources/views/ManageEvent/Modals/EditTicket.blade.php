@@ -128,8 +128,8 @@
                                 </div>
                             @endif
                         </div>
-                    @endif
-                </div> --}}
+                    @endif --}}
+                </div>
                 <a href="javascript:void(0);" class="show-more-options">
                     @lang("ManageEvent.more_options")
                 </a>
