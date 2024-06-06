@@ -89,36 +89,38 @@ class EventTicketsController extends MyBaseController
      */
     public function postCreateTicket(Request $request, $event_id)
     {
-        $ticket = Ticket::createNew();
-
-        if (!$ticket->validate($request->all())) {
-            return response()->json([
-                'status'   => 'error',
-                'messages' => $ticket->errors(),
-            ]);
+        for ($i = 1; $i <= $request->get('number_of_ticket'); $i++) {
+            $ticket = Ticket::createNew();
+    
+            if (!$ticket->validate($request->all())) {
+                return response()->json([
+                    'status'   => 'error',
+                    'messages' => $ticket->errors(),
+                ]);
+            }
+    
+            $ticket->event_id = $event_id;
+            $ticket->title = $request->get('title');
+            $ticket->quantity_available = !$request->get('quantity_available') ? null : $request->get('quantity_available');
+            $ticket->start_sale_date = $request->get('start_sale_date');
+            $ticket->end_sale_date = $request->get('end_sale_date');
+            $ticket->price = $request->get('price');
+            $ticket->min_per_person = $request->get('min_per_person');
+            $ticket->max_per_person = $request->get('max_per_person');
+            $ticket->description = prepare_markdown($request->get('description'));
+            $ticket->is_hidden = $request->get('is_hidden') ? 1 : 0;
+    
+            $ticket->save();
         }
-
-        $ticket->event_id = $event_id;
-        $ticket->title = $request->get('title');
-        $ticket->quantity_available = !$request->get('quantity_available') ? null : $request->get('quantity_available');
-        $ticket->start_sale_date = $request->get('start_sale_date');
-        $ticket->end_sale_date = $request->get('end_sale_date');
-        $ticket->price = $request->get('price');
-        $ticket->min_per_person = $request->get('min_per_person');
-        $ticket->max_per_person = $request->get('max_per_person');
-        $ticket->description = prepare_markdown($request->get('description'));
-        $ticket->is_hidden = $request->get('is_hidden') ? 1 : 0;
-
-        $ticket->save();
 
         // Attach the access codes to the ticket if it's hidden and the code ids have come from the front
-        if ($ticket->is_hidden) {
-            $ticketAccessCodes = $request->get('ticket_access_codes', []);
-            if (empty($ticketAccessCodes) === false) {
-                // Sync the access codes on the ticket
-                $ticket->event_access_codes()->attach($ticketAccessCodes);
-            }
-        }
+        // if ($ticket->is_hidden) {
+        //     $ticketAccessCodes = $request->get('ticket_access_codes', []);
+        //     if (empty($ticketAccessCodes) === false) {
+        //         // Sync the access codes on the ticket
+        //         $ticket->event_access_codes()->attach($ticketAccessCodes);
+        //     }
+        // }
 
         session()->flash('message', 'Successfully Created Ticket');
 

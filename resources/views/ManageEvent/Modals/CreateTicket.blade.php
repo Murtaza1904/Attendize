@@ -127,9 +127,15 @@
                 </div>
 
             </div> <!-- /end modal body-->
-            <div class="modal-footer">
-               {!! Form::button(trans("basic.cancel"), ['class'=>"btn modal-close btn-danger",'data-dismiss'=>'modal']) !!}
-               {!! Form::submit(trans("ManageEvent.create_ticket"), ['class'=>"btn btn-success"]) !!}
+            <div class="modal-footer" style="display: flex; gap: 15px">
+                <div class="form-group">
+                    <label for="number_of_ticket" class="control-label">Number Of Tickets</label>
+                    <input type="number" name="number_of_ticket" id="number_of_ticket" class="form-group" value="1" min="1" required>
+                </div>
+                <div>
+                    {!! Form::button(trans("basic.cancel"), ['class'=>"btn modal-close btn-danger",'data-dismiss'=>'modal']) !!}
+                    {!! Form::submit(trans("ManageEvent.create_ticket"), ['class'=>"btn btn-success"]) !!}
+                </div>
             </div>
         </div><!-- /end modal content-->
        {!! Form::close() !!}
