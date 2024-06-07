@@ -20,9 +20,12 @@
                 <div class="panel-body pt0">
                     <table class="table mb0 table-condensed">
                         @foreach($tickets as $ticket)
+                        <input type="hidden" name="tickets[]" value="{{ $ticket['ticket']['id'] }}">
                         <tr style="padding: 0">
                             <td style="border: none; padding: 0">
                                 <b>{{ $ticket['ticket']['title'] }}</b> X {{ $ticket['qty'] }}
+                                <input type="hidden" name="ticket_title_{{ $ticket['ticket']['id'] }}" value="{{ $ticket['ticket']['title'] }}">
+                                <input type="hidden" name="ticket_quantity_{{ $ticket['ticket']['id'] }}" value="{{ $ticket['qty'] }}">
                             </td>
                         </tr>
                         <tr style="padding: 0">
@@ -41,6 +44,7 @@
                             <td style="border: none; padding: 0; font-weight: bolder">Sub Total : </td>
                             <td style="text-align: right; border: none; padding: 0; font-weight: bolder">
                                 {{ money($ticket['full_price'], $event->currency) }}
+                                <input type="hidden" name="ticket_price_{{ $ticket['ticket']['id'] }}" value="{{ $ticket['full_price'] }}">
                             </td>
                         </tr>
                         <tr style="padding: 5px">
@@ -258,7 +262,8 @@
                     </div>
                 </div>
                {!! Form::hidden('is_embedded', $is_embedded) !!}
-               {!! Form::submit(trans("Public_ViewEvent.checkout_order"), ['class' => 'btn btn-lg btn-event-link btn-success card-submit', 'style' => 'width:100%;']) !!}
+               {{-- {!! Form::submit(trans("Public_ViewEvent.checkout_order"), ['class' => 'btn btn-lg btn-event-link btn-success card-submit', 'style' => 'width:100%;']) !!} --}}
+               <input class="btn btn-lg btn-event-link btn-success card-submit" style="width:100%;" onclick="googleStore()" type="submit" value="Continue to Payment">
                {!! Form::close() !!}
 
             </div>
@@ -288,6 +293,42 @@
         } else {
             $("#email-required").text('Please enter email address');
         }
+    }
+</script>
+<script>
+    function googleStore() {
+        var items = [];
+        var totalPrice = 0;
+        var currency = "{{ $event->currency }}";
+
+        $.each($("input[name='tickets[]']"), function (key, value) { 
+            var ticketId = $(value).val();
+            var ticketQuantity = $("input[name='ticket_quantity_" + ticketId + "']").val();
+            
+            if (ticketQuantity > 0) {
+                var item = {
+                    item_id: ticketId,
+                    item_name: $("input[name='ticket_title_" + ticketId + "']").val(), 
+                    affiliation: "Google Merchandise Store",
+                    coupon: "",
+                    discount: "",
+                    price: $("input[name='ticket_price_" + ticketId + "']").val(), 
+                    quantity: ticketQuantity
+                };
+                items.push(item);
+                totalPrice += parseFloat(item.price) * ticketQuantity;
+            }
+        });
+
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+        event: "begin_checkout",
+        ecommerce: {
+            currency: currency,
+            value: totalPrice,
+            items: items,
+        }
+        });
     }
 </script>
 @if(session()->get('message'))

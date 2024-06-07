@@ -137,7 +137,7 @@
                                                             <?php
                                                             $is_free_event = false;
                                                             ?>
-                                                            <input type="hidden" name="ticket_price_{{ $ticket->id }}" value="{{ $ticket->price }}">
+                                                            <input type="hidden" name="ticket_price_{{ $ticket->full_price }}" value="{{ $ticket->price }}">
                                                             <span title='{{money($ticket->price, $event->currency)}} @lang("Public_ViewEvent.ticket_price") + @lang("Public_ViewEvent.booking_fees")'>{{money($ticket->price, $event->currency)}} Ticket Price 
                                                             </span>
                                                             <div> + Booking Fees</div>
