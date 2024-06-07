@@ -210,7 +210,7 @@
                                                 @endif
                                                 @if($tickets->where('is_hidden', false)->where('is_paused', false)->count() > 0)
                                                     {{-- {!!Form::submit('Add To Cart', ['class' => 'btn btn-lg btn-event-link pull-right h-black'])!!} --}}
-                                                    <input class="btn btn-lg btn-event-link pull-right h-black" type="button" value="Add To Cart" onclick="googleStore()">
+                                                    <input class="btn btn-lg btn-event-link pull-right h-black" type="submit" value="Add To Cart" onclick="googleStore()">
                                                 @endif
                                             </td>
                                         </tr>
