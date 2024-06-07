@@ -101,30 +101,30 @@
                             <b>@lang("Public_ViewEvent.email")</b><br> {{$order->email}}
                         </div>
                         @if ($order->is_business)
-                        <div class="col-sm-4 col-xs-6">
-                            <b>@lang("Public_ViewEvent.business_name")</b><br> {{$order->business_name}}
-                        </div>
-                        <div class="col-sm-4 col-xs-6">
-                            <b>@lang("Public_ViewEvent.business_tax_number")</b><br> {{$order->business_tax_number}}
-                        </div>
-                        <div class="col-sm-4 col-xs-6">
-                            <b>@lang("Public_ViewEvent.business_address")</b><br />
-                            @if ($order->business_address_line_one)
-                            {{$order->business_address_line_one}},
-                            @endif
-                            @if ($order->business_address_line_two)
-                            {{$order->business_address_line_two}},
-                            @endif
-                            @if ($order->business_address_state_province)
-                            {{$order->business_address_state_province}},
-                            @endif
-                            @if ($order->business_address_city)
-                            {{$order->business_address_city}},
-                            @endif
-                            @if ($order->business_address_code)
-                            {{$order->business_address_code}}
-                            @endif
-                        </div>
+                            <div class="col-sm-4 col-xs-6">
+                                <b>@lang("Public_ViewEvent.business_name")</b><br> {{$order->business_name}}
+                            </div>
+                            <div class="col-sm-4 col-xs-6">
+                                <b>@lang("Public_ViewEvent.business_tax_number")</b><br> {{$order->business_tax_number}}
+                            </div>
+                            <div class="col-sm-4 col-xs-6">
+                                <b>@lang("Public_ViewEvent.business_address")</b><br />
+                                @if ($order->business_address_line_one)
+                                {{$order->business_address_line_one}},
+                                @endif
+                                @if ($order->business_address_line_two)
+                                {{$order->business_address_line_two}},
+                                @endif
+                                @if ($order->business_address_state_province)
+                                {{$order->business_address_state_province}},
+                                @endif
+                                @if ($order->business_address_city)
+                                {{$order->business_address_city}},
+                                @endif
+                                @if ($order->business_address_code)
+                                {{$order->business_address_code}}
+                                @endif
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -170,18 +170,25 @@
                         </thead>
                         <tbody>
                             @foreach($order->orderItems as $order_item)
+                                @php
+                                    $ticket = App\Models\Ticket::where('title', $order_item->title)->where('price', $order_item->unit_price)->first();
+                                @endphp
+                                <input type="hidden" name="tickets[]" value="{{ $ticket->id }}">
                                 <tr>
                                     <td>
                                         {{$order_item->title}}
+                                        <input type="hidden" name="ticket_title_{{ $ticket->id }}" value="{{ $order_item->title }}">
                                     </td>
                                     <td>
                                         {{$order_item->quantity}}
+                                        <input type="hidden" name="ticket_quantity_{{ $ticket->id }}" value="{{ $order_item->quantity }}">
                                     </td>
                                     <td>
                                         @isFree($order_item->unit_price)
                                             @lang("Public_ViewEvent.free")
                                         @else
                                             {{money($order_item->unit_price, $order->event->currency)}}
+                                            <input type="hidden" name="ticket_price_{{ $ticket->id }}" value="{{ $order_item->unit_price }}">
                                         @endif
                                     </td>
                                     <td>
@@ -340,4 +347,45 @@
         </div>
     </div>
 </section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    function googleStore() {
+        var items = [];
+        var currency = "{{ $event->currency }}";
+
+        $.each($("input[name='tickets[]']"), function (key, value) { 
+            var ticketId = $(value).val();
+            var ticketQuantity = $("input[name='ticket_quantity_" + ticketId + "']").val();
+            
+            if (ticketQuantity > 0) {
+                var item = {
+                    item_id: ticketId,
+                    item_name: $("input[name='ticket_title_" + ticketId + "']").val(), 
+                    affiliation: "Google Merchandise Store",
+                    coupon: "",
+                    discount: "",
+                    price: $("input[name='ticket_price_" + ticketId + "']").val(), 
+                    quantity: ticketQuantity
+                };
+                items.push(item);
+            }
+        });
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+        event: "purchase",
+        ecommerce: {
+            transaction_id: "{{ $order->transaction_id }}",
+            value: "{{ $order->amount }}",
+            tax: "{{ $order->taxamt }}",
+            shipping: "",
+            currency: "{{ $order->event->currency }}",
+            coupon: "",
+            items: items,
+        }
+        });
+    }
+    $(document).ready(function () {
+        googleStore();
+    });
+</script>
 
