@@ -108,7 +108,7 @@
         
                 @if($tickets->where('is_hidden', false)->where('is_paused', false)->count() > 0)
         
-                    {!! Form::open(['url' => route('postValidateTickets', ['event_id' => $event->id]), 'class' => 'ajax123']) !!}
+                    {!! Form::open(['url' => route('postValidateTickets', ['event_id' => $event->id]), 'class' => 'ajax']) !!}
                     <div class="row">
                         <div class="col-md-12">
                             <div class="content">
