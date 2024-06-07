@@ -138,7 +138,7 @@
                                 <li>
                                     <div class="section">
                                         <h4 class="nm">
-                                            {{ ($ticket->quantity_available === null) ? '∞' : $ticket->quantity_remaining }}
+                                            {{ ($ticket->quantity_available === null) ? '∞' : $ticket->quantity_available - $ticket->quantity_sold }}
                                         </h4>
 
                                         <p class="nm text-muted">@lang("Ticket.remaining")</p>

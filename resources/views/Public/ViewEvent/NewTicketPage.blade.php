@@ -108,7 +108,7 @@
         
                 @if($tickets->where('is_hidden', false)->where('is_paused', false)->count() > 0)
         
-                    {!! Form::open(['url' => route('postValidateTickets', ['event_id' => $event->id]), 'class' => 'ajax']) !!}
+                    {!! Form::open(['url' => route('postValidateTickets', ['event_id' => $event->id]), 'class' => 'ajax123']) !!}
                     <div class="row">
                         <div class="col-md-12">
                             <div class="content">
@@ -120,7 +120,8 @@
                                         @foreach($tickets->where('is_hidden', false)->where('is_paused', false) as $ticket)
                                             <tr class="ticket" property="offers" typeof="Offer">
                                                 <td>
-                                                    <span class="ticket-title semibold" property="name">
+                                                    <input type="hidden" name="ticket_title_{{ $ticket->id }}" value="{{ $ticket->title }}">
+                                                    <span class="ticket-title semibold" property="name" id="ticket-title">
                                                         {{$ticket->title}}
                                                     </span>
                                                     <p class="ticket-descripton mb0 text-muted" property="description">
@@ -136,6 +137,7 @@
                                                             <?php
                                                             $is_free_event = false;
                                                             ?>
+                                                            <input type="hidden" name="ticket_price_{{ $ticket->id }}" value="{{ $ticket->price }}">
                                                             <span title='{{money($ticket->price, $event->currency)}} @lang("Public_ViewEvent.ticket_price") + @lang("Public_ViewEvent.booking_fees")'>{{money($ticket->price, $event->currency)}} Ticket Price 
                                                             </span>
                                                             <div> + Booking Fees</div>
@@ -155,7 +157,7 @@
                                                         </span>
                                                     @elseif($ticket->sale_status === config('attendize.ticket_status_before_sale_date'))
                                                         <span class="text-danger">
-                                                            @lang("Public_ViewEvent.sales_have_not_started")
+                                                            Up Next
                                                         </span>
                                                     @elseif($ticket->sale_status === config('attendize.ticket_status_after_sale_date'))
                                                         <span class="text-danger">
@@ -169,28 +171,22 @@
                                                     @endif
                                                 </td>
                                             </tr>
+                                            @if ($ticket->sale_status !== config('attendize.ticket_status_sold_out') && $ticket->sale_status !== config('attendize.ticket_status_before_sale_date') && $ticket->sale_status !== config('attendize.ticket_status_after_sale_date'))
+                                                @php
+                                                    $remaining = $ticket->quantity_available - $ticket->quantity_sold;
+                                                @endphp
+                                                @if ($remaining <= 10)
+                                                    <tr>
+                                                        <td style="border-top: none"></td>
+                                                        <td colspan="2" style="border-top: none; text-align: right; width: 285px;padding: 0">
+                                                            <span style="padding-top: 5px; color: orange">
+                                                                only {{ $remaining }} tickets left at this price
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                            @endif
                                         @endforeach
-                                        {{-- @if ($tickets->where('is_hidden', true)->count() > 0)
-                                        <tr class="has-access-codes" data-url="{{route('postShowHiddenTickets', ['event_id' => $event->id])}}">
-                                            <td colspan="3"  style="text-align: left">
-                                                @lang("Public_ViewEvent.has_unlock_codes")
-                                                <div class="form-group" style="display:inline-block;margin-bottom:0;margin-left:15px;">
-                                                    {!!  Form::text('unlock_code', null, [
-                                                    'class' => 'form-control',
-                                                    'id' => 'unlock_code',
-                                                    'style' => 'display:inline-block;width:65%;text-transform:uppercase;',
-                                                    'placeholder' => 'ex: UNLOCKCODE01',
-                                                ]) !!}
-                                                    {!! Form::button(trans("basic.apply"), [
-                                                        'class' => "btn btn-success",
-                                                        'id' => 'apply_access_code',
-                                                        'style' => 'display:inline-block;margin-top:-2px;',
-                                                        'data-dismiss' => 'modal',
-                                                    ]) !!}
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endif --}}
                                         @if ($tickets->where('is_hidden', false)->where('is_paused', false)->count() > 0)
                                             <tr>
                                                 <td colspan="3" style="text-align: center">
@@ -213,7 +209,8 @@
                                                     </div>
                                                 @endif
                                                 @if($tickets->where('is_hidden', false)->where('is_paused', false)->count() > 0)
-                                                    {!!Form::submit('Add To Cart', ['class' => 'btn btn-lg btn-event-link pull-right h-black'])!!}
+                                                    {{-- {!!Form::submit('Add To Cart', ['class' => 'btn btn-lg btn-event-link pull-right h-black'])!!} --}}
+                                                    <input class="btn btn-lg btn-event-link pull-right h-black" type="button" value="Add To Cart" onclick="googleStore()">
                                                 @endif
                                             </td>
                                         </tr>
@@ -474,6 +471,42 @@
                 e.preventDefault();
             }
         });
+    </script>
+    <script>
+        function googleStore() {
+            var items = [];
+            var totalPrice = 0;
+            var currency = "{{ $event->currency }}";
+
+            $.each($("input[name='tickets[]']"), function (key, value) { 
+                var ticketId = $(value).val();
+                var ticketQuantity = $("input[name='ticket_" + ticketId + "']").val();
+                
+                if (ticketQuantity > 0) {
+                    var item = {
+                        item_id: ticketId,
+                        item_name: $("input[name='ticket_title_" + ticketId + "']").val(), 
+                        affiliation: "Google Merchandise Store",
+                        coupon: "",
+                        discount: "",
+                        price: $("input[name='ticket_price_" + ticketId + "']").val(), 
+                        quantity: ticketQuantity
+                    };
+                    items.push(item);
+                    totalPrice += parseFloat(item.price) * ticketQuantity;
+                }
+            });
+
+            dataLayer.push({ ecommerce: null });
+            dataLayer.push({
+                event: "add_to_cart",
+                ecommerce: {
+                    currency: currency,
+                    value: totalPrice,
+                    items: items,
+                }
+            });
+        }
     </script>
 </body>
 
