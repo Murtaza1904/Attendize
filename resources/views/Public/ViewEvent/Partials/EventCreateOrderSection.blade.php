@@ -108,16 +108,16 @@
                             <div id="email-required" class="text-danger"></div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    {{-- <div class="col-md-4">
                         <button type="button" class="btn btn-black" style="margin-top: 25px" onclick="sendOTP()">Send OTP</button>
                         <div class="text-success" id="success-message"></div>
-                    </div>
+                    </div> --}}
                 </div>
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-md-4">
                         <div class="form-group" id="otp-field"></div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="row"><div class="col-md-12">&nbsp;</div></div>
                 <div class="row">
                     <div class="col-md-12">

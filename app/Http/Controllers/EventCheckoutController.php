@@ -304,23 +304,23 @@ class EventCheckoutController extends Controller
                 ])
             ]);
         }
-        $client = Client::where('email', $request->order_email)->where('otp', $request->otp)->first();
+        // $client = Client::where('email', $request->order_email)->where('otp', $request->otp)->first();
 
-        if (!$client) {
-            return response()->json([
-                'status'      => 'error',
-                'message'     => 'Invalid otp.',
-                'redirectUrl' => route('showEventPage', [
-                    'event_id' => $event_id,
-                ])
-            ]);
-        }
-        $client->update([
-            'first_name' => $request->order_first_name,
-            'last_name' => $request->order_last_name,
-        ]);
+        // if (!$client) {
+        //     return response()->json([
+        //         'status'      => 'error',
+        //         'message'     => 'Invalid otp.',
+        //         'redirectUrl' => route('showEventPage', [
+        //             'event_id' => $event_id,
+        //         ])
+        //     ]);
+        // }
+        // $client->update([
+        //     'first_name' => $request->order_first_name,
+        //     'last_name' => $request->order_last_name,
+        // ]);
 
-        Auth::guard('client')->login(Client::where('email',$request->order_email)->first());
+        // Auth::guard('client')->login(Client::where('email',$request->order_email)->first());
 
         $request_data = session()->get('ticket_order_' . $event_id . ".request_data");
         $request_data = (!empty($request_data[0])) ? array_merge($request_data[0], $request->all())
