@@ -299,7 +299,7 @@
     function googleStore() {
         var items = [];
         var totalPrice = 0;
-        var currency = "{{ $event->currency }}";
+        var currency = "{{ $event->currency->code }}";
 
         $.each($("input[name='tickets[]']"), function (key, value) { 
             var ticketId = $(value).val();
@@ -309,9 +309,6 @@
                 var item = {
                     item_id: ticketId,
                     item_name: $("input[name='ticket_title_" + ticketId + "']").val(), 
-                    affiliation: "Google Merchandise Store",
-                    coupon: "",
-                    discount: "",
                     price: $("input[name='ticket_price_" + ticketId + "']").val(), 
                     quantity: ticketQuantity
                 };
