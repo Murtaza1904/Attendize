@@ -195,9 +195,9 @@
                                             </tr>
                                         @endif
                                         <tr class="checkout">
-                                            <td colspan="3">
+                                            <td style="width: 60px">
                                                 @if(!$is_free_event)
-                                                    <div class="hidden-xs pull-left">
+                                                    <div class="hidden-xs pull-left" style="margin-top: 20px">
                                                         <img class=""
                                                              src="{{asset('assets/images/public/EventPage/credit-card-logos.png')}}"/>
                                                         @if($event->enable_offline_payments)
@@ -208,9 +208,17 @@
                                                         @endif
                                                     </div>
                                                 @endif
+                                            </td>
+                                            <td style="60px">
                                                 @if($tickets->where('is_hidden', false)->where('is_paused', false)->count() > 0)
                                                     {{-- {!!Form::submit('Add To Cart', ['class' => 'btn btn-lg btn-event-link pull-right h-black'])!!} --}}
-                                                    <input class="btn btn-lg btn-event-link pull-right h-black" type="submit" value="Add To Cart" onclick="googleStore()">
+                                                    @if (isset($event->discount_code))
+                                                    <label for="">Have Discount Code?</label>
+                                                    <input type="text" name="discount_code" id="discount_code" placeholder="Enter discount code" class="form-control">
+                                                @endif
+                                            </td>
+                                            <td>
+                                                    <input class="btn btn-lg btn-event-link pull-right h-black"  style="margin-top: 20px" type="submit" value="Add To Cart" onclick="googleStore()">
                                                 @endif
                                             </td>
                                         </tr>

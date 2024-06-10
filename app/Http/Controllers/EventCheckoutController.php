@@ -38,37 +38,15 @@ use Validator;
 
 class EventCheckoutController extends Controller
 {
-    /**
-     * Is the checkout in an embedded Iframe?
-     *
-     * @var bool
-     */
     protected $is_embedded;
 
-    /**
-     * EventCheckoutController constructor.
-     * @param Request $request
-     */
     public function __construct(Request $request)
     {
-        /*
-         * See if the checkout is being called from an embedded iframe.
-         */
         $this->is_embedded = $request->get('is_embedded') == '1';
     }
 
-    /**
-     * Validate a ticket request. If successful reserve the tickets and redirect to checkout
-     *
-     * @param Request $request
-     * @param $event_id
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
     public function postValidateTickets(Request $request, $event_id)
     {
-        /*
-         * Order expires after X min
-         */
         $order_expires_time = Carbon::now()->addMinutes(config('attendize.checkout_timeout_after'));
 
         $event = Event::findOrFail($event_id);
@@ -80,17 +58,18 @@ class EventCheckoutController extends Controller
             ]);
         }
 
+        if ($request->has('discount_code')) {
+            if ($event->discount_code != $request->discount_code) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Invalid discount code',
+                ]); 
+            }
+        }
+
         $ticket_ids = $request->get('tickets');
 
-        /*
-         * Remove any tickets the user has reserved
-         */
         ReservedTickets::where('session_id', '=', session()->getId())->delete();
-
-        /*
-         * Go though the selected tickets and check if they're available
-         * , tot up the price and reserve them to prevent over selling.
-         */
 
         $validation_rules = [];
         $validation_messages = [];
@@ -133,7 +112,8 @@ class EventCheckoutController extends Controller
                 ]);
             }
 
-            $order_total = $order_total + ($current_ticket_quantity * $ticket->price);
+            $discount = $event->discount_fix_amount ?? ($event->discount_percentage /100) * ($current_ticket_quantity * $ticket->price);
+            $order_total = $order_total + (($current_ticket_quantity * $ticket->price) - $discount);
             $booking_fee = $booking_fee + ($current_ticket_quantity * $ticket->booking_fee);
             $organiser_booking_fee = $organiser_booking_fee + ($current_ticket_quantity * $ticket->organiser_booking_fee);
             $tickets[] = [
@@ -142,12 +122,10 @@ class EventCheckoutController extends Controller
                 'price'                 => ($current_ticket_quantity * $ticket->price),
                 'booking_fee'           => ($current_ticket_quantity * $ticket->booking_fee),
                 'organiser_booking_fee' => ($current_ticket_quantity * $ticket->organiser_booking_fee),
-                'full_price'            => $ticket->price + $ticket->total_booking_fee,
+                'full_price'            => ($ticket->price + $ticket->total_booking_fee) - $discount,
+                'discount'              => $discount,
             ];
 
-            /*
-             * Reserve the tickets for X amount of minutes
-             */
             $reservedTickets = new ReservedTickets();
             $reservedTickets->ticket_id = $ticket_id;
             $reservedTickets->event_id = $event_id;
@@ -671,6 +649,7 @@ class EventCheckoutController extends Controller
                 $orderItem->quantity = $attendee_details['qty'];
                 $orderItem->order_id = $order->id;
                 $orderItem->unit_price = $attendee_details['ticket']['price'];
+                $orderItem->discount = $attendee_details['ticket']['discount'];
                 $orderItem->unit_booking_fee = $attendee_details['ticket']['booking_fee'] + $attendee_details['ticket']['organiser_booking_fee'];
                 $orderItem->save();
 

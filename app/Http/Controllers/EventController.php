@@ -224,6 +224,9 @@ class EventController extends MyBaseController
         $event->start_date = $request->get('start_date');
         $event->card_bg_image = $request->file('card_bg_image') ? $request->file('card_bg_image')->store('events-bg-card', 'public') : $event->card_bg_image;
         $event->region_tax_id = $request->region_tax_id;
+        $event->discount_code = $request->discount_code;
+        $event->discount_fix_amount = $request->discount_fix_amount;
+        $event->discount_percentage = $request->discount_percentage;
         $event->google_tag_manager_code = $request->get('google_tag_manager_code');
 
         /*
