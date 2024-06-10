@@ -43,16 +43,19 @@ class Event extends MyBaseModel
     {
         $format = config('attendize.default_datetime_format');
         return [
-            'title'               => 'required',
-            'description'         => 'required',
-            'location_venue_name' => 'required_without:venue_name_full',
-            'venue_name_full'     => 'required_without:location_venue_name',
-            'start_date'          => 'required|date_format:"' . $format . '"',
-            'end_date'            => 'required|date_format:"' . $format . '"',
-            'organiser_name'      => 'required_without:organiser_id',
-            'event_image'         => 'nullable|mimes:jpeg,jpg,png|max:3000',
+            'title'                 => 'required',
+            'description'           => 'required',
+            'location_venue_name'   => 'required_without:venue_name_full',
+            'venue_name_full'       => 'required_without:location_venue_name',
+            'start_date'            => 'required|date_format:"' . $format . '"',
+            'end_date'              => 'required|date_format:"' . $format . '"',
+            'organiser_name'        => 'required_without:organiser_id',
+            'event_image'           => 'nullable|mimes:jpeg,jpg,png|max:3000',
             'card_bg_image'         => 'nullable|mimes:jpeg,jpg,png|max:3000',
             'region_tax_id'         => 'required|integer',
+            'discount_code'         => 'nullable|string',
+            'discount_fix_amount'   => 'nullable|integer',
+            'discount_percentage'   => 'nullable|integer',
         ];
     }
 

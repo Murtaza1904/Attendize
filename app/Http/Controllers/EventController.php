@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Log;
 use Auth;
 use Image;
 use Validator;
@@ -11,35 +10,20 @@ use App\Models\Organiser;
 use App\Models\EventImage;
 use App\RegionTax;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log as FacadesLog;
-use Spatie\GoogleCalendar\Event as GCEvent;
+use Illuminate\View\View;
 
 class EventController extends MyBaseController
 {
-    /**
-     * Show the 'Create Event' Modal
-     *
-     * @param Request $request
-     * @return \Illuminate\View\View
-     */
-    public function showCreateEvent(Request $request)
+    public function showCreateEvent(Request $request): View
     {
-        $data = [
+        return view('ManageOrganiser.Modals.CreateEvent', [
             'modal_id'     => $request->get('modal_id'),
             'organisers'   => Organiser::scope()->pluck('name', 'id'),
             'organiser_id' => $request->get('organiser_id') ? $request->get('organiser_id') : false,
             'regionTaxes' => RegionTax::orderBy('region')->get(),
-        ];
-
-        return view('ManageOrganiser.Modals.CreateEvent', $data);
+        ]);
     }
 
-    /**
-     * Create an event
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function postCreateEvent(Request $request)
     {
         $event = Event::createNew();
@@ -54,8 +38,11 @@ class EventController extends MyBaseController
         $event->title = $request->get('title');
         $event->description = prepare_markdown($request->get('description'));
         $event->start_date = $request->get('start_date');
-        $event->card_bg_image = $request->file('card_bg_image')->store('events-bg-card', 'public');
+        $event->card_bg_image = $request->hasFile('card_bg_image') ? $request->file('card_bg_image')->store('events-bg-card', 'public') : null;
         $event->region_tax_id = $request->region_tax_id;
+        $event->discount_code = $request->discount_code;
+        $event->discount_fix_amount = $request->discount_fix_amount;
+        $event->discount_percentage = $request->discount_percentage;
 
         /*
          * Venue location info (Usually auto-filled from google maps)

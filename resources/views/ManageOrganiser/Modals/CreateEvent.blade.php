@@ -70,8 +70,8 @@
                             {!! Form::styledFile('card_bg_image') !!}
 
                         </div>
-                        <div class="mb-3">
-                            <label for="region_tax_id" class="form-label required">Region</label>
+                        <div class="form-group">
+                            <label for="region_tax_id" class="form-label required">REGION</label>
                             <select name="region_tax_id" id="region_tax_id" class="form-control">
                                 @forelse ($regionTaxes as $regionTax)
                                     <option value="{{ $regionTax->id }}">{{ $regionTax->region }}</option>
@@ -80,7 +80,24 @@
                                 @endforelse
                             </select>
                         </div>
-
+                        <div class="form-group">
+                            <label for="discount_code" class="form-label">DISCOUNT CODE</label>
+                            <input type="text" name="discount_code" id="discount_code" class="form-control" placeholder="E.g: SUMMER2024"/>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="discount_fix_amount" class="form-label">DISCOUNT FIX AMOUNT</label>
+                                    <input type="number" name="discount_fix_amount" id="discount_fix_amount" class="form-control" placeholder="E.g: 20"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="discount_percentage" class="form-label">DISCOUNT PERCENTAGE</label>
+                                    <input type="number" name="discount_percentage" id="discount_percentage" class="form-control" placeholder="E.g: 30"/>
+                                </div>
+                            </div>
+                        </div>
                         @if (!empty(config('attendize.google_maps_geocoding_key')))
                             <div class="form-group address-automatic">
                                 {!! Form::label('name', trans('Event.venue_name'), ['class' => 'control-label required ']) !!}
