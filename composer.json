@@ -23,6 +23,7 @@
         "intervention/image": "^2.5",
         "laracasts/utilities": "^3.0",
         "laravel/framework": "^6.5",
+        "laravel/sanctum": "^2.15",
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^6.0",
