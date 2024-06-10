@@ -351,7 +351,6 @@
 <script>
     function googleStore() {
         var items = [];
-        var currency = "{{ $event->currency->code }}";
 
         $.each($("input[name='tickets[]']"), function (key, value) { 
             var ticketId = $(value).val();
@@ -377,7 +376,7 @@
             transaction_id: "{{ $order->transaction_id }}",
             value: "{{ $order->amount }}",
             tax: "{{ $order->taxamt }}",
-            currency: "{{ $order->event->currency }}",
+            currency: "{{ $order->event->currency->code }}",
             items: items,
         }
         });
