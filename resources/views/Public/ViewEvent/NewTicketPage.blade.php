@@ -209,15 +209,9 @@
                                                     </div>
                                                 @endif
                                             </td>
-                                            <td style="60px">
+                                            <td colspan="2">
                                                 @if($tickets->where('is_hidden', false)->where('is_paused', false)->count() > 0)
                                                     {{-- {!!Form::submit('Add To Cart', ['class' => 'btn btn-lg btn-event-link pull-right h-black'])!!} --}}
-                                                    @if (isset($event->discount_code))
-                                                    <label for="">Have Discount Code?</label>
-                                                    <input type="text" name="discount_code" id="discount_code" placeholder="Enter discount code" class="form-control">
-                                                @endif
-                                            </td>
-                                            <td>
                                                     <input class="btn btn-lg btn-event-link pull-right h-black"  style="margin-top: 20px" type="submit" value="Add To Cart" onclick="googleStore()">
                                                 @endif
                                             </td>
