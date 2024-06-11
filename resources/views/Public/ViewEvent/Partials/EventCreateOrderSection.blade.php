@@ -60,7 +60,7 @@
                         @endforeach
                     </table>
                 </div>
-                @if($order_total > 0)
+                {{-- @if($order_total > 0) --}}
                 <div class="panel-footer">
                     <h5>
                         @lang("Public_ViewEvent.total"): <span style="float: right;"><b>{{ $orderService->getOrderTotalWithBookingFee(true) }}</b></span>
@@ -79,7 +79,7 @@
                     </h5>
                     {{-- @endif --}}
                 </div>
-                @endif
+                {{-- @endif --}}
 
             </div>
             <div class="help-block">

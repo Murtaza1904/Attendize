@@ -113,7 +113,7 @@ class EventCheckoutController extends Controller
             }
             $discount = 0;
             if (!empty($request->discount_code)) {
-                $discount = $event->discount_fix_amount ?? ($event->discount_percentage /100) * ($current_ticket_quantity * $ticket->price);
+                $discount = $event->discount_fix_amount ?? ($event->discount_percentage /100) * ($current_ticket_quantity * ($ticket->price + $ticket->organiser_booking_fee));
             }
             $order_total = $order_total + (($current_ticket_quantity * $ticket->price) - $discount);
             $booking_fee = $booking_fee + ($current_ticket_quantity * $ticket->booking_fee);
