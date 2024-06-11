@@ -58,6 +58,15 @@ class EventCheckoutController extends Controller
             ]);
         }
 
+        if (!empty($request->discount_code)) {
+            if ($event->discount_code != $request->discount_code) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Invalid discount code',
+                ]); 
+            }
+        }
+
         $ticket_ids = $request->get('tickets');
 
         ReservedTickets::where('session_id', '=', session()->getId())->delete();
@@ -102,7 +111,11 @@ class EventCheckoutController extends Controller
                     'messages' => $validator->messages()->toArray(),
                 ]);
             }
-            $order_total = $order_total + ($current_ticket_quantity * $ticket->price);
+            $discount = 0;
+            if (!empty($request->discount_code)) {
+                $discount = $event->discount_fix_amount ?? ($event->discount_percentage /100) * ($current_ticket_quantity * $ticket->price);
+            }
+            $order_total = $order_total + (($current_ticket_quantity * $ticket->price) - $discount);
             $booking_fee = $booking_fee + ($current_ticket_quantity * $ticket->booking_fee);
             $organiser_booking_fee = $organiser_booking_fee + ($current_ticket_quantity * $ticket->organiser_booking_fee);
             $tickets[] = [
@@ -111,7 +124,8 @@ class EventCheckoutController extends Controller
                 'price'                 => ($current_ticket_quantity * $ticket->price),
                 'booking_fee'           => ($current_ticket_quantity * $ticket->booking_fee),
                 'organiser_booking_fee' => ($current_ticket_quantity * $ticket->organiser_booking_fee),
-                'full_price'            => ($ticket->price + $ticket->total_booking_fee),
+                'full_price'            => ($ticket->price + $ticket->total_booking_fee) - $discount,
+                'discount'              => $discount,
             ];
 
             $reservedTickets = new ReservedTickets();
@@ -123,7 +137,9 @@ class EventCheckoutController extends Controller
             $reservedTickets->save();
 
             for ($i = 0; $i < $current_ticket_quantity; $i++) {
-                
+                /*
+                 * Create our validation rules here
+                 */
                 $validation_rules['ticket_holder_first_name.' . $i . '.' . $ticket_id] = ['required'];
                 $validation_rules['ticket_holder_last_name.' . $i . '.' . $ticket_id] = ['required'];
                 $validation_rules['ticket_holder_email.' . $i . '.' . $ticket_id] = ['required', 'email'];
@@ -133,7 +149,9 @@ class EventCheckoutController extends Controller
                 $validation_messages['ticket_holder_email.' . $i . '.' . $ticket_id . '.required'] = 'Ticket holder ' . ($i + 1) . '\'s email is required';
                 $validation_messages['ticket_holder_email.' . $i . '.' . $ticket_id . '.email'] = 'Ticket holder ' . ($i + 1) . '\'s email appears to be invalid';
 
-                
+                /*
+                 * Validation rules for custom questions
+                 */
                 foreach ($ticket->questions as $question) {
                     if ($question->is_required && $question->is_enabled) {
                         $validation_rules['ticket_holder_questions.' . $ticket_id . '.' . $i . '.' . $question->id] = ['required'];
@@ -151,7 +169,7 @@ class EventCheckoutController extends Controller
         }
 
         $activeAccountPaymentGateway = $event->account->getGateway($event->account->payment_gateway_id);
-        
+        //if no payment gateway configured and no offline pay, don't go to the next step and show user error
         if (empty($activeAccountPaymentGateway) && !$event->enable_offline_payments) {
             return response()->json([
                 'status'  => 'error',
@@ -159,11 +177,13 @@ class EventCheckoutController extends Controller
             ]);
         }
 
+        $paymentGateway = $activeAccountPaymentGateway ? $activeAccountPaymentGateway->payment_gateway : false;
         $account_payment_gateway = AccountPaymentGateway::whereHas('payment_gateway', function($q) use ($event) {
             $q->where('provider_name', $event->regionTax->payment_gateway);
         })->first();
-        
-        
+        /*
+         * The 'ticket_order_{event_id}' session stores everything we need to complete the transaction.
+         */
         session()->put('ticket_order_' . $event->id, [
             'validation_rules'        => $validation_rules,
             'validation_messages'     => $validation_messages,
@@ -180,10 +200,16 @@ class EventCheckoutController extends Controller
             'order_requires_payment'  => PaymentUtils::requiresPayment($order_total),
             'account_id'              => $event->account->id,
             'affiliate_referral'      => Cookie::get('affiliate_' . $event_id),
+            // 'account_payment_gateway' => $activeAccountPaymentGateway,
             'account_payment_gateway' => $account_payment_gateway,
+            // 'payment_gateway'         => $paymentGateway
             'payment_gateway'         => $account_payment_gateway->payment_gateway,
         ]);
 
+        /*
+         * If we're this far assume everything is OK and redirect them
+         * to the the checkout page.
+         */
         if ($request->ajax()) {
             return response()->json([
                 'status'      => 'success',
@@ -194,9 +220,19 @@ class EventCheckoutController extends Controller
             ]);
         }
 
+        /*
+         * Maybe display something prettier than this?
+         */
         exit('Please enable Javascript in your browser.');
     }
 
+    /**
+     * Show the checkout page
+     *
+     * @param Request $request
+     * @param $event_id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function showEventCheckout(Request $request, $event_id)
     {
         $order_session = session()->get('ticket_order_' . $event_id);
@@ -224,6 +260,13 @@ class EventCheckoutController extends Controller
         if ($this->is_embedded) {
             return view('Public.ViewEvent.Embedded.EventPageCheckout', $data);
         }
+        
+        // if (empty(Auth::guard('client')->user())) {
+        //     session()->put([
+        //         'redirect_url' => request()->url(),
+        //     ]);
+        //     return redirect()->route('client-login.show');
+        // }
 
         return view('Public.ViewEvent.EventPageCheckout', $data);
 
@@ -231,6 +274,7 @@ class EventCheckoutController extends Controller
 
     public function postValidateOrder(Request $request, $event_id)
     {
+        //If there's no session kill the request and redirect back to the event homepage.
         if (!session()->get('ticket_order_' . $event_id)) {
             return response()->json([
                 'status'      => 'error',
@@ -240,31 +284,32 @@ class EventCheckoutController extends Controller
                 ])
             ]);
         }
-        
-        $event = Event::findOrFail($event_id);
+        // $client = Client::where('email', $request->order_email)->where('otp', $request->otp)->first();
 
-        if (!empty($request->discount_code)) {
-            if ($event->discount_code != $request->discount_code) {
-                return response()->json([
-                    'status'  => 'error',
-                    'message' => 'Invalid discount code',
-                ]); 
-            }
-        }
+        // if (!$client) {
+        //     return response()->json([
+        //         'status'      => 'error',
+        //         'message'     => 'Invalid otp.',
+        //         'redirectUrl' => route('showEventPage', [
+        //             'event_id' => $event_id,
+        //         ])
+        //     ]);
+        // }
+        // $client->update([
+        //     'first_name' => $request->order_first_name,
+        //     'last_name' => $request->order_last_name,
+        // ]);
+
+        // Auth::guard('client')->login(Client::where('email',$request->order_email)->first());
 
         $request_data = session()->get('ticket_order_' . $event_id . ".request_data");
-
-        $discount = 0;
-        if (!empty($request->discount_code)) {
-            $discount = $event->discount_fix_amount ?? ($event->discount_percentage /100) * ($current_ticket_quantity * $request_data->tickets->price);
-        }
-
         $request_data = (!empty($request_data[0])) ? array_merge($request_data[0], $request->all())
                                                    : $request->all();
 
         session()->remove('ticket_order_' . $event_id . '.request_data');
         session()->push('ticket_order_' . $event_id . '.request_data', $request_data);
 
+        $event = Event::findOrFail($event_id);
         $order = new Order();
         $ticket_order = session()->get('ticket_order_' . $event_id);
 
