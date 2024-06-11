@@ -58,7 +58,7 @@ class EventCheckoutController extends Controller
             ]);
         }
 
-        if ($request->has('discount_code')) {
+        if (!empty($request->discount_code)) {
             if ($event->discount_code != $request->discount_code) {
                 return response()->json([
                     'status'  => 'error',
@@ -111,8 +111,10 @@ class EventCheckoutController extends Controller
                     'messages' => $validator->messages()->toArray(),
                 ]);
             }
-
-            $discount = $event->discount_fix_amount ?? ($event->discount_percentage /100) * ($current_ticket_quantity * $ticket->price);
+            $discount = 0;
+            if (!empty($request->discount_code)) {
+                $discount = $event->discount_fix_amount ?? ($event->discount_percentage /100) * ($current_ticket_quantity * $ticket->price);
+            }
             $order_total = $order_total + (($current_ticket_quantity * $ticket->price) - $discount);
             $booking_fee = $booking_fee + ($current_ticket_quantity * $ticket->booking_fee);
             $organiser_booking_fee = $organiser_booking_fee + ($current_ticket_quantity * $ticket->organiser_booking_fee);

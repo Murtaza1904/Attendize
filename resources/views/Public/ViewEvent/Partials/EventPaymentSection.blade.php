@@ -54,6 +54,12 @@
                                 {{ money($ticket['organiser_booking_fee'], $event->currency) }}
                             </td>
                         </tr>
+                        <tr style="padding: 0">
+                            <td style="border: none; padding: 0">Discount</td>
+                            <td style="text-align: right; border: none; padding: 0">
+                                {{ money($ticket['discount'], $event->currency) }}
+                            </td>
+                        </tr>
                         <tr style="border-bottom: 2px solid black; padding: 0">
                             <td style="border: none; padding: 0; font-weight: bolder">Sub Total : </td>
                             <td style="text-align: right; border: none; padding: 0; font-weight: bolder">
