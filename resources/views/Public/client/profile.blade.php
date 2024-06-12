@@ -7,6 +7,11 @@
                 Profile
             </h1>
         </div>
+        @if (session()->has('message'))
+            <div style="display: flex; justify-content:center">
+                <h5 style="color: greenyellow">{{ session()->get('message') }}</h5>
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-12">
                 <form method="POST" action="{{ route('client.profile.update') }}" enctype="multipart/form-data">

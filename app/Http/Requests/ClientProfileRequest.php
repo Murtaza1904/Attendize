@@ -16,7 +16,7 @@ class ClientProfileRequest extends FormRequest
         return [
             'first_name' => ['nullable', 'string', 'max:191'],
             'last_name' => ['nullable', 'string', 'max:191'],
-            'avatar' => ['nullable', 'file', 'mimes:png,jpg', 'max:5120'],
+            'avatar' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:5120'],
         ];
     }
 }
