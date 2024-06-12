@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.png') }}">
-    <title>Client Login OTP</title>
+    <title>Client Login Verification Code</title>
     <style>
         /* Events */
         @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap');
@@ -92,9 +92,9 @@
                     <form action="{{ route('client-login.otp.verify') }}" method="POST">
                         @csrf
                         <div class="mb-3">
-                            <label for="otp" class="form-label">OTP Code <sup class="text-danger">*</sup></label>
+                            <label for="otp" class="form-label">Verification Code <sup class="text-danger">*</sup></label>
                             <input type="otp" name="otp" id="otp" class="form-control"
-                                placeholder="Enter otp code" title="OTP" />
+                                placeholder="Enter verification code" title="Verification Code" />
                             @error('otp')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror

@@ -21,7 +21,7 @@ class LoginOTPMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Login OTP')
+        return $this->subject('Login Verification Code')
                     ->view('Emails.clients.login-otp');
     }
 }

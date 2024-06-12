@@ -17,4 +17,11 @@ class ClientOtpRequest extends FormRequest
             'otp' => ['required', 'string', 'max:6', 'exists:clients,otp'],
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'opt' => 'verification code',
+        ];
+    }
 }
