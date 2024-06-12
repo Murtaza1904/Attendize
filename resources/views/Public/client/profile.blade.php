@@ -23,7 +23,7 @@
                             <div class="form-group">
                                 <label for="first_name">First name</label>
                                 <input class="form-control" name="first_name" type="text" id="first_name"
-                                    value="{{ $user->first_name }}">
+                                    value="{{ $user->first_name ?? '' }}">
                                 @error('first_name')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -33,7 +33,7 @@
                             <div class="form-group">
                                 <label for="last_name">Last name</label>
                                 <input class="form-control" name="last_name" type="text" id="last_name"
-                                    value="{{ $user->last_name }}">
+                                    value="{{ $user->last_name ?? '' }}">
                                 @error('last_name')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -45,18 +45,7 @@
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input class="form-control" name="email" type="text" id="email"
-                                    value="{{ $user->email }}" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="avatar">Avatar</label>
-                                <input class="form-control" name="avatar" type="file" id="avatar">
-                                @error('avatar')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                                    value="{{ $user->email ?? '' }}" readonly>
                             </div>
                         </div>
                     </div>

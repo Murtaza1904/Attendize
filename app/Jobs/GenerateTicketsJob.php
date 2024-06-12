@@ -10,6 +10,7 @@ use App\Models\Order;
 class GenerateTicketsJob extends GenerateTicketsJobBase
 {
     public $order;
+    public $attendees;
 
     /**
      * Create a new job instance.

@@ -54,8 +54,8 @@ class Event extends MyBaseModel
             'card_bg_image'         => 'nullable|mimes:jpeg,jpg,png|max:3000',
             'region_tax_id'         => 'required|integer',
             'discount_code'         => 'nullable|string',
-            'discount_fix_amount'   => 'nullable|integer',
-            'discount_percentage'   => 'nullable|integer',
+            'discount_fix_amount'   => 'nullable|numeric',
+            'discount_percentage'   => 'nullable|numeric',
         ];
     }
 

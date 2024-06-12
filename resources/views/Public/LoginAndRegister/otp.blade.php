@@ -89,17 +89,19 @@
                     <div class="logo">
                         {{ config('app.name') }}
                     </div>
+                    <div class="d-flex justify-content-center">
+                        <p>We have sent you the vefication code on your email</p>
+                    </div>
                     <form action="{{ route('client-login.otp.verify') }}" method="POST">
                         @csrf
                         <div class="mb-3">
-                            <label for="otp" class="form-label">Verification Code <sup class="text-danger">*</sup></label>
                             <input type="otp" name="otp" id="otp" class="form-control"
                                 placeholder="Enter verification code" title="Verification Code" />
                             @error('otp')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <button type="submit" class="btn btn-red form-control mt-4">Submit</button>
+                        <button type="submit" class="btn btn-red form-control mt-2">Submit</button>
                     </form>
                 </div>
             </div>

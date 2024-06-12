@@ -22,17 +22,7 @@ class ClientController extends Controller
 
     public function profileUpdate(ClientProfileRequest $request): RedirectResponse
     {
-        Client::find(auth()->guard('client')->id())->update([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-        ]);
-
-        
-        if ($request->file('avatar')) {
-            Client::find(auth()->guard('client')->id())->update([
-                'avatar' => $request->file('avatar')->store('clients','public'),
-            ]);
-        }
+        Client::find(auth()->guard('client')->id())->update($request->validated());
 
         return redirect()->back()->with('message', 'Profile updated!');
     }

@@ -18,6 +18,7 @@ class GenerateTicketsJobBase implements ShouldQueue
     public $event;
     public $order;
     public $file_name;
+    public $attendees;
 
     /**
      * Execute the job.
