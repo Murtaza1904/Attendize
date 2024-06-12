@@ -23,8 +23,8 @@
             <a href="{{ route('client.profile.index') }}" style="color: #fff">{{ auth()->guard('client')->user()->email }}</a>
         </div>
     @else
-        <div style="position: absolute;z-index: 999; right: 0; margin: 20px">
-            <a href="{{ route('client-login.show') }}" style="color: #fff; background: #fc2222; text-decoration: none; padding-inline: 7px; padding-block: 15px; border-radius;text-align: center;">Login</a>
+        <div style="position: absolute;z-index: 999; right: 0; margin: 20px; margin-top:30px;">
+            <a href="{{ route('client-login.show') }}" style="color: #fff; background: #fc2222; text-decoration: none; padding-inline: 24px; padding-block: 15px; border-radius;text-align: center;">Login</a>
         </div>
     @endif
     <div class="new-header">
