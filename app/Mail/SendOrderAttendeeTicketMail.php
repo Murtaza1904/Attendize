@@ -45,7 +45,7 @@ class SendOrderAttendeeTicketMail extends Mailable
             "Controllers.tickets_for_event",
             ["event" => $this->attendee->event->title]
         );
-        if (isset($this->attendee->order->ticket_pdf_path)) {
+        if (file_exists($file_path)) {
             return $this->subject($subject)
                         ->attach($file_path)
                         ->view('Emails.OrderAttendeeTicket');
