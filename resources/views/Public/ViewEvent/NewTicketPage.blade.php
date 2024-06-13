@@ -179,8 +179,8 @@
                                                     <tr>
                                                         <td style="border-top: none"></td>
                                                         <td colspan="2" style="border-top: none; text-align: right; width: 285px;padding: 0">
-                                                            <span style="padding-top: 5px; color: orange">
-                                                                only {{ $remaining }} tickets left at this price
+                                                            <span style="padding-top: 5px; color: #fc2222">
+                                                                Only {{ $remaining }} tickets left at this price
                                                             </span>
                                                         </td>
                                                     </tr>

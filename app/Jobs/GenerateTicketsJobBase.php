@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Log;
 use PDF;
+use Barryvdh\DomPDF\Facade as BarryvdhPdf;
 
 class GenerateTicketsJobBase implements ShouldQueue
 {
@@ -50,11 +51,13 @@ class GenerateTicketsJobBase implements ShouldQueue
             'image'     => base64_encode(file_get_contents(public_path($image_path))),
             'images'    => $images,
         ];
-        try {
-            PDF::setOutputMode('F'); // force to file
-            PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, $file_path);
-        } catch(\Exception $e) {
-            $this->fail($e);
-        }
+        // try {
+            // PDF::setOutputMode('F'); // force to file
+            // PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, $file_path);
+            BarryvdhPdf::loadView('Public.ViewEvent.Partials.PDFTicket', $data)->save($file_with_ext);
+
+        // } catch(\Exception $e) {
+        //     $this->fail($e);
+        // }
     }
 }

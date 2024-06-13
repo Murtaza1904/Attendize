@@ -32,7 +32,8 @@ use Illuminate\Support\Facades\Auth;
 use Log;
 use Mail;
 use Omnipay;
-use PDF;
+// use PDF;
+use Barryvdh\DomPDF\Facade as BarryvdhPdf;
 use PhpSpec\Exception\Exception;
 use Validator;
 
@@ -818,7 +819,8 @@ class EventCheckoutController extends Controller
         ];
 
         if ($request->get('download') == '1') {
-            return PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, 'Tickets');
+            // return PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, 'Tickets');
+            return BarryvdhPdf::loadView('Public.ViewEvent.Partials.PDFTicket', $data)->download('Tickets.pdf');
         }
         return view('Public.ViewEvent.Partials.PDFTicket', $data);
     }
