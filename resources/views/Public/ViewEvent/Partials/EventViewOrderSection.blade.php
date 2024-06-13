@@ -170,8 +170,10 @@
                         </thead>
                         <tbody>
                             @foreach($order->orderItems as $order_item)
+                                {{-- @dd($order_item) --}}
                                 @php
-                                    $ticket = App\Models\Ticket::where('title', $order_item->title)->where('price', $order_item->unit_price)->first();
+                                    // $ticket = App\Models\Ticket::where('title', $order_item->title)->where('price', $order_item->unit_price)->first();
+                                    $ticket = $order->attendees->first()->ticket;
                                 @endphp
                                 <input type="hidden" name="tickets[]" value="{{ $ticket->id }}">
                                 <tr>
@@ -369,6 +371,7 @@
                 items.push(item);
             }
         });
+        console.log(items);
         dataLayer.push({ ecommerce: null });
         dataLayer.push({
         event: "purchase",
