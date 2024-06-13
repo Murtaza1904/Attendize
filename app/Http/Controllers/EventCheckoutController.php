@@ -818,11 +818,13 @@ class EventCheckoutController extends Controller
             'images'    => $images,
         ];
 
-        if ($request->get('download') == '1') {
+        if ($request->get('download') == '11') {
             // return PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, 'Tickets');
-            return BarryvdhPdf::loadView('Public.ViewEvent.Partials.PDFTicket', $data)->download('Tickets.pdf');
+            return BarryvdhPdf::loadView('Public.ViewEvent.Partials.PDFTicketUpdated', $data)
+                                    ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
+                                    ->download('Tickets.pdf');
         }
-        return view('Public.ViewEvent.Partials.PDFTicket', $data);
+        return view('Public.ViewEvent.Partials.PDFTicketUpdated', $data);
     }
 
 }
