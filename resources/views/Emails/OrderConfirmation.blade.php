@@ -52,6 +52,9 @@ Order Email: <strong>{{$order->email}}</strong><br>
             <td>
                 <strong>Total</strong>
             </td>
+            <td>
+                <strong>Discount</strong>
+            </td>
         </tr>
         @foreach($order->orderItems as $order_item)
         <tr>
@@ -78,6 +81,9 @@ Order Email: <strong>{{$order->email}}</strong><br>
                 {{money(($order_item->unit_price + $order_item->unit_booking_fee) * ($order_item->quantity),
                 $order->event->currency)}}
                 @endif
+            </td>
+            <td>
+                {{ money($order_item->discount, $order->event->currency) }}
             </td>
         </tr>
         @endforeach

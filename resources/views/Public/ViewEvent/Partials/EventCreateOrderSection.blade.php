@@ -26,6 +26,7 @@
                                 <b>{{ $ticket['ticket']['title'] }}</b> X {{ $ticket['qty'] }}
                                 <input type="hidden" name="ticket_title_{{ $ticket['ticket']['id'] }}" value="{{ $ticket['ticket']['title'] }}">
                                 <input type="hidden" name="ticket_quantity_{{ $ticket['ticket']['id'] }}" value="{{ $ticket['qty'] }}">
+                                <input type="hidden" name="ticket_discount_{{ $ticket['ticket']['id'] }}" value="{{ $ticket['discount'] }}">
                             </td>
                         </tr>
                         <tr style="padding: 0">
@@ -319,7 +320,8 @@
                     item_id: ticketId,
                     item_name: $("input[name='ticket_title_" + ticketId + "']").val(), 
                     price: $("input[name='ticket_price_" + ticketId + "']").val(), 
-                    quantity: ticketQuantity
+                    quantity: ticketQuantity,
+                    discount: $("input[name='ticket_discount_" + ticketId + "']").val(),
                 };
                 items.push(item);
                 totalPrice += parseFloat(item.price) * ticketQuantity;

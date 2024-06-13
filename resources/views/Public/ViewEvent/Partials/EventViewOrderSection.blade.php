@@ -166,6 +166,9 @@
                                 <th style="background-color: #fc2222 !important; border: none !important">
                                     @lang("Public_ViewEvent.total")
                                 </th>
+                                <th style="background-color: #fc2222 !important; border: none !important">
+                                    Discount
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -211,6 +214,10 @@
                                             {{money(($order_item->unit_price + $order_item->unit_booking_fee) * ($order_item->quantity), $order->event->currency)}}
                                         @endif
 
+                                    </td>
+                                    <td>
+                                        {{ money($order_item->discount, $order->event->currency) }}
+                                        <input type="hidden" name="ticket_discount_{{ $ticket->id }}" value="{{ $order_item->discount }}">
                                     </td>
                                 </tr>
                             @endforeach
@@ -364,7 +371,7 @@
                     item_name: $("input[name='ticket_title_" + ticketId + "']").val(), 
                     affiliation: "Google Merchandise Store",
                     coupon: "",
-                    discount: "",
+                    discount: $("input[name='ticket_title_" + ticketId + "']").val(),
                     price: $("input[name='ticket_price_" + ticketId + "']").val(), 
                     quantity: ticketQuantity
                 };

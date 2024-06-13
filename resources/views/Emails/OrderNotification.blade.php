@@ -48,6 +48,9 @@
             <th>
                 @lang("Public_ViewEvent.total")
             </th>
+            <th>
+                Discount
+            </th>
         </tr>
         @foreach($order->orderItems as $order_item)
         <tr>
@@ -81,7 +84,9 @@
                 @else
                 {{money(($order_item->unit_price + $order_item->unit_booking_fee) * ($order_item->quantity), $order->event->currency)}}
                 @endif
-
+            </td>
+            <td>
+                {{ money($order_item->discount, $order->event->currency) }}
             </td>
         </tr>
         @endforeach

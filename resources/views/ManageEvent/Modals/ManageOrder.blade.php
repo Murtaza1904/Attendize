@@ -125,6 +125,7 @@
                             <th>@lang("Order.price")</th>
                             <th>@lang("Order.booking_fee")</th>
                             <th>@lang("Order.total")</th>
+                            <th>Discount</th>
                             </thead>
                             <tbody>
                             @foreach($order->orderItems as $order_item)
@@ -152,12 +153,20 @@
                                             {{money(($order_item->unit_price + $order_item->unit_booking_fee) * ($order_item->quantity), $order->event->currency)}}
                                         @endif
                                     </td>
+                                    <td>
+                                        {{ money($order_item->discount, $order->event->currency) }}
+                                    </td>
                                 </tr>
                             @endforeach
                             <tr>
                                 <td colspan="3"></td>
                                 <td><b>@lang("Order.sub_total")</b></td>
                                 <td colspan="2">{{money($order->total_amount, $order->event->currency)}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td><b>Tax</b></td>
+                                <td colspan="2">{{ $orderService->getTaxAmount(true) }}</td>
                             </tr>
                             @if($order->event->organiser->charge_tax)
                                 <tr>
