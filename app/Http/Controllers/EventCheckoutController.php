@@ -25,6 +25,7 @@ use Illuminate\Http\Request;
 use App\Models\PaymentGateway;
 use App\Models\QuestionAnswer;
 use App\Attendize\PaymentUtils;
+use App\EventDiscountCode;
 use App\Models\ReservedTickets;
 use PhpSpec\Exception\Exception;
 use Illuminate\Support\Facades\Auth;
@@ -59,7 +60,8 @@ class EventCheckoutController extends Controller
         }
 
         if (!empty($request->discount_code)) {
-            if ($event->discount_code != $request->discount_code) {
+            $eventDiscountCode = EventDiscountCode::where('event_id', $event_id)->where('code', $request->discount_code)->where('expiry_date','>',now())->first();
+            if (empty($eventDiscountCode) || $eventDiscountCode->limit == $eventDiscountCode->usage) {
                 return response()->json([
                     'status'  => 'error',
                     'message' => 'Invalid discount code',
@@ -112,8 +114,8 @@ class EventCheckoutController extends Controller
                 ]);
             }
             $discount = 0;
-            if (!empty($request->discount_code)) {
-                $discount = $event->discount_fix_amount ?? ($event->discount_percentage /100) * ($current_ticket_quantity * ($ticket->price + $ticket->organiser_booking_fee));
+            if (!empty($eventDiscountCode)) {
+                $discount = ($eventDiscountCode->discount_percentage /100) * ($current_ticket_quantity * ($ticket->price + $ticket->organiser_booking_fee));
             }
             $order_total = $order_total + (($current_ticket_quantity * $ticket->price) - $discount);
             $booking_fee = $booking_fee + ($current_ticket_quantity * $ticket->booking_fee);
@@ -188,6 +190,7 @@ class EventCheckoutController extends Controller
             'validation_rules'        => $validation_rules,
             'validation_messages'     => $validation_messages,
             'event_id'                => $event->id,
+            'discount_code'           => $eventDiscountCode->code ?? 0,
             'tickets'                 => $tickets,
             'total_ticket_quantity'   => $total_ticket_quantity,
             'order_started'           => time(),
@@ -718,6 +721,9 @@ class EventCheckoutController extends Controller
         }
         //save the order to the database
         DB::commit();
+
+        EventDiscountCode::where('event_id', $event->id)->where('code', $ticket_order['discount_code'])->increment('usage', 1);
+
         //forget the order in the session
         session()->forget('ticket_order_' . $event->id);
 

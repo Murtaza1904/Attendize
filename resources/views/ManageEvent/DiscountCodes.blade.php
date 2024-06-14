@@ -44,11 +44,12 @@
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th width="20%" class="has-text-center">CODE</th>
-                                            <th width="20%" class="has-text-center">PERCENTAGE DISCOUNT</th>
-                                            <th width="20%" class="has-text-center">USAGE</th>
-                                            <th width="20%" class="has-text-center">CREATED AT</th>
-                                            <th width="20%" class="has-text-center">ACTION</th>
+                                            <th width="15%" class="has-text-center">CODE</th>
+                                            <th width="15%" class="has-text-center">PERCENTAGE DISCOUNT</th>
+                                            <th width="15%" class="has-text-center">LIMIT</th>
+                                            <th width="15%" class="has-text-center">USAGE</th>
+                                            <th width="15%" class="has-text-center">CREATED AT</th>
+                                            <th width="15%" class="has-text-center">ACTION</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -56,6 +57,7 @@
                                             <tr>
                                                 <td class="has-text-center"><strong>{{ $discountCode->code }}</strong></td>
                                                 <td class="has-text-center"><strong>{{ $discountCode->discount_percentage }} %</strong></td>
+                                                <td class="has-text-center"><strong>{{ $discountCode->limit }}</strong></td>
                                                 <td class="has-text-center"><strong>{{ $discountCode->usage }}</strong></td>
                                                 <td class="has-text-center">{{ $discountCode->created_at }}</td>
                                                 {{-- Can only remove if haven't been used before--}}

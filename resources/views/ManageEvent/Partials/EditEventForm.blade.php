@@ -52,7 +52,7 @@
                 @endforeach
             </select>
         </div>
-        <div class="form-group">
+        {{-- <div class="form-group">
             <label for="discount_code" class="form-label">DISCOUNT CODE</label>
             <input type="text" name="discount_code" id="discount_code" class="form-control" placeholder="E.g: SUMMER2024" value="{{ $event->discount_code }}"/>
         </div>
@@ -69,7 +69,7 @@
                     <input type="number" name="discount_percentage" id="discount_percentage" class="form-control" placeholder="E.g: 30" value="{{ $event->discount_percentage }}"/>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="form-group address-automatic" style="display:{{ $event->location_is_manual ? 'none' : 'block' }};">
             {!! Form::label('name', trans('Event.venue_name'), ['class' => 'control-label required ']) !!}
             {!! Form::text('venue_name_full', old('venue_name_full'), [
