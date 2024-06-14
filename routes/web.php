@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EventViewController;
 use App\Http\Controllers\InstallerController;
 use App\Http\Controllers\OrganiserController;
@@ -19,7 +20,6 @@ use App\Http\Controllers\EventPromoteController;
 use App\Http\Controllers\EventTicketsController;
 use App\Http\Controllers\EventWidgetsController;
 use App\Http\Controllers\RefundPolicyController;
-use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EventCheckoutController;
 use App\Http\Controllers\ManageAccountController;
 use App\Http\Controllers\OrganiserViewController;
@@ -29,6 +29,7 @@ use App\Http\Controllers\EventDashboardController;
 use App\Http\Controllers\OrganiserEventsController;
 use App\Http\Controllers\EventAccessCodesController;
 use App\Http\Controllers\EventViewEmbeddedController;
+use App\Http\Controllers\EventDiscountCodesController;
 use App\Http\Controllers\OrganiserCustomizeController;
 use App\Http\Controllers\OrganiserDashboardController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -625,6 +626,27 @@ Route::group(
             Route::post('{event_id}/access_codes/{access_code_id}/delete',
                 [EventAccessCodesController::class, 'postDelete']
             )->name('postDeleteEventAccessCode');
+
+            /*
+             * -------
+             * Event Discount Codes page
+             * -------
+             */
+            Route::get('{event_id}/discount_codes',
+                [EventDiscountCodesController::class, 'show']
+            )->name('showEventDiscountCodes');
+
+            Route::get('{event_id}/discount_codes/create',
+                [EventDiscountCodesController::class, 'showCreate']
+            )->name('showCreateEventDiscountCode');
+
+            Route::post('{event_id}/discount_codes/create',
+                [EventDiscountCodesController::class, 'postCreate']
+            )->name('postCreateEventDiscountCode');
+
+            Route::post('{event_id}/discount_codes/{discount_code_id}/delete',
+                [EventDiscountCodesController::class, 'postDelete']
+            )->name('postDeleteEventDiscountCode');
 
             /*
              * -------
