@@ -2,40 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Attendize\PaymentUtils;
-use App\Jobs\SendLoginOTP;
-use App\Jobs\SendOrderNotificationJob;
-use App\Jobs\SendOrderConfirmationJob;
-use App\Jobs\SendOrderAttendeeTicketJob;
-use App\Models\Account;
-use App\Models\AccountPaymentGateway;
-use App\Models\Affiliate;
-use App\Models\Attendee;
-use App\Models\Client;
-use App\Models\Event;
-use App\Models\EventStats;
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\PaymentGateway;
-use App\Models\QuestionAnswer;
-use App\Models\ReservedTickets;
-use App\Models\Ticket;
-use App\Services\Order as OrderService;
-use Services\PaymentGateway\Factory as PaymentGatewayFactory;
-use Carbon\Carbon;
-use Config;
-use Cookie;
 use DB;
-use Illuminate\Http\Request;
-use Illuminate\Log\Logger;
-use Illuminate\Support\Facades\Auth;
 use Log;
 use Mail;
+use Config;
+use Cookie;
 use Omnipay;
-// use PDF;
-use Barryvdh\DomPDF\Facade as BarryvdhPdf;
-use PhpSpec\Exception\Exception;
 use Validator;
+use Carbon\Carbon;
+use App\Models\Event;
+use App\Models\Order;
+use App\Models\Client;
+use App\Models\Ticket;
+use App\Models\Account;
+use App\Models\Attendee;
+use App\Models\Affiliate;
+use App\Models\OrderItem;
+use App\Jobs\SendLoginOTP;
+use App\Models\EventStats;
+use Illuminate\Log\Logger;
+use Illuminate\Http\Request;
+use App\Models\PaymentGateway;
+use App\Models\QuestionAnswer;
+use App\Attendize\PaymentUtils;
+use App\Models\ReservedTickets;
+use PhpSpec\Exception\Exception;
+use Illuminate\Support\Facades\Auth;
+use App\Models\AccountPaymentGateway;
+use App\Jobs\SendOrderConfirmationJob;
+use App\Jobs\SendOrderNotificationJob;
+use PDF;
+use App\Services\Order as OrderService;
+use App\Jobs\SendOrderAttendeeTicketJob;
+use Services\PaymentGateway\Factory as PaymentGatewayFactory;
 
 class EventCheckoutController extends Controller
 {
@@ -818,13 +817,10 @@ class EventCheckoutController extends Controller
             'images'    => $images,
         ];
 
-        if ($request->get('download') == '11') {
-            // return PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, 'Tickets');
-            return BarryvdhPdf::loadView('Public.ViewEvent.Partials.PDFTicketUpdated', $data)
-                                    ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
-                                    ->download('Tickets.pdf');
+        if ($request->get('download') == '1') {
+            return PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, 'Tickets');
         }
-        return view('Public.ViewEvent.Partials.PDFTicketUpdated', $data);
+        return view('Public.ViewEvent.Partials.PDFTicket', $data);
     }
 
 }
