@@ -53,6 +53,11 @@
                     Logout
                 </button>
             </form>
+            @else
+                <a href="{{ route('client-login.show') }}"  class="btn"
+                    style="background: #fc2222; padding-inline: 10px; padding-block: 5px; text-decoration: none; border-radius: 5px">
+                    LOGIN
+                </a>
             @endif
         </nav>
     </div>

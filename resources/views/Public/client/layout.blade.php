@@ -18,14 +18,29 @@
                 loading="lazy" alt="" class="image-145">
         </a>
         <nav role="navigation" class="nav-menu-5 w-nav-menu">
-            <a href="{{ route('client.my-orders.index') }}" class="hr_nav-link w-nav-link">My orders</a>
-            <a href="{{ route('client.profile.index') }}" class="hr_nav-link w-nav-link">Profile</a>
+            @if (auth()->guard('client')->user())
+            <a href="{{ route('client.my-orders.index') }}" class="hr_nav-link w-nav-link">My Tickets</a>
+            <a href="{{ route('client.profile.index') }}" class="hr_nav-link w-nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512" fill="#fff" height="15">
+                    <path
+                        d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
+                </svg>
+                <span style="margin-left: 4px">My Profile</span>
+            </a>
             <form action="{{ route('client.logout') }}" method="POST" style="float: right; display: inline;">
                 @csrf
-                <button type="submit" class="btn" style="background: #fc2222">
+                <button type="submit" class="btn"
+                    style="background: #fc2222; padding-inline: 10px; padding-block: 5px">
                     Logout
                 </button>
             </form>
+            @else
+                <a href="{{ route('client-login.show') }}"  class="btn"
+                    style="background: #fc2222; padding-inline: 10px; padding-block: 5px; text-decoration: none; border-radius: 5px">
+                    LOGIN
+                </a>
+            @endif
         </nav>
     </div>
     <main>
