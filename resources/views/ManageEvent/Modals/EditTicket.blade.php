@@ -94,11 +94,19 @@
                     </div>
                 </div>
                 <div class="row more-options">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <div class="custom-checkbox">
                                 {!! Form::checkbox('is_hidden', null, null, ['id' => 'is_hidden']) !!}
                                 {!! Form::label('is_hidden', trans("ManageEvent.hide_this_ticket"), array('class'=>' control-label')) !!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="custom-checkbox">
+                                {!! Form::checkbox('show_quantity', null, null, ['id' => 'show_quantity']) !!}
+                                {!! Form::label('show_quantity', 'SHOW REMAINING QUANTITY', array('class'=>' control-label')) !!}
                             </div>
                         </div>
                     </div>

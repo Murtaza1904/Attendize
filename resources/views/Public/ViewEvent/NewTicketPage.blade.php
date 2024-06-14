@@ -175,12 +175,12 @@
                                                 @php
                                                     $remaining = $ticket->quantity_available - $ticket->quantity_sold;
                                                 @endphp
-                                                @if ($remaining <= 10)
+                                                @if ($ticket->show_quantity)
                                                     <tr>
                                                         <td style="border-top: none"></td>
                                                         <td colspan="2" style="border-top: none; text-align: right; width: 285px;padding: 0">
                                                             <span style="padding-top: 5px; color: #fc2222">
-                                                                Only {{ $remaining }} tickets left at this price
+                                                                {{ $remaining }} tickets are remaining
                                                             </span>
                                                         </td>
                                                     </tr>
