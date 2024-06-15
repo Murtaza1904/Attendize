@@ -31,7 +31,8 @@ class Ticket extends MyBaseModel
             'description'        => 'nullable',
             'start_sale_date'    => 'nullable|date_format:"'.$format.'"',
             'end_sale_date'      => 'nullable|date_format:"'.$format.'"|after:start_sale_date',
-            'quantity_available' => 'nullable|integer|min:'.($this->quantity_sold + $this->quantity_reserved)
+            'quantity_available' => 'nullable|integer|min:'.($this->quantity_sold + $this->quantity_reserved),
+            'number_of_person'   => 'required|integer|min:1',
         ];
     }
 

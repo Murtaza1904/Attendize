@@ -4,22 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Ticket;
-use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Log;
-
-/*
-  Attendize.com   - Event Management & Ticketing
- */
+use Illuminate\View\View;
 
 class EventTicketsController extends MyBaseController
 {
-    /**
-     * @param Request $request
-     * @param $event_id
-     * @return mixed
-     */
-    public function showTickets(Request $request, $event_id)
+    public function showTickets(Request $request, $event_id): View
     {
         $allowed_sorts = [
             'created_at'    => trans("Controllers.sort.created_at"),
@@ -29,65 +20,38 @@ class EventTicketsController extends MyBaseController
             'sort_order'  => trans("Controllers.sort.sort_order"),
         ];
 
-        // Getting get parameters.
         $q = $request->get('q', '');
         $sort_by = $request->get('sort_by');
         if (isset($allowed_sorts[$sort_by]) === false) {
             $sort_by = 'sort_order';
         }
 
-        // Find event or return 404 error.
-        $event = Event::scope()->find($event_id);
-        if ($event === null) {
-            abort(404);
-        }
-
-        // Get tickets for event.
+        $event = Event::scope()->findOrFail($event_id);
+        
         $tickets = empty($q) === false
-            ? $event->tickets()->where('title', 'like', '%' . $q . '%')->orderBy($sort_by, 'asc')->paginate()
-            : $event->tickets()->orderBy($sort_by, 'asc')->paginate();
+            ? $event->tickets()->where('title', 'like', '%' . $q . '%')->orderBy($sort_by, 'asc')->paginate(100)
+            : $event->tickets()->orderBy($sort_by, 'asc')->paginate(100);
 
-        // Return view.
+        
         return view('ManageEvent.Tickets', compact('event', 'tickets', 'sort_by', 'q', 'allowed_sorts'));
     }
 
-    /**
-     * Show the edit ticket modal
-     *
-     * @param $event_id
-     * @param $ticket_id
-     * @return mixed
-     */
-    public function showEditTicket($event_id, $ticket_id)
-    {
-        $data = [
-            'event'  => Event::scope()->find($event_id),
-            'ticket' => Ticket::scope()->find($ticket_id),
-        ];
-
-        return view('ManageEvent.Modals.EditTicket', $data);
-    }
-
-    /**
-     * Show the create ticket modal
-     *
-     * @param $event_id
-     * @return \Illuminate\Contracts\View\View
-     */
-    public function showCreateTicket($event_id)
+    public function showCreateTicket($event_id): View
     {
         return view('ManageEvent.Modals.CreateTicket', [
             'event' => Event::scope()->find($event_id),
         ]);
     }
 
-    /**
-     * Creates a ticket
-     *
-     * @param $event_id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postCreateTicket(Request $request, $event_id)
+    public function showEditTicket($event_id, $ticket_id): View
+    {
+        return view('ManageEvent.Modals.EditTicket', [
+            'event'  => Event::scope()->find($event_id),
+            'ticket' => Ticket::scope()->find($ticket_id),
+        ]);
+    }
+
+    public function postCreateTicket(Request $request, $event_id): JsonResponse
     {
         for ($i = 1; $i <= $request->get('number_of_ticket'); $i++) {
             $ticket = Ticket::createNew();
@@ -107,21 +71,13 @@ class EventTicketsController extends MyBaseController
             $ticket->price = $request->get('price');
             $ticket->min_per_person = $request->get('min_per_person');
             $ticket->max_per_person = $request->get('max_per_person');
+            $ticket->number_of_person = $request->get('number_of_person');
             $ticket->description = prepare_markdown($request->get('description'));
             $ticket->is_hidden = $request->get('is_hidden') ? 1 : 0;
             $ticket->show_quantity = $request->get('show_quantity') ? 1 : 0;
     
             $ticket->save();
         }
-
-        // Attach the access codes to the ticket if it's hidden and the code ids have come from the front
-        // if ($ticket->is_hidden) {
-        //     $ticketAccessCodes = $request->get('ticket_access_codes', []);
-        //     if (empty($ticketAccessCodes) === false) {
-        //         // Sync the access codes on the ticket
-        //         $ticket->event_access_codes()->attach($ticketAccessCodes);
-        //     }
-        // }
 
         session()->flash('message', 'Successfully Created Ticket');
 
@@ -135,12 +91,6 @@ class EventTicketsController extends MyBaseController
         ]);
     }
 
-    /**
-     * Pause ticket / take it off sale
-     *
-     * @param Request $request
-     * @return mixed
-     */
     public function postPauseTicket(Request $request)
     {
         $ticket_id = $request->get('ticket_id');
@@ -164,21 +114,12 @@ class EventTicketsController extends MyBaseController
         ]);
     }
 
-    /**
-     * Deleted a ticket
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function postDeleteTicket(Request $request)
     {
         $ticket_id = $request->get('ticket_id');
 
         $ticket = Ticket::scope()->find($ticket_id);
 
-        /*
-         * Don't allow deletion of tickets which have been sold already.
-         */
         if ($ticket->quantity_sold > 0) {
             return response()->json([
                 'status'  => 'error',
@@ -202,21 +143,10 @@ class EventTicketsController extends MyBaseController
         ]);
     }
 
-    /**
-     * Edit a ticket
-     *
-     * @param Request $request
-     * @param $event_id
-     * @param $ticket_id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postEditTicket(Request $request, $event_id, $ticket_id)
+    public function postEditTicket(Request $request, $event_id, $ticket_id): JsonResponse
     {
         $ticket = Ticket::scope()->findOrFail($ticket_id);
 
-        /*
-         * Add validation message
-         */
         $validation_messages['quantity_available.min'] = trans("Controllers.quantity_min_error");
         $ticket->messages = $validation_messages + $ticket->messages;
 
@@ -227,9 +157,6 @@ class EventTicketsController extends MyBaseController
             ]);
         }
 
-        // Check if the ticket visibility changed on update
-        $ticketPreviouslyHidden = (bool)$ticket->is_hidden;
-
         $ticket->title = $request->get('title');
         $ticket->quantity_available = !$request->get('quantity_available') ? null : $request->get('quantity_available');
         $ticket->price = $request->get('price');
@@ -238,23 +165,10 @@ class EventTicketsController extends MyBaseController
         $ticket->description = prepare_markdown($request->get('description'));
         $ticket->min_per_person = $request->get('min_per_person');
         $ticket->max_per_person = $request->get('max_per_person');
+        $ticket->number_of_person = $request->get('number_of_person');
         $ticket->is_hidden = $request->get('is_hidden') ? 1 : 0;
         $ticket->show_quantity = $request->get('show_quantity') ? 1 : 0;
-
         $ticket->save();
-
-        // Attach the access codes to the ticket if it's hidden and the code ids have come from the front
-        if ($ticket->is_hidden) {
-            $ticketAccessCodes = $request->get('ticket_access_codes', []);
-            if (empty($ticketAccessCodes) === false) {
-                // Sync the access codes on the ticket
-                $ticket->event_access_codes()->detach();
-                $ticket->event_access_codes()->attach($ticketAccessCodes);
-            }
-        } else if ($ticketPreviouslyHidden) {
-            // Delete access codes on ticket if the visibility changed to visible
-            $ticket->event_access_codes()->detach();
-        }
 
         return response()->json([
             'status'      => 'success',
@@ -266,12 +180,6 @@ class EventTicketsController extends MyBaseController
         ]);
     }
 
-    /**
-     * Updates the sort order of tickets
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function postUpdateTicketsOrder(Request $request)
     {
         $ticket_ids = $request->get('ticket_ids');
