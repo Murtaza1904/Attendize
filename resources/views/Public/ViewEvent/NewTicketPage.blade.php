@@ -461,38 +461,14 @@
                                             $is_free_event = true;
                                         ?>
                                         @foreach($tickets->where('is_hidden', false)->where('is_paused', false) as $ticket)
-                                            <tr class="ticket" property="offers" typeof="Offer">
-                                                <td>
+                                            <tr class="ticket" property="offers" typeof="Offer" style="border: 1px solid lightgray; border-bottom: 0">
+                                                <td style="width: 85%; border: none">
                                                     <input type="hidden" name="ticket_title_{{ $ticket->id }}" value="{{ $ticket->title }}">
-                                                    <span class="ticket-title semibold" property="name" id="ticket-title">
+                                                    <span class="ticket-title semibold" property="name" id="ticket-title" style="padding-left: 10px">
                                                         {{$ticket->title}}
                                                     </span>
-                                                    <p class="ticket-descripton mb0 text-muted" property="description">
-                                                        {{$ticket->description}}
-                                                    </p>
                                                 </td>
-                                                <td style="width:200px; text-align: right;">
-                                                    <div class="ticket-pricing" style="margin-right: 20px;">
-                                                        @if($ticket->is_free)
-                                                            @lang("Public_ViewEvent.free")
-                                                            <meta property="price" content="0">
-                                                        @else
-                                                            <?php
-                                                            $is_free_event = false;
-                                                            ?>
-                                                            <input type="hidden" name="ticket_price_{{ $ticket->id }}" value="{{ $ticket->total_price }}">
-                                                            <span title='{{money($ticket->price, $event->currency)}} @lang("Public_ViewEvent.ticket_price") + @lang("Public_ViewEvent.booking_fees")'>{{money($ticket->price, $event->currency)}} Ticket Price 
-                                                            </span>
-                                                            <div> + Booking Fees</div>
-                                                            <span class="tax-amount text-muted text-smaller">{{ ($event->organiser->tax_name && $event->organiser->tax_value) ? '(+'.money(($ticket->total_price*($event->organiser->tax_value)/100), $event->currency).' '.$event->organiser->tax_name.')' : '' }}</span>
-                                                            <meta property="priceCurrency"
-                                                                content="{{ $event->currency->code }}">
-                                                            <meta property="price"
-                                                                content="{{ number_format($ticket->price, 2, '.', '') }}">
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                                <td style="width:85px;">
+                                                <td style="width:15%; position: absolute; right: 10; border: none">
                                                     @if($ticket->sale_status === config('attendize.ticket_status_sold_out'))
                                                         <span class="text-danger" property="availability"
                                                                 content="http://schema.org/SoldOut">
@@ -514,6 +490,37 @@
                                                     @endif
                                                 </td>
                                             </tr>
+                                            @if (!$ticket->is_free)
+                                                <tr style="border-inline: 1px solid lightgray">
+                                                    <td style="border: none;padding: 0" colspan="3">
+                                                        <div class="ticket-pricing" style="padding-inline: 10px">
+                                                            @if($ticket->is_free)
+                                                                @lang("Public_ViewEvent.free")
+                                                                <meta property="price" content="0">
+                                                            @else
+                                                                <?php
+                                                                $is_free_event = false;
+                                                                ?>
+                                                                <input type="hidden" name="ticket_price_{{ $ticket->id }}" value="{{ $ticket->total_price }}">
+                                                                <span title='{{money($ticket->price, $event->currency)}} @lang("Public_ViewEvent.ticket_price") + @lang("Public_ViewEvent.booking_fees")'>{{money($ticket->price, $event->currency)}} Ticket Price + Booking Fees
+                                                                </span>
+                                                                <span class="tax-amount text-muted text-smaller">{{ ($event->organiser->tax_name && $event->organiser->tax_value) ? '(+'.money(($ticket->total_price*($event->organiser->tax_value)/100), $event->currency).' '.$event->organiser->tax_name.')' : '' }}</span>
+                                                                <meta property="priceCurrency"
+                                                                    content="{{ $event->currency->code }}">
+                                                                <meta property="price"
+                                                                    content="{{ number_format($ticket->price, 2, '.', '') }}">
+                                                            @endif
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                            <tr style="border-inline: 1px solid lightgray; border-bottom: 1px solid lightgray">
+                                                <td colspan="3" style="border: none; padding: 0">
+                                                    <p class="ticket-descripton mb0 text-muted" style="padding-inline: 10px" property="description">
+                                                        {{$ticket->description}}
+                                                    </p>
+                                                </td>
+                                            </tr>
                                             @if ($ticket->sale_status !== config('attendize.ticket_status_sold_out') && $ticket->sale_status !== config('attendize.ticket_status_before_sale_date') && $ticket->sale_status !== config('attendize.ticket_status_after_sale_date'))
                                                 @php
                                                     $remaining = $ticket->quantity_available - $ticket->quantity_sold;
@@ -529,6 +536,9 @@
                                                     </tr>
                                                 @endif
                                             @endif
+                                            <tr>
+                                                <td style="border: none"></td>
+                                            </tr>
                                         @endforeach
                                         @if ($tickets->where('is_hidden', false)->where('is_paused', false)->count() > 0)
                                             <tr>
