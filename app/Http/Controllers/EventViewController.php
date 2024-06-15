@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Attendize\Utils;
+use App\EventFaq;
 use App\Models\Affiliate;
 use App\Models\Event;
 use App\Models\EventAccessCodes;
@@ -46,13 +47,11 @@ class EventViewController extends Controller
         }
 
         $data = [
-            'event' => $event,
-            'tickets' => $event->tickets()->orderByRaw('position IS NULL, position ASC')->get(),
-            'is_embedded' => 0,
+            'event'         => $event,
+            'tickets'       => $event->tickets()->orderByRaw('position IS NULL, position ASC')->get(),
+            'is_embedded'   => 0,
+            'faqs'          => EventFaq::where('event_id', $event->id)->get(), 
         ];
-        /*
-         * Don't record stats if we're previewing the event page from the backend or if we own the event.
-         */
         if (!$preview && !Auth::check()) {
             $event_stats = new EventStats();
             $event_stats->updateViewCount($event_id);

@@ -85,7 +85,350 @@
             background: #000 !important;
         }
     </style>
+    <style>
+        @font-face { 
+        font-family:webflow-icons;
+        src:url(data:application/x-font-ttf;charset=utf-8;base64,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)format("truetype");
+        font-weight:400;
+        font-style:normal;
+        } 
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap'); 
+        body {  
+            color:#333;
+            font-family:sans-serif;
+            font-size:16px;
+            line-height:20px;
+        }  
+        * { 
+            box-sizing: border-box;
+        } 
 
+        body { 
+            margin: 0;
+        } 
+
+        body { 
+            color: #333; 
+            background-color: #fff; 
+            min-height: 100%; 
+            margin: 0; 
+            font-family: Arial,sans-serif; 
+            font-size: 14px; 
+            line-height: 20px;
+        } 
+
+        body { 
+            color: #333; 
+            font-family: Montserrat,sans-serif; 
+            font-size: 16px; 
+            line-height: 20px;
+        } 
+
+        body { 
+            top: 0px !important;
+        } 
+
+        html { 
+            -webkit-text-size-adjust: 100%; 
+            -ms-text-size-adjust: 100%; 
+            font-family: sans-serif;
+        } 
+
+        html { 
+            height: 100%;
+        } 
+
+        :root { 
+            --red: #fc2222; 
+            --black: black; 
+        } 
+
+        .w-container { 
+            max-width: 940px; 
+            margin-left: auto; 
+            margin-right: auto;
+        } 
+
+        .faq-container { 
+            border: 0 solid transparent; 
+            border-radius: 14px; 
+            padding-bottom: 20px; 
+            padding-left: 20px; 
+            padding-right: 20px;
+        } 
+
+        .w-container:before,.w-container:after { 
+            content: " "; 
+            grid-area: 1/1/2/2; 
+            display: table;
+        } 
+
+        .w-container:after { 
+            clear: both;
+        } 
+
+        h1 { 
+            margin: .67em 0; 
+            font-size: 2em;
+        } 
+
+        h1 { 
+            margin-bottom: 10px; 
+            font-weight: 700;
+        } 
+
+        h1 { 
+            margin-top: 20px; 
+            font-size: 38px; 
+            line-height: 44px;
+        } 
+
+        h1 { 
+            margin-top: 20px; 
+            margin-bottom: 10px; 
+            font-size: 38px; 
+            line-height: 44px;
+        } 
+
+        .faqheading-108 { 
+            color: var(--black); 
+            text-align: center; 
+            margin-bottom: 30px; 
+            font-family: Montserrat,sans-serif; 
+            font-size: 38px;
+        } 
+
+        .w-dropdown { 
+            text-align: left; 
+            z-index: 900; 
+            margin-left: auto; 
+            margin-right: auto; 
+            display: inline-block; 
+            position: relative;
+        } 
+
+        .accordion-item { 
+            float: none; 
+            text-align: left; 
+            width: 100%; 
+            margin: 0 0 30px; 
+            overflow: hidden;
+        } 
+
+        .w-dropdown-toggle { 
+            vertical-align: top; 
+            color: #222; 
+            text-align: left; 
+            white-space: nowrap; 
+            margin-left: auto; 
+            margin-right: auto; 
+            padding: 20px; 
+            text-decoration: none; 
+            position: relative;
+        } 
+
+        .w-dropdown-toggle { 
+            -webkit-user-select: none; 
+            -ms-user-select: none; 
+            user-select: none; 
+            cursor: pointer; 
+            padding-right: 40px; 
+            display: inline-block;
+        } 
+
+        .accordion-toggle-2 { 
+            background-color: var(--red); 
+            border-radius: 0; 
+            height: 70px; 
+            padding-top: 10px; 
+            padding-bottom: 10px; 
+            display: flex;
+        } 
+
+        nav { 
+            display: block;
+        } 
+
+        .w-dropdown-list { 
+            background: #ddd; 
+            min-width: 100%; 
+            display: none; 
+            position: absolute;
+        }
+
+        .dropdown-list-3 { 
+            background-color: #fff; 
+            height: auto; 
+            padding: 20px 0; 
+            display: block; 
+            position: static;
+        } 
+
+        [class*=" w-icon-"] { 
+            speak: none; 
+            font-variant: normal; 
+            text-transform: none; 
+            -webkit-font-smoothing: antialiased; 
+            -moz-osx-font-smoothing: grayscale; 
+            font-style: normal; 
+            font-weight: 400; 
+            line-height: 1; 
+            font-family: webflow-icons!important;
+        } 
+
+        .w-icon-dropdown-toggle { 
+            width: 1em; 
+            height: 1em; 
+            margin: auto 20px auto auto; 
+            position: absolute; 
+            top: 0; 
+            bottom: 0; 
+            right: 0;
+        } 
+
+        .accordion-icon { 
+            color: #fff; 
+            background-color: transparent; 
+            font-size: 18px;
+        } 
+
+        .w-icon-arrow-down:before,.w-icon-dropdown-toggle:before { 
+            content: "";
+        } 
+
+        .text-block-24 { 
+            color: #fff; 
+            align-self: center; 
+            width: 100%; 
+            height: auto; 
+            font-size: 20px; 
+            font-weight: 600;
+        } 
+
+        a { 
+            background-color: transparent;
+        } 
+
+        a { 
+            color: var(--red); 
+            font-weight: 500; 
+            text-decoration: underline;
+        } 
+
+        .w-dropdown-link { 
+            vertical-align: top; 
+            color: #222; 
+            text-align: left; 
+            white-space: nowrap; 
+            margin-left: auto; 
+            margin-right: auto; 
+            padding: 20px; 
+            text-decoration: none; 
+            position: relative;
+        } 
+
+        .w-dropdown-link { 
+            color: #222; 
+            padding: 10px 20px; 
+            display: block;
+        } 
+
+        .dropdown-link-4 { 
+            color: #000; 
+            white-space: break-spaces; 
+            cursor: default; 
+            align-items: stretch; 
+            width: 100%; 
+            height: auto; 
+            margin: auto; 
+            padding: 10px 20px; 
+            font-family: Montserrat,sans-serif; 
+            font-size: 18px; 
+            font-weight: 500; 
+            line-height: 25px; 
+            display: block;
+        } 
+
+        a:active,a:hover { 
+            outline: 0;
+        } 
+
+        [class^="w-icon-"], [class*=" w-icon-"] { 
+            speak: none; 
+            font-variant: normal; 
+            text-transform: none; 
+            -webkit-font-smoothing: antialiased; 
+            -moz-osx-font-smoothing: grayscale; 
+            font-style: normal; 
+            font-weight: 400; 
+            line-height: 1; 
+            font-family: webflow-icons!important;
+        } 
+
+        strong { 
+            font-weight: 700;
+        } 
+
+        strong { 
+            color: var(--red); 
+            font-size: 70px; 
+            font-weight: 500;
+        } 
+
+        .faq-bold-text { 
+            color: #fff; 
+            font-size: 22px;
+        } 
+
+        .text-span-52 { 
+            color: var(--red); 
+            cursor: pointer; 
+            font-weight: 700;
+        } 
+
+
+        /* These were inline style tags. Uses id+class to override almost everything */
+        #style-aPEiH.style-aPEiH {  
+        height: 70px;  
+        }
+
+        .show {
+            width: 900px;
+            z-index: 901;
+        }
+
+        #style-ohEWj.style-ohEWj {  
+        height: 70px;  
+        }  
+        #style-XrOy4.style-XrOy4 {  
+        height: 70px;  
+        }  
+        #style-OdSj6.style-OdSj6 {  
+        height: 70px;  
+        }  
+        #style-V3oIU.style-V3oIU {  
+        height: 70px;  
+        }  
+        #style-ZOQee.style-ZOQee {  
+        height: 70px;  
+        }  
+        #style-tOnGG.style-tOnGG {  
+        height: 70px;  
+        }  
+        #style-rNZe1.style-rNZe1 {  
+        height: 70px;  
+        }  
+        #style-MTIz7.style-MTIz7 {  
+        height: 70px;  
+        }  
+        #style-1bW1Y.style-1bW1Y {  
+        height: 70px;  
+        }  
+        #style-N53TH.style-N53TH {  
+        height: 70px;  
+        }  
+
+    </style>
 </head>
 
 <body class="attendize">
@@ -379,6 +722,32 @@
                         <iframe frameborder="0" style="border:0;" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q={{$event->map_address}}&amp;aq=0&amp;oq={{$event->map_address}}&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq={{$event->map_address}}&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe>
                     </div>
                 </div>
+            </div>
+        </section>
+        <script>
+            function show(element) {
+                var $element = $(element);
+                if ($element.hasClass('style-aPEiH')) {
+                    $element.removeClass('style-aPEiH').addClass('show');
+                } else {
+                    $element.addClass('style-aPEiH').removeClass('show');
+                }
+            }
+        </script>
+        <section id="faq">
+            <div class="faq-container w-container">
+                <h1 class="faqheading-108">Frequently Ask Questions</h1>
+                @forelse ($faqs as $faq)
+                    <div data-hover="false" class="accordion-item w-dropdown style-aPEiH" id="style-aPEiH" onclick="show(this)">
+                        <div class="accordion-toggle-2 w-dropdown-toggle" id="w-dropdown-toggle-2" aria-controls="w-dropdown-list-2" aria-haspopup="menu" aria-expanded="false" role="button" tabindex="0">
+                            <div class="accordion-icon w-icon-dropdown-toggle" aria-hidden="true"></div>
+                            <div class="text-block-24"><strong class="faq-bold-text">{{ $faq->question }}</strong></div>
+                        </div>
+                        <nav class="dropdown-list-3 w-dropdown-list" id="w-dropdown-list-2" aria-labelledby="w-dropdown-toggle-2"><a href="#" class="dropdown-link-4 w-dropdown-link" tabindex="0">{{ $faq->answer }}</a></nav>
+                    </div>
+                @empty
+                    <div style="color: #fc2222; text-align: center">No FAQ Exists</div>
+                @endforelse
             </div>
         </section>
         <section id="organiser" class="container">
