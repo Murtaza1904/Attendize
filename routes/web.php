@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\EventFaqController;
 use App\Http\Controllers\EventViewController;
 use App\Http\Controllers\InstallerController;
 use App\Http\Controllers\OrganiserController;
@@ -647,6 +648,35 @@ Route::group(
             Route::post('{event_id}/discount_codes/{discount_code_id}/delete',
                 [EventDiscountCodesController::class, 'postDelete']
             )->name('postDeleteEventDiscountCode');
+            
+            /*
+             * -------
+             * Event FAQ page
+             * -------
+             */
+            Route::get('{event_id}/faq',
+                [EventFaqController::class, 'show']
+            )->name('showEventFaq');
+
+            Route::get('{event_id}/faq/create',
+                [EventFaqController::class, 'showCreate']
+            )->name('showCreateEventFaq');
+
+            Route::post('{event_id}/faq/create',
+                [EventFaqController::class, 'postCreate']
+            )->name('postCreateEventFaq');
+            
+            Route::get('{event_id}/faq/{faq_id}/edit',
+                [EventFaqController::class, 'showEdit']
+            )->name('showEditEventFaq');
+
+            Route::put('{event_id}/faq/{faq_id}/update',
+                [EventFaqController::class, 'postEdit']
+            )->name('postEditEventFaq');
+
+            Route::post('{event_id}/faq/{faq_id}/delete',
+                [EventFaqController::class, 'postDelete']
+            )->name('postDeleteEventFaq');
 
             /*
              * -------

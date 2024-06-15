@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\EventDiscountCode;
+use App\EventFaq;
 use Str;
 use URL;
 use App\RegionTax;
@@ -434,6 +435,11 @@ ICSTemplate;
     public function discountCodes(): HasMany
     {
         return $this->hasMany(EventDiscountCode::class);
+    }
+    
+    public function faqs(): HasMany
+    {
+        return $this->hasMany(EventFaq::class);
     }
 
     /**

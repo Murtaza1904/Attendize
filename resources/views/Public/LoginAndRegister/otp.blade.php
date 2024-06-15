@@ -90,7 +90,7 @@
                         {{ config('app.name') }}
                     </div>
                     <div class="d-flex justify-content-center">
-                        <p>We have sent you the vefication code on your email</p>
+                        <p>We have sent you the verification code on your email</p>
                     </div>
                     <form action="{{ route('client-login.otp.verify') }}" method="POST">
                         @csrf

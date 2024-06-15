@@ -80,6 +80,12 @@
                     <span class="text">DISCOUNT CODE</span>
                 </a>
             </li>
+            <li class="{{ Request::is('*faq*') ? 'active' : '' }}">
+                <a href="{{ route('showEventFaq', [ 'event_id' => $event->id ]) }}">
+                    <span class="figure"><i class="ico-question"></i></span>
+                    <span class="text">FAQ</span>
+                </a>
+            </li>
         </ul>
     </section>
 </aside>

@@ -30,37 +30,39 @@
 <body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KBQ8RTT" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
-    <div class="hr_nav-container">
-        <a href="/" aria-current="page" class="hr-logo w-nav-brand w--current" aria-label="home">
-            <img src="https://cdn.prod.website-files.com/62a4ae1a77029b4f2e631a4e/6478ba3d1b4f2642c524267b_HRF%20TOUR%20LOGO%20White-01.svg"
-                loading="lazy" alt="" class="image-145">
-        </a>
-        <nav role="navigation" class="nav-menu-5 w-nav-menu">
-            @if (auth()->guard('client')->user())
-            <a href="{{ route('client.my-orders.index') }}" class="hr_nav-link w-nav-link">My Tickets</a>
-            <a href="{{ route('client.profile.index') }}" class="hr_nav-link w-nav-link">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 448 512" fill="#fff" height="15">
-                    <path
-                        d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
-                </svg>
-                <span style="margin-left: 4px">My Profile</span>
-            </a>
-            <form action="{{ route('client.logout') }}" method="POST" style="float: right; display: inline;">
-                @csrf
-                <button type="submit" class="btn"
-                    style="background: #fc2222; padding-inline: 10px; padding-block: 5px">
-                    Logout
-                </button>
-            </form>
-            @else
-                <a href="{{ route('client-login.show') }}"  class="btn"
-                    style="background: #fc2222; padding-inline: 10px; padding-block: 5px; text-decoration: none; border-radius: 5px">
-                    LOGIN
-                </a>
-            @endif
-        </nav>
-    </div>
+            <div style="width: 100%; background: black">
+                <div class="hr_nav-container">
+                    <a href="/" aria-current="page" class="hr-logo w-nav-brand w--current" aria-label="home">
+                        <img src="https://cdn.prod.website-files.com/62a4ae1a77029b4f2e631a4e/6478ba3d1b4f2642c524267b_HRF%20TOUR%20LOGO%20White-01.svg"
+                            loading="lazy" alt="" class="image-145">
+                    </a>
+                    <nav role="navigation" class="nav-menu-5 w-nav-menu">
+                        @if (auth()->guard('client')->user())
+                        <a href="{{ route('client.my-orders.index') }}" class="hr_nav-link w-nav-link">My Tickets</a>
+                        <a href="{{ route('client.profile.index') }}" class="hr_nav-link w-nav-link">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 448 512" fill="#fff" height="15">
+                                <path
+                                    d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
+                            </svg>
+                            <span style="margin-left: 4px">My Profile</span>
+                        </a>
+                        <form action="{{ route('client.logout') }}" method="POST" style="float: right; display: inline;">
+                            @csrf
+                            <button type="submit" class="btn"
+                                style="background: #fc2222; padding-inline: 10px; padding-block: 5px">
+                                Logout
+                            </button>
+                        </form>
+                        @else
+                            <a href="{{ route('client-login.show') }}"  class="btn"
+                                style="background: #fc2222; padding-inline: 10px; padding-block: 5px; text-decoration: none; border-radius: 5px">
+                                LOGIN
+                            </a>
+                        @endif
+                    </nav>
+                </div>
+            </div>
     {{-- @if (auth()->guard('client')->user())
         <div style="position: absolute;z-index: 999; right: 0; margin: 20px">
             <a href="{{ route('client.profile.index') }}" style="color: #fff">{{ auth()->guard('client')->user()->email }}</a>

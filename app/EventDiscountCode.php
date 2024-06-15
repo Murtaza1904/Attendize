@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Models\MyBaseModel;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EventDiscountCode extends MyBaseModel
@@ -24,8 +23,4 @@ class EventDiscountCode extends MyBaseModel
             'expiry_date' => 'required|date_format:d-m-Y',
         ];
     }
-
-    protected $cast = [
-        'expiry_date'
-    ];
 }

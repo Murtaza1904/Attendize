@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\EventDiscountCode;
 use App\Models\Event;
-use App\Models\EventAccessCodes;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -19,14 +17,14 @@ class EventDiscountCodesController extends MyBaseController
         ]);
     }
 
-    public function showCreate($event_id)
+    public function showCreate($event_id): View
     {
         return view('ManageEvent.Modals.CreateDiscountCode', [
             'event' => Event::scope()->find($event_id),
         ]);
     }
 
-    public function postCreate(Request $request, $event_id)
+    public function postCreate(Request $request, $event_id): JsonResponse
     {
         $eventDiscountCode = new EventDiscountCode();
 
@@ -54,20 +52,16 @@ class EventDiscountCodesController extends MyBaseController
         ]);
     }
 
-    public function postDelete($event_id, $discount_code_id)
+    public function postDelete($event_id, $discount_code_id): JsonResponse
     {
-        $event = Event::scope()->findOrFail($event_id);
-
-        if ($event->hasAccessCode($discount_code_id)) {
-            $discountCode = EventDiscountCode::find($discount_code_id);
-            if ($discountCode->usage > 0) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => trans('AccessCodes.cannot_delete_used_code'),
-                ]);
-            }
-            $discountCode->delete();
+        $discountCode = EventDiscountCode::find($discount_code_id);
+        if ($discountCode->usage > 0) {
+            return response()->json([
+                'status' => 'error',
+                'message' => trans('AccessCodes.cannot_delete_used_code'),
+            ]);
         }
+        $discountCode->delete();
 
         session()->flash('message', 'DISCOUNT CODE DELETED!');
 
