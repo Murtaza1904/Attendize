@@ -747,6 +747,7 @@
         <section id="faq">
             <div class="faq-container w-container">
                 <h1 class="faqheading-108">Frequently Ask Questions</h1>
+                @if(isset($faqs))
                 @forelse ($faqs as $faq)
                     <div data-hover="false" class="accordion-item w-dropdown style-aPEiH" id="style-aPEiH" onclick="show(this)">
                         <div class="accordion-toggle-2 w-dropdown-toggle" id="w-dropdown-toggle-2" aria-controls="w-dropdown-list-2" aria-haspopup="menu" aria-expanded="false" role="button" tabindex="0">
@@ -758,6 +759,9 @@
                 @empty
                     <div style="color: #fc2222; text-align: center">No FAQ Exists</div>
                 @endforelse
+                @else
+                    <div style="color: #fc2222; text-align: center">No FAQ Exists</div>
+                @endif
             </div>
         </section>
         <section id="organiser" class="container">
