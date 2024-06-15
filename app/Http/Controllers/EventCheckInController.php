@@ -6,18 +6,14 @@ use App\Models\Attendee;
 use App\Models\Event;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use JavaScript;
 
 class EventCheckInController extends MyBaseController
 {
-    /**
-     * Show the check-in page
-     *
-     * @param $event_id
-     * @return \Illuminate\View\View
-     */
-    public function showCheckIn($event_id)
+    public function showCheckIn($event_id): View
     {
         $event = Event::scope()->findOrFail($event_id);
 
@@ -35,18 +31,11 @@ class EventCheckInController extends MyBaseController
         return view('ManageEvent.CheckIn', $data);
     }
 
-    public function showQRCodeModal(Request $request, $event_id)
+    public function showQRCodeModal(Request $request, $event_id): View
     {
         return view('ManageEvent.Modals.QrcodeCheckIn');
     }
 
-    /**
-     * Search attendees
-     *
-     * @param Request $request
-     * @param $event_id
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function postCheckInSearch(Request $request, $event_id)
     {
         $searchQuery = $request->get('q');
@@ -86,22 +75,13 @@ class EventCheckInController extends MyBaseController
         return response()->json($attendees);
     }
 
-    /**
-     * Check in/out an attendee
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function postCheckInAttendee(Request $request)
+    public function postCheckInAttendee(Request $request): JsonResponse
     {
         $attendee_id = $request->get('attendee_id');
         $checking = $request->get('checking');
 
         $attendee = Attendee::scope()->find($attendee_id);
 
-        /*
-         * Ugh
-         */
         if ((($checking == 'in') && ($attendee->has_arrived == 1)) || (($checking == 'out') && ($attendee->has_arrived == 0))) {
             return response()->json([
                 'status'  => 'error',
@@ -123,14 +103,6 @@ class EventCheckInController extends MyBaseController
         ]);
     }
 
-
-    /**
-     * Check in an attendee
-     *
-     * @param $event_id
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function postCheckInAttendeeQr($event_id, Request $request)
     {
         $event = Event::scope()->findOrFail($event_id);
