@@ -6,7 +6,12 @@
 {!! @trans("Order_Emails.successful_order", ["name"=>$order->event->title]) !!}<br><br>
 
 {{ @trans("Order_Emails.tickets_attached") }} <a href="{{route('showOrderDetails', ['order_reference' => $order->order_reference])}}">{{route('showOrderDetails', ['order_reference' => $order->order_reference])}}</a>.
-
+<div style="display: flex; justify-content: center">
+    <a href="{{ route('showOrderTickets', ['order_reference' => $order->order_reference] ).'?download=1' }}" 
+        style="background: #fc2222; padding-inline: 100px; padding-block: 10px; color: #fff; border-radius: 5px; margin-block: 10px; text-decoration: none">
+        Download Your Ticket
+    </a>
+</div>
 @if(!$order->is_payment_received)
 <br><br>
 <strong>{{ @trans("Order_Emails.order_still_awaiting_payment") }}</strong>
