@@ -16,7 +16,7 @@ class EventDiscountCode extends MyBaseModel
     public function rules()
     {
         return [
-            'code' => 'required|string|max:191|unique:event_discount_codes,code',
+            'code' => 'required|string|max:191',
             'discount_percentage' => 'required|numeric',
             'limit' => 'required|numeric',
             'usage' => 'nullable|numeric',

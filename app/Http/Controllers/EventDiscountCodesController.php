@@ -35,6 +35,13 @@ class EventDiscountCodesController extends MyBaseController
             ]);
         }
 
+        if(EventDiscountCode::where('event_id', $event_id)->where('code', $request->code)->count() == 1) {
+            return response()->json([
+                'status' => 'error',
+                'messages' => ['code' => 'The code has already been taken.'],
+            ]);
+        }
+
         $eventDiscountCode->event_id = $event_id;
         $eventDiscountCode->code = $request->code;
         $eventDiscountCode->discount_percentage = $request->discount_percentage;
