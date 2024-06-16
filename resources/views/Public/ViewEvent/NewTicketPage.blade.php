@@ -434,6 +434,9 @@
             width: 15%;
             position: absolute;
         }
+        .label_discount{
+            width: 170px;
+        }
         /* CSS rules for devices with a viewport width of 768px or less */
         @media (max-width: 768px) {
             body{
@@ -448,6 +451,12 @@
              .ticket_select{
             width: 30% !important;
             }
+            .cards_image{
+                display: none !important;
+            }
+            .label_discount{
+            width: 100%;
+        }
         }
             </style>
 </head>
@@ -569,13 +578,12 @@
                                             </tr>
                                         @endif
                                         <tr class="checkout">
-                                            <td style="width: 40%">
+                                            <td style="40%" class="cards_image">
                                                 @if(!$is_free_event)
-                                                    <div class="hidden-xs pull-left" style="margin-top: 20px">
+                                                    <div class="cards_image pull-left" style="margin-top: 20px">
                                                         <img class=""
                                                              src="{{asset('assets/images/public/EventPage/credit-card-logos.png')}}"/>
                                                         @if($event->enable_offline_payments)
-        
                                                             <div class="help-block" style="font-size: 11px;">
                                                                 @lang("Public_ViewEvent.offline_payment_methods_available")
                                                             </div>
@@ -583,19 +591,21 @@
                                                     </div>
                                                 @endif
                                             </td>
-                                            <td style="width: 30%">
+                                            <td style="30%;">
                                                 @if($tickets->where('is_hidden', false)->where('is_paused', false)->count() > 0)
-                                                    {{-- {!!Form::submit('Add To Cart', ['class' => 'btn btn-lg btn-event-link pull-right h-black'])!!} --}}
                                                     @if ($event->discountCodes->isNotEmpty())
-                                                    <label for="">Have Discount Code?</label>
-                                                    <input type="text" name="discount_code" id="discount_code" placeholder="Enter discount code" class="form-control">
+                                                        <label class="label_discount" for="">Have Discount Code?</label>
+                                                        <input type="text" name="discount_code" id="discount_code" placeholder="Enter discount code" class="form-control" style="width: 85%">
+                                                    @endif
                                                 @endif
                                             </td>
-                                            <td style="width: 30%">
-                                                    <input class="btn btn-lg btn-event-link pull-right h-black"  style="margin-top: 20px" type="submit" value="Add To Cart" onclick="googleStore()">
+                                            <td style="30%">
+                                                @if($tickets->where('is_hidden', false)->where('is_paused', false)->count() > 0)
+                                                    <input class="btn btn-lg btn-event-link pull-right h-black" style="margin-top: 20px" type="submit" value="Add To Cart" onclick="googleStore()">
                                                 @endif
                                             </td>
                                         </tr>
+                                        
                                     </table>
                                 </div>
                             </div>

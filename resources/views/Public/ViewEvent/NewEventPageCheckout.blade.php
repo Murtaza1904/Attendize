@@ -50,12 +50,12 @@
             font-display: swap;
         }
 
-        /* body {
+        body {
             background-image: url(https://assets-global.website-files.com/62a4ae1a77029b4f2e631a4e/649096276c987f8deefd0a57_eat.png), url(https://assets-global.website-files.com/62a4ae1a77029b4f2e631a4e/646ef4d502eaff757e319436_Layer%2049%20\(1\).png);
             background-position: 100% 30px, 0 30px;
             background-repeat: no-repeat, no-repeat, no-repeat;
             background-size: auto, auto, auto;
-        } */
+        }
 
         #event_page_wrap {
             background: none;
