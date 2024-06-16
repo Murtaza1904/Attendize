@@ -190,7 +190,7 @@ class EventCheckoutController extends Controller
             'validation_rules'        => $validation_rules,
             'validation_messages'     => $validation_messages,
             'event_id'                => $event->id,
-            'discount_code'           => $eventDiscountCode->code ?? 0,
+            'discount_code'           => $eventDiscountCode->code ?? null,
             'tickets'                 => $tickets,
             'total_ticket_quantity'   => $total_ticket_quantity,
             'order_started'           => time(),
@@ -722,7 +722,13 @@ class EventCheckoutController extends Controller
         //save the order to the database
         DB::commit();
 
-        EventDiscountCode::where('event_id', $event->id)->where('code', $ticket_order['discount_code'])->increment('usage', 1);
+        $eventDiscountCode = EventDiscountCode::where('event_id', $event->id)->where('code', $ticket_order['discount_code'])->first();
+
+        if(isset($eventDiscountCode)) {
+            $eventDiscountCode->update([
+                'usage' => $eventDiscountCode->usage + 1,
+            ]);
+        }
 
         //forget the order in the session
         session()->forget('ticket_order_' . $event->id);

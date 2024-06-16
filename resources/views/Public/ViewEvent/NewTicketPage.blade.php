@@ -548,7 +548,7 @@
                                             </tr>
                                         @endif
                                         <tr class="checkout">
-                                            <td style="width: 60px">
+                                            <td style="width: 40%">
                                                 @if(!$is_free_event)
                                                     <div class="hidden-xs pull-left" style="margin-top: 20px">
                                                         <img class=""
@@ -562,7 +562,7 @@
                                                     </div>
                                                 @endif
                                             </td>
-                                            <td style="60px">
+                                            <td style="width: 30%">
                                                 @if($tickets->where('is_hidden', false)->where('is_paused', false)->count() > 0)
                                                     {{-- {!!Form::submit('Add To Cart', ['class' => 'btn btn-lg btn-event-link pull-right h-black'])!!} --}}
                                                     @if ($event->discountCodes->isNotEmpty())
@@ -570,7 +570,7 @@
                                                     <input type="text" name="discount_code" id="discount_code" placeholder="Enter discount code" class="form-control">
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td style="width: 30%">
                                                     <input class="btn btn-lg btn-event-link pull-right h-black"  style="margin-top: 20px" type="submit" value="Add To Cart" onclick="googleStore()">
                                                 @endif
                                             </td>
