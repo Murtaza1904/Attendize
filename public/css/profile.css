@@ -48,8 +48,8 @@ body {
         url(https://assets-global.website-files.com/62a4ae1a77029b4f2e631a4e/649096276c987f8deefd0a57_eat.png),
         url(https://assets-global.website-files.com/62a4ae1a77029b4f2e631a4e/646ef4d502eaff757e319436_Layer%2049%20\(1\).png);
     background-position: 100% 30px, 0 30px;
-    background-repeat: no-repeat, no-repeat, no-repeat;
-    background-size: auto, auto, auto;
+    background-repeat: no-repeat, no-repeat;
+    background-size: auto, auto;
 }
 
 #event_page_wrap {
@@ -369,4 +369,12 @@ svg:not(:root) {
 
 .dropdown-link-5:hover {
     color: var(--red);
+}
+/* CSS rules for devices with a viewport width of 768px or less */
+@media (max-width: 768px) {
+    body {
+       
+        background-position: 120% 30px, 4px 30px !important;
+        
+    }
 }

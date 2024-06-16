@@ -427,8 +427,29 @@
         #style-N53TH.style-N53TH {  
         height: 70px;  
         }  
-
-    </style>
+        .ticket_name{
+            width: 85%;
+        }
+        .ticket_select{
+            width: 15%;
+            position: absolute;
+        }
+        /* CSS rules for devices with a viewport width of 768px or less */
+        @media (max-width: 768px) {
+            body{
+                background-position: 133% 30px, -13px 30px;
+            }
+            .content{
+                padding: 0px !important;
+            }
+            .ticket_name{
+            width: 100% !important;
+            }
+             .ticket_select{
+            width: 30% !important;
+            }
+        }
+            </style>
 </head>
 
 <body class="attendize">
@@ -462,13 +483,13 @@
                                         ?>
                                         @foreach($tickets->where('is_hidden', false)->where('is_paused', false) as $ticket)
                                             <tr class="ticket" property="offers" typeof="Offer" style="border: 1px solid lightgray; border-bottom: 0">
-                                                <td style="width: 85%; border: none">
+                                                <td class="ticket_name" style="border: none; padding-left: 10px">
                                                     <input type="hidden" name="ticket_title_{{ $ticket->id }}" value="{{ $ticket->title }}">
-                                                    <span class="ticket-title semibold" property="name" id="ticket-title" style="padding-left: 10px">
+                                                    <span class="ticket-title semibold" property="name" id="ticket-title">
                                                         {{$ticket->title}}
                                                     </span>
                                                 </td>
-                                                <td style="width:15%; position: absolute; right: 10; border: none">
+                                                <td class="ticket_select" style="border: none">
                                                     @if($ticket->sale_status === config('attendize.ticket_status_sold_out'))
                                                         <span class="text-danger" property="availability"
                                                                 content="http://schema.org/SoldOut">
@@ -516,7 +537,7 @@
                                             @endif
                                             <tr style="border-inline: 1px solid lightgray; border-bottom: 1px solid lightgray">
                                                 <td colspan="3" style="border: none; padding: 0">
-                                                    <p class="ticket-descripton mb0 text-muted" style="padding-inline: 10px" property="description">
+                                                    <p class="ticket-descripton mb0 text-muted" style="padding-inline: 10px ; padding-bottom: 10px" property="description">
                                                         {{$ticket->description}}
                                                     </p>
                                                 </td>

@@ -9,6 +9,14 @@
         color: #fff;
         text-align: center;
     }
+
+    @media (max-width: 768px) {
+
+        /* Your CSS styles here */
+        #footer {
+            line-height: 25px;
+        }
+    }
 </style>
 <footer id="footer" class="container-fluid">
     <div class="container">
@@ -16,7 +24,7 @@
             <div class="col-md-12">
                 Copyrights &copy; by
                 <a class="adminLink " href="https://www.halalribfest.com/" target="__blank"
-                style="text-decoration: none; color: #fc2222">Halal Ribfest</a>. All rights reserved
+                    style="text-decoration: none; color: #fc2222">Halal Ribfest</a>. All rights reserved
             </div>
         </div>
     </div>
