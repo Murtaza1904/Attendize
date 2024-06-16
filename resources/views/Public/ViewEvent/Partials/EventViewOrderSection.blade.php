@@ -53,6 +53,12 @@
                 <i class="ico ico-checkmark-circle"></i>
             </span>
             <h1>{{ @trans("Public_ViewEvent.thank_you_for_your_order") }}</h1>
+            <div style="display: flex; justify-content: center">
+                <a href="{{ route('showOrderTickets', ['order_reference' => $order->order_reference] ).'?download=1' }}" 
+                    style="background: #fc2222; padding-inline: 100px; padding-block: 10px; color: #fff; border-radius: 5px">
+                    Download Ticket
+                </a>
+            </div>
             <h2>
                 {{ @trans("Public_ViewEvent.your") }}
                 <a class="ticket_download_link"
