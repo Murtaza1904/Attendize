@@ -27,9 +27,11 @@ class Handler extends ExceptionHandler
 
     public function report(Exception $exception)
     {
-        Mail::to(env('ERROR_MAIL_TO'))
-            ->cc(env('ERROR_MAIL_CC'))
-            ->send(new ServerErrorMail([$exception->getMessage(), $exception->getFile().':'.$exception->getLine()]));
+        if (config('app.env') == 'production') {
+            Mail::to(env('ERROR_MAIL_TO'))
+                ->cc(env('ERROR_MAIL_CC'))
+                ->send(new ServerErrorMail([$exception->getMessage(), $exception->getFile().':'.$exception->getLine()]));
+        }
 
         parent::report($exception);
     }

@@ -10,11 +10,10 @@ class AttendeeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'email' => $this->email,
-            'reference_number' => $this->private_reference_number,
-            'is_arrived' => $this->has_arrived === 0 ? false : true,
+            'name' => $this->first_name.' '. $this->last_name,
+            'reference' => $this->getReferenceAttribute(),
+            'ticket' => $this->ticket->title,
+            'has_arrived' => $this->has_arrived === 0 ? false : true,
         ];
     }
 }

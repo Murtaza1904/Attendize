@@ -41,9 +41,14 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\SetViewVariables::class
         ],
 
+        // 'api' => [
+        //     'throttle:60,1',
+        //     'bindings',
+        // ],
         'api' => [
             'throttle:60,1',
-            'bindings',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         ],
     ];
 
