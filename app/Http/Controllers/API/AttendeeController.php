@@ -72,7 +72,8 @@ class AttendeeController extends Controller
 
         if ($attendee->has_arrived) {
             return response()->json([
-                'message' => 'Attendee_already_checked_in at '. $attendee->arrival_time->format(config("attendize.default_datetime_format")),
+                'message' => 'Attendee already checked in at '. $attendee->arrival_time->format(config("attendize.default_datetime_format")),
+                'attendee_id' => $attendee->id,
             ], 422);
         }
 
@@ -80,6 +81,7 @@ class AttendeeController extends Controller
 
         return response()->json([
             'message' =>  'Attendee successfully checked in',
+            'attendee_id' => $attendee->id,
         ]);
     }
 }
