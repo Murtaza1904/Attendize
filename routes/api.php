@@ -25,5 +25,6 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // Attendees
     Route::get('attendees-list/{event}', [AttendeeController::class, 'index']);
-    Route::post('attendees-list/{event}/check-mark', [AttendeeController::class, 'update']);
+    Route::put('attendees-list/{event}/check-mark', [AttendeeController::class, 'update']);
+    Route::put('attendees-list/{event}/check-mark-qrcode', [AttendeeController::class, 'updateUsingQrcode']);
 });

@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\Attendee;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\AttendeeCheckInQrcodeRequest;
 use App\Http\Requests\Api\AttendeeCheckInRequest;
 use App\Http\Resources\AttendeeResource;
 
@@ -38,6 +39,47 @@ class AttendeeController extends Controller
 
         return response()->json([
             'message' =>  (($checking == 'in') ? 'Attendee successfully checked in' : 'attendee successfully checked out'),
+        ]);
+    }
+
+    public function updateUsingQrcode($event_id, AttendeeCheckInQrcodeRequest $request)
+    {
+        $event = Event::scope()->findOrFail($event_id);
+
+        $qrcodeToken = $request->get('attendee_reference');
+        $attendee = Attendee::scope()->withoutCancelled()
+            ->join('tickets', 'tickets.id', '=', 'attendees.ticket_id')
+            ->where(function ($query) use ($event, $qrcodeToken) {
+                $query->where('attendees.event_id', $event->id)
+                    ->where('attendees.private_reference_number', $qrcodeToken);
+            })->select([
+                'attendees.id',
+                'attendees.order_id',
+                'attendees.first_name',
+                'attendees.last_name',
+                'attendees.email',
+                'attendees.reference_index',
+                'attendees.arrival_time',
+                'attendees.has_arrived',
+                'tickets.title as ticket',
+            ])->first();
+
+        if (is_null($attendee)) {
+            return response()->json([
+                'message' => 'Invalid Ticket! Please try again',
+            ], 422);
+        }
+
+        if ($attendee->has_arrived) {
+            return response()->json([
+                'message' => 'Attendee_already_checked_in at '. $attendee->arrival_time->format(config("attendize.default_datetime_format")),
+            ], 422);
+        }
+
+        Attendee::find($attendee->id)->update(['has_arrived' => true, 'arrival_time' => Carbon::now()]);
+
+        return response()->json([
+            'message' =>  'Attendee successfully checked in',
         ]);
     }
 }
