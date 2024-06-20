@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use JavaScript;
 use Validator;
@@ -122,7 +123,7 @@ class EventCheckInController extends MyBaseController
 
         // $attendee->has_arrived = ($checking == 'in') ? 1 : 0;
         $attendee->has_arrived = 1;
-        $attendee->arrival_time = Carbon::now();
+        $attendee->arrival_time = $attendee->arrival_time ?? Carbon::now();
         $attendee->number_of_attendees = $request->number_of_attendees;
         $attendee->number_of_children = $request->number_of_children;
         $attendee->note = $request->note;
@@ -153,6 +154,7 @@ class EventCheckInController extends MyBaseController
                 'attendees.last_name',
                 'attendees.email',
                 'attendees.reference_index',
+                'attendees.private_reference_number',
                 'attendees.arrival_time',
                 'attendees.has_arrived',
                 'tickets.title as ticket',
@@ -161,30 +163,34 @@ class EventCheckInController extends MyBaseController
         if (is_null($attendee)) {
             return response()->json([
                 'status'  => 'error',
-                'message' => trans("Controllers.invalid_ticket_error")
+                'message' => 'Invalid Ticket! Please try again.',
             ]);
         }
 
-        $relatedAttendesCount = Attendee::where('id', '!=', $attendee->id)
-            ->where([
-                'order_id'    => $attendee->order_id,
-                'has_arrived' => false
-            ])->count();
+        // $relatedAttendesCount = Attendee::where('id', '!=', $attendee->id)
+        //     ->where([
+        //         'order_id'    => $attendee->order_id,
+        //         'has_arrived' => false
+        //     ])->count();
 
-        if ($attendee->has_arrived) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => trans("Controllers.attendee_already_checked_in", ["time"=> $attendee->arrival_time->format(config("attendize.default_datetime_format"))])
-            ]);
-        }
+        // if ($attendee->has_arrived) {
+        //     return response()->json([
+        //         'status'  => 'error',
+        //         'message' => trans("Controllers.attendee_already_checked_in", ["time"=> $attendee->arrival_time->format(config("attendize.default_datetime_format"))])
+        //     ]);
+        // }
 
-        Attendee::find($attendee->id)->update(['has_arrived' => true, 'arrival_time' => Carbon::now()]);
+        // Attendee::find($attendee->id)->update(['has_arrived' => true, 'arrival_time' => Carbon::now()]);
 
+        // return response()->json([
+        //     'status'  => 'success',
+        //     'name' => $attendee->first_name." ".$attendee->last_name,
+        //     'reference' => $attendee->reference,
+        //     'ticket' => $attendee->ticket
+        // ]);
         return response()->json([
             'status'  => 'success',
-            'name' => $attendee->first_name." ".$attendee->last_name,
-            'reference' => $attendee->reference,
-            'ticket' => $attendee->ticket
+            'reference' => $attendee->private_reference_number,
         ]);
     }
 }

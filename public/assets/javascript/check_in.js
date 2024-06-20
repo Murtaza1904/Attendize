@@ -105,6 +105,8 @@ var checkinApp = new Vue({
                 this.successBeep.play();
                 this.scanResult = true;
                 this.scanResultObject = res.data;
+                this.searchTerm = res.data.reference;
+                this.fetchAttendees();
 
             }, function (response) {
                 this.scanResultObject.message = lang("whoops2");
