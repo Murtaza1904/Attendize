@@ -109,7 +109,7 @@
                             <label for="number_of_attendees" class="form-label">Number Of Attendees <sup
                                     class="text-danger">*</sup></label>
                             <input type="number" v-model="number_of_attendees" name="number_of_attendees" id="number_of_attendees"
-                                class="form-control" min="1" max="@{{ number_of_person }}">
+                                class="form-control" min="1" max="@{{ number_of_person }}" value="1">
                             <div class="text-danger" v-if="errors.number_of_attendees">@{{ errors.number_of_attendees }}</div>
                         </div>
                         <div class="form-group">
