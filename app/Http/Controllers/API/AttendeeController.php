@@ -27,10 +27,17 @@ class AttendeeController extends Controller
 
         $attendee = Attendee::scope()->find($attendee_id);
 
-        if($attendee->ticket->number_of_person > 1 && $request->number_of_attendees > $attendee->ticket->number_of_person) {
-            return response()->json([
-                'errors' => 'The number of attendees must not be greater than '. $request->number_of_attendees,
-            ], 422);
+        if($attendee->ticket->number_of_person > 1) {
+            if ($request->number_of_attendees > $attendee->ticket->number_of_person) {
+                return response()->json([
+                    'errors' => 'The number of attendees must not be greater than '. $request->number_of_attendees,
+                ], 422);
+            }
+            if (empty($request->number_of_attendees)) {
+                return response()->json([
+                    'errors' => 'The number of attendees field is required.',
+                ], 422);
+            }
         }
         // if ((($checking == 'in') && ($attendee->has_arrived == 1)) || (($checking == 'out') && ($attendee->has_arrived == 0))) {
         //     return response()->json([

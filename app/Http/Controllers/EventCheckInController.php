@@ -100,8 +100,13 @@ class EventCheckInController extends MyBaseController
         $attendee = Attendee::scope()->find($attendee_id);
 
         $validator->after(function ($validator) use ($attendee, $request) {
-            if ($attendee->ticket->number_of_person > 1 && $request->number_of_attendees > $attendee->ticket->number_of_person) {
-                $validator->errors()->add('number_of_attendees', 'The number of attendees must not be greater than ' . $attendee->ticket->number_of_person);
+            if ($attendee->ticket->number_of_person > 1) {
+                if ($request->number_of_attendees > $attendee->ticket->number_of_person) {
+                    $validator->errors()->add('number_of_attendees', 'The number of attendees must not be greater than ' . $attendee->ticket->number_of_person);
+                }
+                if (empty($request->number_of_attendees)) {
+                    $validator->errors()->add('number_of_attendees', 'The number of attendees field is required.');
+                }
             }
         });
 
