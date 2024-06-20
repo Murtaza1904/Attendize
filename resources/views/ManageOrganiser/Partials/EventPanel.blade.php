@@ -1,13 +1,3 @@
-<style>
-    /* Styles for screens with a maximum width of 768px */
-@media (max-width: 768px) {
-    /* Your CSS rules here */
-    .hide_for_mobile{
-        display: none !important;
-    }
-}
-
-</style>
 <div class="panel panel-success event">
     <div class="panel-heading" data-style="background-color: {{{$event->bg_color}}};background-image: url({{{$event->bg_image_url}}}); background-size: cover;">
         <div class="event-date">
@@ -34,21 +24,21 @@
     <div class="panel-body">
         <ul class="nav nav-section nav-justified mt5 mb5">
             <li>
-                <div class="section hide_for_mobile">
+                <div class="section">
                     <h4 class="nm">{{ $event->tickets->sum('quantity_sold') }}</h4>
                     <p class="nm text-muted">@lang("Event.tickets_sold")</p>
                 </div>
             </li>
 
             <li>
-                <div class="section hide_for_mobile">
+                <div class="section">
                     <h4 class="nm">{{ $event->getEventRevenueAmount()->display() }}</h4>
                     <p class="nm text-muted">@lang("Event.revenue")</p>
                 </div>
             </li>
         </ul>
     </div>
-    <div class="panel-footer hide_for_mobile">
+    <div class="panel-footer">
         <ul class="nav nav-section nav-justified">
             <li>
                 <a href="{{route('showEventCustomize', ['event_id' => $event->id])}}">

@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ Lang::locale() }}">
 <head>
-    <style>
-        /* Styles for screens with a maximum width of 768px */
-    @media (max-width: 768px) {
-        /* Your CSS rules here */
-        .hide_for_mobile{
-            display: none !important;
-        }
-    }
-    
-    </style>
     <!--
               _   _                 _ _
          /\  | | | |               | (_)
@@ -73,7 +63,7 @@
 
 
                 <ul class="dropdown-menu" role="menu">
-                    <li class="hide_for_mobile">
+                    <li class="">
                         <a href="{{route('showCreateOrganiser')}}">
                             <i class="ico ico-plus"></i>
                             @lang("Top.create_organiser")
@@ -90,17 +80,17 @@
                     @endforeach
                     <li class="divider"></li>
 
-                    <li class="hide_for_mobile">
+                    <li>
                         <a data-href="{{route('showEditUser')}}" data-modal-id="EditUser"
                            class="loadModal editUserModal" href="javascript:void(0);"><span class="icon ico-user"></span>@lang("Top.my_profile")</a>
                     </li>
                     <li class="divider"></li>
-                    <li class="hide_for_mobile"><a data-href="{{route('showEditAccount')}}" data-modal-id="EditAccount" class="loadModal"
+                    <li><a data-href="{{route('showEditAccount')}}" data-modal-id="EditAccount" class="loadModal"
                            href="javascript:void(0);"><span class="icon ico-cog"></span>@lang("Top.account_settings")</a></li>
 
 
                     <li class="divider"></li>
-                    <li class="hide_for_mobile"><a target="_blank" href="https://github.com/Attendize/Attendize/issues/new?body=Version%20{{ config('attendize.version') }}"><span class="icon ico-megaphone"></span>@lang("Top.feedback_bug_report")</a></li>
+                    <li><a target="_blank" href="https://github.com/Attendize/Attendize/issues/new?body=Version%20{{ config('attendize.version') }}"><span class="icon ico-megaphone"></span>@lang("Top.feedback_bug_report")</a></li>
                     <li class="divider"></li>
                     <li><a href="{{route('logout')}}"><span class="icon ico-exit"></span>@lang("Top.sign_out")</a></li>
                 </ul>
