@@ -17,7 +17,7 @@ Route::resource('events', EventsApiController::class);
 Route::resource('attendees', AttendeesApiController::class);
 
 // Login
-Route::post('login', LoginController::class);
+Route::post('login', [LoginController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     // Events
@@ -27,4 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('attendees-list/{event}', [AttendeeController::class, 'index']);
     Route::put('attendees-list/{event}/check-mark', [AttendeeController::class, 'update']);
     Route::put('attendees-list/{event}/check-mark-qrcode', [AttendeeController::class, 'updateUsingQrcode']);
+
+    // Logout
+    Route::post('logout', [LoginController::class, 'logout']);
 });

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function __invoke(LoginRequest $request): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             return response()->json([
@@ -22,5 +22,14 @@ class LoginController extends Controller
         return response()->json([
             'message' => 'Unauthorized',
         ], 401);
+    }
+
+    public function logout(): JsonResponse
+    {
+        Auth::user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message' => 'User logout!',
+        ]);
     }
 }
