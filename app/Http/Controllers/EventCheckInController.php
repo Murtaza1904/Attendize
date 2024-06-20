@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use JavaScript;
+use Validator;
 
 class EventCheckInController extends MyBaseController
 {
@@ -35,7 +36,7 @@ class EventCheckInController extends MyBaseController
     public function getAttendeeTicket(Request $request)
     {
         return response()->json([
-            'ticket' => Ticket::whereHas('attendee', fn($q) => $q->where('id', $request->attendee_id))->pluck('number_of_person')->first(),
+            'attendee' => Attendee::with('ticket')->where('id', $request->attendee_id)->first(),
         ]);
     }
 
@@ -85,21 +86,42 @@ class EventCheckInController extends MyBaseController
 
     public function postCheckInAttendee(Request $request): JsonResponse
     {
+        $validator = Validator::make($request->all(), [
+            'attendee_id' => ['required', 'numeric'],
+            'checking' => ['required', 'string', 'in:in,out'],
+            'number_of_attendees' => ['nullable', 'numeric', 'digits_between:0,3'],
+            'number_of_children' => ['nullable', 'numeric', 'digits_between:0,3'],
+            'note'  => ['nullable', 'string'],
+        ]);
+
         $attendee_id = $request->get('attendee_id');
         $checking = $request->get('checking');
-
         $attendee = Attendee::scope()->find($attendee_id);
 
-        if ((($checking == 'in') && ($attendee->has_arrived == 1)) || (($checking == 'out') && ($attendee->has_arrived == 0))) {
+        $validator->after(function ($validator) use ($attendee, $request) {
+            if ($attendee->ticket->number_of_person > 1 && $request->number_of_attendees > $attendee->ticket->number_of_person) {
+                $validator->errors()->add('number_of_attendees', 'The number of attendees must not be greater than ' . $attendee->ticket->number_of_person);
+            }
+        });
+
+        if($validator->fails()) {
             return response()->json([
-                'status'  => 'error',
-                'message' => 'Attendee Already Checked ' . (($checking == 'in') ? 'In (at ' . $attendee->arrival_time->format('H:i A, F j') . ')' : 'Out') . '!',
-                'checked' => $checking,
-                'id'      => $attendee->id,
+                'errors' => $validator->errors(),
             ]);
         }
 
-        $attendee->has_arrived = ($checking == 'in') ? 1 : 0;
+
+        // if ((($checking == 'in') && ($attendee->has_arrived == 1)) || (($checking == 'out') && ($attendee->has_arrived == 0))) {
+        //     return response()->json([
+        //         'status'  => 'error',
+        //         'message' => 'Attendee Already Checked ' . (($checking == 'in') ? 'In (at ' . $attendee->arrival_time->format('H:i A, F j') . ')' : 'Out') . '!',
+        //         'checked' => $checking,
+        //         'id'      => $attendee->id,
+        //     ]);
+        // }
+
+        // $attendee->has_arrived = ($checking == 'in') ? 1 : 0;
+        $attendee->has_arrived = 1;
         $attendee->arrival_time = Carbon::now();
         $attendee->number_of_attendees = $request->number_of_attendees;
         $attendee->number_of_children = $request->number_of_children;

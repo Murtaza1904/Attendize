@@ -105,20 +105,23 @@
                         <input type="hidden" v-model="attendee_id" name="attendee_id" id="attendee_id">
                         <input type="hidden" v-model="checking" name="checking" id="checking">
                         <input type="hidden" v-model="attendee" id="attendee">
-                        <div class="form-group" v-if="this.is_group">
+                        <div class="form-group" v-if="this.is_group == true">
                             <label for="number_of_attendees" class="form-label">Number Of Attendees <sup
                                     class="text-danger">*</sup></label>
                             <input type="number" v-model="number_of_attendees" name="number_of_attendees" id="number_of_attendees"
-                                class="form-control" min="1">
+                                class="form-control" min="1" max="@{{ number_of_person }}">
+                            <div class="text-danger" v-if="errors.number_of_attendees">@{{ errors.number_of_attendees }}</div>
                         </div>
                         <div class="form-group">
                             <label for="number_of_children" class="form-label">Number Of Children </label>
                             <input type="number" v-model="number_of_children" name="number_of_children" id="number_of_children" class="form-control"
                                 min="0">
+                            <div class="text-danger" v-if="errors.number_of_children">@{{ errors.number_of_attendees }}</div>
                         </div>
                         <div class="form-group">
                             <label for="note" class="form-label">Note </label>
                             <textarea v-model="note" name="note" id="note" class="form-control"></textarea>
+                            <div class="text-danger" v-if="errors.note">@{{ errors.number_of_attendees }}</div>
                         </div>
                         <button type="button" @click="toggleCheckin()" class="btn btn-primary">Check In</button>
                 </div>

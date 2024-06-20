@@ -8,12 +8,14 @@ var checkinApp = new Vue({
         showCheckInModal: false,
         attendee_id: null,
         is_group: false,
+        number_of_person: null,
         checking: null,
         number_of_attendees: null,
         number_of_children: null,
         note: null,
         workingAway: false,
         isInit: false,
+        errors: null,
         isScanning: false,
         videoElement: $('video#scannerVideo')[0],
         canvasElement: $('canvas#QrCanvas')[0],
@@ -44,11 +46,16 @@ var checkinApp = new Vue({
         },
         toggleCheckInModal: function (attendee) {
             this.$http.get('get-attendee-ticket/'+attendee.id).then(function (res) {
-                this.is_group = res.data == 1 ? false : true;
+                this.is_group = res.data.attendee.ticket.number_of_person == 1 ? false : true;
+                this.number_of_person = res.data.attendee.ticket.number_of_person;
+                this.number_of_attendees = res.data.attendee.number_of_attendees;
+                this.number_of_children = res.data.attendee.number_of_children;
+                this.note = res.data.attendee.note;
             });
             this.showCheckInModal = true;
             this.attendee_id = attendee.id;
-            this.checking = attendee.has_arrived ? 'out' : 'in';
+            // this.checking = attendee.has_arrived ? 'out' : 'in';
+            this.checking = 'in';
             this.attendee = attendee;
         },
         toggleCheckin: function () {
@@ -68,6 +75,9 @@ var checkinApp = new Vue({
             };
 
             this.$http.post(Attendize.checkInRoute, checkinData).then(function (res) {
+                if (res.data.errors) {
+                    this.errors = res.data.errors;
+                }
                 if (res.data.status == 'success' || res.data.status == 'error') {
                     if (res.data.status == 'error') {
                         alert(res.data.message);
