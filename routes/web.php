@@ -732,6 +732,10 @@ Route::group(
             Route::get('{event_id}/check_in',
                 [EventCheckInController::class, 'showCheckIn']
             )->name('showCheckIn');
+            
+            Route::get('{event_id}/get-attendee-ticket/{attendee_id}',
+                [EventCheckInController::class, 'getAttendeeTicket']
+            )->name('getAttendeeTicket');
 
             Route::post('{event_id}/check_in/search',
                 [EventCheckInController::class, 'postCheckInSearch']

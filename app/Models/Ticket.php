@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Attendize\PaymentUtils;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Superbalist\Money\Money;
@@ -17,11 +18,6 @@ class Ticket extends MyBaseModel
 
     protected $quantity_reserved_cache = null;
 
-    /**
-     * The rules to validate the model.
-     *
-     * @return array $rules
-     */
     public function rules()
     {
         $format = config('attendize.default_datetime_format');
@@ -37,11 +33,6 @@ class Ticket extends MyBaseModel
         ];
     }
 
-    /**
-     * The validation error messages.
-     *
-     * @var array $messages
-     */
     public $messages = [
         'price.numeric'              => 'The price must be a valid number (e.g 12.50)',
         'title.required'             => 'You must at least give a title for your ticket. (e.g Early Bird)',
@@ -311,5 +302,10 @@ class Ticket extends MyBaseModel
             !empty($eventCurrency->symbol_left)
         );
         return $currency;
+    }
+
+    public function attendee(): HasOne
+    {
+        return $this->hasOne(Attendee::class);
     }
 }

@@ -71,9 +71,9 @@
                             @lang('ManageEvent.no_attendees_matching') <b>@{{ searchTerm }}</b>
                         </div>
                         <ul v-if="searchResultsCount > 0" class="list-group" id="attendee_list" v-cloak>
-                            <li @click="toggleCheckin(attendee)" v-for="attendee in attendees"
+                            <li @click="toggleCheckInModal(attendee)" v-for="attendee in attendees"
                                 class="at list-group-item"
-                                :class="{arrived : attendee.has_arrived || attendee.has_arrived == '1'}">
+                                :class="{ arrived: attendee.has_arrived || attendee.has_arrived == '1' }">
                                 @lang('Attendee.name'): <b>@{{ attendee.first_name }} @{{ attendee.last_name }} </b> &nbsp; <span
                                     v-if="!attendee.is_payment_received"
                                     class="label label-danger">@lang('Order.awaiting_payment')</span>
@@ -92,6 +92,40 @@
         </div>
     </section>
 
+    {{-- CheckIn Modal --}}
+    <div class="modal @{{ this.showCheckInModal == true ? 'show' : '' }}" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content modal-dialog-centered">
+                <div class="modal-header">
+                    <h4 class="modal-title">Check In</h4>
+                    <button type="button" @click="this.showCheckInModal = false" class="close" data-dismiss="modal"
+                        style="margin-top: -20px">&times;</button>
+                </div>
+                <div class="modal-body">
+                        <input type="hidden" v-model="attendee_id" name="attendee_id" id="attendee_id">
+                        <input type="hidden" v-model="checking" name="checking" id="checking">
+                        <input type="hidden" v-model="attendee" id="attendee">
+                        <div class="form-group" v-if="this.is_group">
+                            <label for="number_of_attendees" class="form-label">Number Of Attendees <sup
+                                    class="text-danger">*</sup></label>
+                            <input type="number" v-model="number_of_attendees" name="number_of_attendees" id="number_of_attendees"
+                                class="form-control" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="number_of_children" class="form-label">Number Of Children </label>
+                            <input type="number" v-model="number_of_children" name="number_of_children" id="number_of_children" class="form-control"
+                                min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="note" class="form-label">Note </label>
+                            <textarea v-model="note" name="note" id="note" class="form-control"></textarea>
+                        </div>
+                        <button type="button" @click="toggleCheckin()" class="btn btn-primary">Check In</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- /END CheckIn Modal --}}
     {{-- QR Modal --}}
     <div role="dialog" id="QrModal" class="scannerModal" v-show="showScannerModal" v-cloak>
         <div class="scannerModalContent">

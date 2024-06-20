@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use App\EventDiscountCode;
-use App\EventFaq;
 use Str;
 use URL;
+use App\EventFaq;
 use App\RegionTax;
 use Carbon\Carbon;
+use App\Models\Attendee;
+use App\EventDiscountCode;
 use Superbalist\Money\Money;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;

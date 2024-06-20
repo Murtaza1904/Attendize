@@ -5,6 +5,13 @@ var checkinApp = new Vue({
         searchTerm: '',
         searchResultsCount: 0,
         showScannerModal: false,
+        showCheckInModal: false,
+        attendee_id: null,
+        is_group: false,
+        checking: null,
+        number_of_attendees: null,
+        number_of_children: null,
+        note: null,
         workingAway: false,
         isInit: false,
         isScanning: false,
@@ -35,7 +42,16 @@ var checkinApp = new Vue({
                 console.log('Failed to fetch attendees')
             });
         },
-        toggleCheckin: function (attendee) {
+        toggleCheckInModal: function (attendee) {
+            this.$http.get('get-attendee-ticket/'+attendee.id).then(function (res) {
+                this.is_group = res.data == 1 ? false : true;
+            });
+            this.showCheckInModal = true;
+            this.attendee_id = attendee.id;
+            this.checking = attendee.has_arrived ? 'out' : 'in';
+            this.attendee = attendee;
+        },
+        toggleCheckin: function () {
             if(this.workingAway) {
                 return;
             }
@@ -44,8 +60,11 @@ var checkinApp = new Vue({
 
 
             var checkinData = {
-                checking: attendee.has_arrived ? 'out' : 'in',
-                attendee_id: attendee.id,
+                checking: this.checking,
+                attendee_id: this.attendee_id,
+                number_of_attendees: this.number_of_attendees,
+                number_of_children: this.number_of_children,
+                note: this.note,
             };
 
             this.$http.post(Attendize.checkInRoute, checkinData).then(function (res) {
@@ -53,14 +72,13 @@ var checkinApp = new Vue({
                     if (res.data.status == 'error') {
                         alert(res.data.message);
                     }
-                    attendee.has_arrived = checkinData.checking == 'out' ? 0 : 1;
+                    this.attendee.has_arrived = checkinData.checking == 'out' ? 0 : 1;
+                    this.showCheckInModal = false;
                     that.workingAway = false;
                 } else {
-                    /* @todo handle error*/
                     that.workingAway = false;
                 }
             });
-
         },
         clearSearch: function () {
             this.searchTerm = '';

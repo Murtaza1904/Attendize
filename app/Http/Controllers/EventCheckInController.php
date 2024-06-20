@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attendee;
 use App\Models\Event;
+use App\Models\Ticket;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\JsonResponse;
@@ -29,6 +30,13 @@ class EventCheckInController extends MyBaseController
         ]);
 
         return view('ManageEvent.CheckIn', $data);
+    }
+
+    public function getAttendeeTicket(Request $request)
+    {
+        return response()->json([
+            'ticket' => Ticket::whereHas('attendee', fn($q) => $q->where('id', $request->attendee_id))->pluck('number_of_person')->first(),
+        ]);
     }
 
     public function showQRCodeModal(Request $request, $event_id): View
@@ -93,6 +101,9 @@ class EventCheckInController extends MyBaseController
 
         $attendee->has_arrived = ($checking == 'in') ? 1 : 0;
         $attendee->arrival_time = Carbon::now();
+        $attendee->number_of_attendees = $request->number_of_attendees;
+        $attendee->number_of_children = $request->number_of_children;
+        $attendee->note = $request->note;
         $attendee->save();
 
         return response()->json([
