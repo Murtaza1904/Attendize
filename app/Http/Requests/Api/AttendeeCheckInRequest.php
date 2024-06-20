@@ -16,6 +16,9 @@ class AttendeeCheckInRequest extends FormRequest
         return [
             'attendee_id' => ['required', 'numeric', 'exists:attendees,id'],
             'checking' => ['required', 'string', 'in:in,out'],
+            'number_of_attendees' => ['nullable', 'numeric', 'digits_between:0,3'],
+            'number_of_children' => ['nullable', 'numeric', 'digits_between:0,3'],
+            'note'  => ['nullable', 'string'],
         ];
     }
 }

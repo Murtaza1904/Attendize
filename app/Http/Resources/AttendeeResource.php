@@ -14,6 +14,7 @@ class AttendeeResource extends JsonResource
             'reference' => $this->getReferenceAttribute(),
             'ticket' => $this->ticket->title,
             'has_arrived' => $this->has_arrived === 0 ? false : true,
+            'number_of_person' => $this->ticket->number_of_person,
         ];
     }
 }

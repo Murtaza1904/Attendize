@@ -27,14 +27,24 @@ class AttendeeController extends Controller
 
         $attendee = Attendee::scope()->find($attendee_id);
 
-        if ((($checking == 'in') && ($attendee->has_arrived == 1)) || (($checking == 'out') && ($attendee->has_arrived == 0))) {
+        if($attendee->ticket->number_of_person > 1 && $request->number_of_attendees > $attendee->ticket->number_of_person) {
             return response()->json([
-                'message' => 'Attendee Already Checked ' . (($checking == 'in') ? 'In (at ' . $attendee->arrival_time->format('H:i A, F j') . ')' : 'Out') . '!',
+                'errors' => 'The number of attendees must not be greater than '. $request->number_of_attendees,
             ], 422);
         }
+        // if ((($checking == 'in') && ($attendee->has_arrived == 1)) || (($checking == 'out') && ($attendee->has_arrived == 0))) {
+        //     return response()->json([
+        //         'message' => 'Attendee Already Checked ' . (($checking == 'in') ? 'In (at ' . $attendee->arrival_time->format('H:i A, F j') . ')' : 'Out') . '!',
+        //     ], 422);
+        // }
 
-        $attendee->has_arrived = ($checking == 'in') ? 1 : 0;
-        $attendee->arrival_time = Carbon::now();
+        // $attendee->has_arrived = ($checking == 'in') ? 1 : 0;
+        // $attendee->arrival_time = Carbon::now();
+        $attendee->has_arrived = 1;
+        $attendee->arrival_time = $attendee->arrival_time ?? Carbon::now();
+        $attendee->number_of_attendees = $request->number_of_attendees;
+        $attendee->number_of_children = $request->number_of_children;
+        $attendee->note = $request->note;
         $attendee->save();
 
         return response()->json([
