@@ -1,3 +1,14 @@
+<style>
+    /* Styles for screens with a maximum width of 768px */
+@media (max-width: 768px) {
+    /* Your CSS rules here */
+    .hide_for_mobile{
+        display: none !important;
+    }
+}
+
+</style>
+
 <aside class="sidebar sidebar-left sidebar-menu">
     <section class="content">
         <h5 class="heading">@lang("basic.main_menu")</h5>
@@ -17,31 +28,31 @@
                     <span class="text">@lang("basic.dashboard")</span>
                 </a>
             </li>
-            <li class="{{ Request::is('*tickets*') ? 'active' : '' }}">
+            <li class="hide_for_mobile" class="{{ Request::is('*tickets*') ? 'active' : '' }}">
                 <a href="{{route('showEventTickets', array('event_id' => $event->id))}}">
                     <span class="figure"><i class="ico-ticket"></i></span>
                     <span class="text">@lang("basic.tickets")</span>
                 </a>
             </li>
-            <li class="{{ Request::is('*orders*') ? 'active' : '' }}">
+            <li class="hide_for_mobile" class="{{ Request::is('*orders*') ? 'active' : '' }}">
                 <a href="{{route('showEventOrders', array('event_id' => $event->id))}}">
                     <span class="figure"><i class="ico-cart"></i></span>
                     <span class="text">@lang("basic.orders")</span>
                 </a>
             </li>
-            <li class="{{ Request::is('*attendees*') ? 'active' : '' }}">
+            <li class="hide_for_mobile" class="{{ Request::is('*attendees*') ? 'active' : '' }}">
                 <a href="{{route('showEventAttendees', array('event_id' => $event->id))}}">
                     <span class="figure"><i class="ico-user"></i></span>
                     <span class="text">@lang("basic.attendees")</span>
                 </a>
             </li>
-            <li class="{{ Request::is('*promote*') ? 'active' : '' }} hide">
+            <li class="hide_for_mobile" class="{{ Request::is('*promote*') ? 'active' : '' }} hide">
                 <a href="{{route('showEventPromote', array('event_id' => $event->id))}}">
                     <span class="figure"><i class="ico-bullhorn"></i></span>
                     <span class="text">@lang("basic.promote")</span>
                 </a>
             </li>
-            <li class="{{ Request::is('*customize*') ? 'active' : '' }}">
+            <li class="hide_for_mobile" class="{{ Request::is('*customize*') ? 'active' : '' }}">
                 <a href="{{route('showEventCustomize', array('event_id' => $event->id))}}">
                     <span class="figure"><i class="ico-cog"></i></span>
                     <span class="text">@lang("basic.customize")</span>
@@ -56,13 +67,13 @@
                     <span class="text">@lang("ManageEvent.check-in")</span>
                 </a>
             </li>
-            <li class="{{ Request::is('*surveys*') ? 'active' : '' }}">
+            <li class="hide_for_mobile" class="{{ Request::is('*surveys*') ? 'active' : '' }}">
                 <a href="{{route('showEventSurveys', array('event_id' => $event->id))}}">
                     <span class="figure"><i class="ico-question"></i></span>
                     <span class="text">@lang("ManageEvent.surveys")</span>
                 </a>
             </li>
-            <li class="{{ Request::is('*widgets*') ? 'active' : '' }}">
+            <li class="hide_for_mobile" class="{{ Request::is('*widgets*') ? 'active' : '' }}">
                 <a href="{{route('showEventWidgets', array('event_id' => $event->id))}}">
                     <span class="figure"><i class="ico-code"></i></span>
                     <span class="text">@lang("ManageEvent.widgets")</span>
@@ -74,13 +85,13 @@
                     <span class="text">@lang("AccessCodes.title")</span>
                 </a>
             </li> --}}
-            <li class="{{ Request::is('*discount_codes*') ? 'active' : '' }}">
+            <li class="hide_for_mobile" class="{{ Request::is('*discount_codes*') ? 'active' : '' }}">
                 <a href="{{ route('showEventDiscountCodes', [ 'event_id' => $event->id ]) }}">
                     <span class="figure"><i class="ico-money"></i></span>
                     <span class="text">DISCOUNT CODE</span>
                 </a>
             </li>
-            <li class="{{ Request::is('*faq*') ? 'active' : '' }}">
+            <li class="hide_for_mobile" class="{{ Request::is('*faq*') ? 'active' : '' }}">
                 <a href="{{ route('showEventFaq', [ 'event_id' => $event->id ]) }}">
                     <span class="figure"><i class="ico-question"></i></span>
                     <span class="text">FAQ</span>

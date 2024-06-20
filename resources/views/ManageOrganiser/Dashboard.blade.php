@@ -17,7 +17,16 @@
 @stop
 
 @section('head')
+<style>
+    /* Styles for screens with a maximum width of 768px */
+@media (max-width: 768px) {
+    /* Your CSS rules here */
+    .hide_for_mobile{
+        display: none !important;
+    }
+}
 
+</style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" integrity="sha256-szHusaozbQctTn4FX+3l5E0A5zoxz7+ne4fr8NgWJlw=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js" integrity="sha256-Gk+dzc4kV2rqAZMkyy3gcfW6Xd66BhGYjVWa/FjPu+s=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js" integrity="sha256-0rg2VtfJo3VUij/UY9X0HJP7NET6tgAY98aMOfwP0P8=" crossorigin="anonymous"></script>
@@ -51,7 +60,7 @@
 @stop
 
 @section('content')
-    <div class="row">
+    <div class="row hide_for_mobile">
         <div class="col-sm-6">
             <div class="stat-box">
                 <h3>
@@ -78,8 +87,8 @@
 
         <div class="col-md-8">
 
-            <h4 style="margin-bottom: 25px;margin-top: 20px;">@lang("Organiser.event_calendar")</h4>
-            <div id="calendar"></div>
+            <h4ccc style="margin-bottom: 25px;margin-top: 20px;">@lang("Organiser.event_calendar")</h4>
+            <div class="hide_for_mobile" id="calendar"></div>
 
 
             <h4 style="margin-bottom: 25px;margin-top: 20px;">@lang("Public_ViewOrganiser.upcoming_events")</h4>
@@ -95,7 +104,7 @@
                 </div>
             @endif
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 hide_for_mobile">
             <h4 style="margin-bottom: 25px;margin-top: 20px;">@lang("Order.recent_orders")</h4>
             @if($organiser->orders->count())
                 <ul class="list-group">

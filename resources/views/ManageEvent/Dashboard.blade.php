@@ -35,11 +35,18 @@
         svg {
             width: 100% !important;
         }
+            /* Styles for screens with a maximum width of 768px */
+@media (max-width: 768px) {
+    /* Your CSS rules here */
+    .hide_for_mobile{
+        display: none !important;
+    }
+}
     </style>
 @stop
 
 @section('content')
-    <div class="row">
+    <div class="row hide_for_mobile">
         <div class="col-sm-3">
             <div class="stat-box">
                 <h3>{{ $event->getEventRevenueAmount()->display() }}</h3>
@@ -76,7 +83,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-9 col-sm-6">
+        <div class="col-md-9 col-sm-6 hide_for_mobile">
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel">
