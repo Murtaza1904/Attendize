@@ -116,7 +116,6 @@ class EventCheckInController extends MyBaseController
             ]);
         }
 
-
         // if ((($checking == 'in') && ($attendee->has_arrived == 1)) || (($checking == 'out') && ($attendee->has_arrived == 0))) {
         //     return response()->json([
         //         'status'  => 'error',
@@ -126,9 +125,8 @@ class EventCheckInController extends MyBaseController
         //     ]);
         // }
 
-        // $attendee->has_arrived = ($checking == 'in') ? 1 : 0;
-        $attendee->has_arrived = 1;
-        $attendee->arrival_time = $attendee->arrival_time ?? Carbon::now();
+        $attendee->has_arrived = $checking == 'in' ? 1 : 0;
+        $attendee->arrival_time = $checking == 'out' ? null : ($attendee->arrival_time ?? Carbon::now());
         $attendee->number_of_attendees = $request->number_of_attendees;
         $attendee->number_of_children = $request->number_of_children;
         $attendee->note = $request->note;

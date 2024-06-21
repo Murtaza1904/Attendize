@@ -13,6 +13,8 @@ var checkinApp = new Vue({
         number_of_attendees: null,
         number_of_children: null,
         note: null,
+        checkinButton: true,
+        checkoutButton: false,
         workingAway: false,
         isInit: false,
         errors: null,
@@ -51,11 +53,12 @@ var checkinApp = new Vue({
                 this.number_of_attendees = res.data.attendee.number_of_attendees;
                 this.number_of_children = res.data.attendee.number_of_children;
                 this.note = res.data.attendee.note;
+                this.checkoutButton = res.data.attendee.ticket.number_of_days > 1 && res.data.attendee.has_arrived ? true : false;
+                this.checkinButton = !this.checkoutButton;
             });
             this.showCheckInModal = true;
             this.attendee_id = attendee.id;
-            // this.checking = attendee.has_arrived ? 'out' : 'in';
-            this.checking = 'in';
+            this.checking = attendee.has_arrived ? 'out' : 'in';
             this.attendee = attendee;
         },
         toggleCheckin: function () {

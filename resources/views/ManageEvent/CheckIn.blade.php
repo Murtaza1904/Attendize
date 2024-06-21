@@ -123,7 +123,9 @@
                             <textarea v-model="note" name="note" id="note" class="form-control"></textarea>
                             <div class="text-danger" v-if="errors.note">@{{ errors.number_of_attendees }}</div>
                         </div>
-                        <button type="button" @click="toggleCheckin()" class="btn btn-primary">Check In</button>
+                        <button type="button" @click="toggleCheckin()" class="btn" :class="this.checkinButton ? 'btn-primary' : 'btn-danger'">
+                            @{{ this.checkinButton ? 'Check In' : 'Check Out' }}
+                        </button>
                 </div>
             </div>
         </div>
