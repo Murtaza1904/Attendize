@@ -1,7 +1,7 @@
 <form class="online_payment" action="<?php echo route('postCreateOrder', ['event_id' => $event->id]); ?>" method="post" id="stripe-sca-payment-form">
     <div class="form-row">
         <label for="card-element">
-            @lang("Public_ViewEvent.stripe_credit_or_debit_card")
+            @lang('Public_ViewEvent.stripe_credit_or_debit_card')
         </label>
         <div id="card-element">
 
@@ -11,8 +11,8 @@
     </div>
     {!! Form::token() !!}
 
-    <input class="btn btn-lg btn-success card-submit" style="width:100%;" type="submit" value="@lang("Public_ViewEvent.complete_payment")"
-    onclick="document.getElementById('loader').style.display = 'block';">
+    <input class="btn btn-lg btn-success card-submit" style="width:100%;" type="submit" value="@lang('Public_ViewEvent.complete_payment')"
+        onclick="document.getElementById('loader').style.display = 'block';">
 
     <style>
         .loading-container {
@@ -26,30 +26,40 @@
 
         .loading-progress {
             position: absolute;
-            height: 100%;
-            width: 100%;
+            height: 130%;
+            width: 130%;
         }
+
         .loading-progress::before {
             content: "";
             position: absolute;
-            height: 100%;
-            width: 100%;
+            height: 120%;
+            width: 120%;
             border-radius: 50%;
-            border: 5px solid transparent;
-            border-top-color: #ACCAFF;
-            top: -5px;
+            border: 8px solid transparent;
+            border-top-color: #FD313C;
+            top: -130px;
             left: -5px;
             animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
-        0% {
-            transform: rotate(0deg);
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
-        
-        100% {
-            transform: rotate(360deg);
-        }
+
+        @media (max-width: 768px) {
+
+            /* Your CSS rules here */
+            .loading-container {
+
+                margin-left: 70px;
+            }
         }
     </style>
     <div class="loading-container" id="loader" style="display: none">
@@ -59,7 +69,6 @@
 </form>
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
 <script type="text/javascript">
-
     var stripe = Stripe('<?php echo $account_payment_gateway->config['publishableKey']; ?>');
     var elements = stripe.elements();
 
@@ -79,7 +88,10 @@
         }
     };
 
-    var cardElement = elements.create('card', {hidePostalCode: true, style: style});
+    var cardElement = elements.create('card', {
+        hidePostalCode: true,
+        style: style
+    });
     cardElement.mount('#card-element');
 
     cardElement.addEventListener('change', function(event) {
@@ -91,11 +103,8 @@
             displayError.textContent = '';
         }
     });
-
-
 </script>
 <style type="text/css">
-
     .StripeElement {
         box-sizing: border-box;
 
