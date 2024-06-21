@@ -90,14 +90,26 @@
                         <div class="row more-options">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="number_of_person" class=" control-label required">NUMBER OF PERSON</label>
-                                    <input class="form-control" placeholder="E.g: 10" name="number_of_person" type="number" id="number_of_person" value="1" min="1">
+                                    <label for="number_of_person" class=" control-label required">NUMBER OF
+                                        PERSON</label>
+                                    <input class="form-control" placeholder="E.g: 10" name="number_of_person"
+                                        type="number" id="number_of_person" value="1" min="1">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="position" class=" control-label required">POSITION</label>
-                                    <input class="form-control" placeholder="E.g: 1" name="position" type="number" id="position" min="1">
+                                    <input class="form-control" placeholder="E.g: 1" name="position" type="number"
+                                        id="position" min="1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row more-options">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="number_of_days" class=" control-label required">Number Of Days</label>
+                                    <input class="form-control" placeholder="E.g: 1" name="number_of_days" type="number"
+                                        id="number_of_days" min="1" value="1">
                                 </div>
                             </div>
                         </div>

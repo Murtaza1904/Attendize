@@ -103,6 +103,15 @@
                 <div class="row more-options">
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label for="number_of_days" class=" control-label required">Number Of Days</label>
+                            <input class="form-control" placeholder="E.g: 1" name="number_of_days" type="number"
+                                id="number_of_days" min="1" value="{{ $ticket->number_of_days }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row more-options">
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <div class="custom-checkbox">
                                 {!! Form::checkbox('is_hidden', null, null, ['id' => 'is_hidden']) !!}
                                 {!! Form::label('is_hidden', trans('ManageEvent.hide_this_ticket'), ['class' => ' control-label']) !!}

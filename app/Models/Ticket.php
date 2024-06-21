@@ -30,6 +30,7 @@ class Ticket extends MyBaseModel
             'quantity_available' => 'nullable|integer|min:'.($this->quantity_sold + $this->quantity_reserved),
             'number_of_person'   => 'required|integer|min:1',
             'position'           => 'required|integer|min:1',
+            'number_of_days'     => 'required|integer|min:1',
         ];
     }
 
