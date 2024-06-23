@@ -17,7 +17,9 @@ class AttendeeResource extends JsonResource
             'has_arrived' => $this->has_arrived === 0 ? false : true,
             'number_of_person' => $this->ticket->number_of_person,
             'number_of_days' => $this->ticket->number_of_days,
-            'number_of_attendees' => $this->number_of_attendees,
+            $this->mergeWhen($this->ticket->number_of_person > 1, [
+                'number_of_attendees' => $this->number_of_attendees,
+            ]),
             'number_of_children' => $this->number_of_children,
             'note' => $this->note,
         ];

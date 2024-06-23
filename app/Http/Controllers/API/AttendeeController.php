@@ -47,9 +47,19 @@ class AttendeeController extends Controller
 
         // $attendee->has_arrived = ($checking == 'in') ? 1 : 0;
         // $attendee->arrival_time = Carbon::now();
-        $attendee->has_arrived = 1;
-        $attendee->arrival_time = $attendee->arrival_time ?? Carbon::now();
-        $attendee->number_of_attendees = $request->number_of_attendees;
+
+        // $attendee->has_arrived = 1;
+        // $attendee->arrival_time = $attendee->arrival_time ?? Carbon::now();
+        // $attendee->number_of_attendees = $request->number_of_attendees;
+        // $attendee->number_of_children = $request->number_of_children;
+        // $attendee->note = $request->note;
+        // $attendee->save();
+
+        $checking = $attendee->ticket->number_of_days == 1 ? 'in' : $checking;
+
+        $attendee->has_arrived = $checking == 'in' ? 1 : 0;
+        $attendee->arrival_time = $checking == 'out' ? null : ($attendee->arrival_time ?? Carbon::now());
+        $attendee->number_of_attendees = $attendee->ticket->number_of_person > 1 ? $request->number_of_attendees : null;
         $attendee->number_of_children = $request->number_of_children;
         $attendee->note = $request->note;
         $attendee->save();
