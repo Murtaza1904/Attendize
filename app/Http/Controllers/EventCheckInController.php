@@ -62,7 +62,7 @@ class EventCheckInController extends MyBaseController
                         'like',
                         $searchQuery . '%'
                     )
-                    //->orWhere('attendees.email', 'like', $searchQuery . '%')
+                    ->orWhere('attendees.email', 'like', $searchQuery . '%')
                     ->orWhere('orders.order_reference', 'like', $searchQuery . '%')
                     ->orWhere('attendees.private_reference_number', 'like', $searchQuery . '%')
                     ->orWhere('attendees.last_name', 'like', $searchQuery . '%');
@@ -124,6 +124,8 @@ class EventCheckInController extends MyBaseController
         //         'id'      => $attendee->id,
         //     ]);
         // }
+
+        $checking = $attendee->ticket->number_of_days == 1 ? 'in' : $checking;
 
         $attendee->has_arrived = $checking == 'in' ? 1 : 0;
         $attendee->arrival_time = $checking == 'out' ? null : ($attendee->arrival_time ?? Carbon::now());

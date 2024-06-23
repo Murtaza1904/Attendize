@@ -55,10 +55,11 @@ var checkinApp = new Vue({
                 this.note = res.data.attendee.note;
                 this.checkoutButton = res.data.attendee.ticket.number_of_days > 1 && res.data.attendee.has_arrived ? true : false;
                 this.checkinButton = !this.checkoutButton;
+                this.checking = attendee.has_arrived ? 'out' : 'in';
+                this.checking = this.checkoutButton == false ? 'in' : this.checking;
             });
             this.showCheckInModal = true;
             this.attendee_id = attendee.id;
-            this.checking = attendee.has_arrived ? 'out' : 'in';
             this.attendee = attendee;
         },
         toggleCheckin: function () {
