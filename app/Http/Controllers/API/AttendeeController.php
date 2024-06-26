@@ -30,7 +30,7 @@ class AttendeeController extends Controller
         if($attendee->ticket->number_of_person > 1) {
             if ($request->number_of_attendees > $attendee->ticket->number_of_person) {
                 return response()->json([
-                    'errors' => 'The number of attendees must not be greater than '. $request->number_of_attendees,
+                    'errors' => 'The number of attendees must not be greater than '. $attendee->ticket->number_of_person,
                 ], 422);
             }
             if (empty($request->number_of_attendees)) {
