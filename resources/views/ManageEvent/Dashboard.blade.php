@@ -172,8 +172,8 @@
                 </div>
 
                 <div class="panel-body">
-                    {{-- {!! Form::input('text', 'front_end_url', $event->event_url, ['class' => 'form-control', 'onclick' => 'this.select();']) !!} --}}
-                    {!! Form::input('text', 'front_end_url', route('events.tickets.index', $event->id), ['class' => 'form-control', 'onclick' => 'this.select();']) !!}
+                    {!! Form::input('text', 'front_end_url', $event->event_url, ['class' => 'form-control', 'onclick' => 'this.select();']) !!}
+                    {{-- {!! Form::input('text', 'front_end_url', route('events.tickets.index', $event->id), ['class' => 'form-control', 'onclick' => 'this.select();']) !!} --}}
                 </div>
 
             </div>

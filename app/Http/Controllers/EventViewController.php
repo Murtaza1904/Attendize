@@ -97,7 +97,7 @@ class EventViewController extends Controller
     {
         return view('Public.ViewEvent.NewTicketPage', [
             'event' => $event,
-            'tickets' => $event->tickets()->orderBy('sort_order', 'asc')->get(),
+            'tickets' => $event->tickets()->orderByRaw('position IS NULL, position ASC')->get(),
             'is_embedded' => 0,
         ]);
     }
