@@ -40,7 +40,7 @@
     <div class="row">
         <div class="col-md-12 text-black">
             <h1 property="name">{{$event->title}}</h1>
-            <div class="event_venue">
+            <div class="event_venue" style="color: #000">
                 <span property="startDate" content="{{ $event->start_date->toIso8601String() }}">
                     {{ $event->start_date->format('l F d h:i A') }}
                 </span>
