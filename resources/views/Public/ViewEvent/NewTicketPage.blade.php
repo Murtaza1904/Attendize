@@ -393,7 +393,7 @@
         }
 
         .show {
-            width: 900px;
+            width: 100%;
             z-index: 901;
         }
 
@@ -457,13 +457,9 @@
             .label_discount{
             width: 100%;
         }
-        .show {
-            width: 100%;
-            z-index: 901;
-        }
+        
         .faq-bold-text{
             font-size: 16px;
-            max-width: 100%;
         }
         }
             </style>
