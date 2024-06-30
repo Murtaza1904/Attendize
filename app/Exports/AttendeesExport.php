@@ -34,6 +34,10 @@ class AttendeesExport implements FromQuery, WithHeadings, WithEvents
             'attendees.private_reference_number',
             'orders.order_reference',
             'tickets.title',
+            'orders.amount',
+            'orders.organiser_booking_fee',
+            'orders.taxamt',
+            'orders.discount',
             'orders.created_at',
             DB::raw("(CASE WHEN attendees.has_arrived THEN '$yes' ELSE '$no' END) AS has_arrived"),
             'attendees.arrival_time',
@@ -43,7 +47,6 @@ class AttendeesExport implements FromQuery, WithHeadings, WithEvents
             ->where('attendees.event_id', $this->event_id)
             ->where('attendees.account_id', Auth::user()->account_id)
             ->where('attendees.is_cancelled', false);
-
         return $query;
     }
 
@@ -56,6 +59,10 @@ class AttendeesExport implements FromQuery, WithHeadings, WithEvents
             trans("Ticket.id"),
             trans("Order.order_ref"),
             trans("Ticket.ticket_type"),
+            'Ticket Fee',
+            'Booking Fee',
+            'Tax',
+            'Discount',
             trans("Order.order_date"),
             trans("Attendee.has_arrived"),
             trans("Attendee.arrival_time"),
