@@ -37,12 +37,13 @@ class AttendeesExport implements FromQuery, WithHeadings, WithEvents
             'orders.amount',
             'orders.organiser_booking_fee',
             'orders.taxamt',
-            'orders.discount',
+            'order_items.discount',
             'orders.created_at',
             DB::raw("(CASE WHEN attendees.has_arrived THEN '$yes' ELSE '$no' END) AS has_arrived"),
             'attendees.arrival_time',
         ])->join('events', 'events.id', '=', 'attendees.event_id')
             ->join('orders', 'orders.id', '=', 'attendees.order_id')
+            ->join('order_items', 'order_items.order_id', '=', 'orders.id')
             ->join('tickets', 'tickets.id', '=', 'attendees.ticket_id')
             ->where('attendees.event_id', $this->event_id)
             ->where('attendees.account_id', Auth::user()->account_id)
