@@ -32,8 +32,15 @@
 
             <li>
                 <div class="section">
-                    <h4 class="nm">{{ $event->getEventRevenueAmount()->display() }}</h4>
+                    {{-- <h4 class="nm">{{ $event->getEventRevenueAmount()->display() }}</h4> --}}
+                    <h4 class="nm">{{ money($event->orders->sum('amount') + $event->orders->sum('organiser_booking_fee') + $event->orders->sum('taxamt'), $event->currency) }}</h4>
                     <p class="nm text-muted">@lang("Event.revenue")</p>
+                </div>
+            </li>
+            <li>
+                <div class="section">
+                    <h4 class="nm">{{ money($event->orders->sum('amount') + $event->orders->sum('organiser_booking_fee'), $event->currency) }}</h4>
+                    <p class="nm text-muted">Excluding Tax</p>
                 </div>
             </li>
         </ul>
