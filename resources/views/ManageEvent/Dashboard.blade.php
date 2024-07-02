@@ -42,8 +42,9 @@
     <div class="row">
         <div class="col-sm-3">
             <div class="stat-box">
-                <h3>{{ $event->getEventRevenueAmount()->display() }}</h3>
-                <span>@lang("Event.revenue")</span>
+                {{-- <h3>{{ $event->getEventRevenueAmount()->display() }}</h3> --}}
+                <h3>{{ money($event->orders->sum('amount') + $event->orders->sum('organiser_booking_fee'), $event->currency) }}</h3>
+                <span>@lang("Event.revenue") EXC TAX</span>
             </div>
         </div>
         <div class="col-sm-3">
@@ -101,7 +102,8 @@
                             <h3 class="panel-title">
                                 @lang("Dashboard.ticket_sales_volume")
                                 <span style="color: green; float: right;">
-                                    {{ $event->getEventRevenueAmount()->display() }}
+                                    {{-- {{ $event->getEventRevenueAmount()->display() }} --}}
+                                    {{ money($event->orders->sum('amount') + $event->orders->sum('organiser_booking_fee'), $event->currency) }}
                                     @lang("basic.total")
                                 </span>
                             </h3>
