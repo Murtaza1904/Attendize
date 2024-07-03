@@ -655,6 +655,7 @@ class EventCheckoutController extends Controller
                 $orderItem->order_id = $order->id;
                 $orderItem->unit_price = $attendee_details['ticket']['price'];
                 $orderItem->discount = $attendee_details['discount'];
+                $orderItem->discount_code = $ticket_order['discount_code'];
                 $orderItem->unit_booking_fee = $attendee_details['ticket']['booking_fee'] + $attendee_details['ticket']['organiser_booking_fee'];
                 $orderItem->save();
 

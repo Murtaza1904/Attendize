@@ -14,6 +14,7 @@ class OrderItem extends MyBaseModel
         'quantity',
         'unit_price',
         'discount',
+        'discount_code',
         'unit_booking_fee',
         'order_id',
     ];
