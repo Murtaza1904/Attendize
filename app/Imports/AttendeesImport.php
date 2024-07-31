@@ -2,21 +2,23 @@
 
 namespace App\Imports;
 
-use App\Models\Event;
-use App\Models\EventStats;
-use App\Models\Attendee;
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Ticket;
 use Auth;
-use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use App\Jobs\SendAttendeeInviteJob;
+use App\Models\Event;
+use App\Models\Order;
+use App\Models\Ticket;
+use App\Models\Attendee;
+use App\Models\OrderItem;
+use App\Models\EventStats;
 use Maatwebsite\Excel\Row;
+use Illuminate\Validation\Rule;
+use App\Jobs\SendAttendeeInviteJob;
+use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\OnEachRow;
+use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class AttendeesImport implements OnEachRow, WithHeadingRow
+class AttendeesImport implements OnEachRow, WithHeadingRow, WithValidation
 {
     use Importable;
 
@@ -25,6 +27,15 @@ class AttendeesImport implements OnEachRow, WithHeadingRow
         $this->event = $event;
         $this->ticket = $ticket;
         $this->emailAttendees = $emailAttendees;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'first_name' => ['required', 'string', 'max:255'],             
+            'last_name' => ['required', 'string', 'max:255'],             
+            'email' => ['required', 'string', 'email', 'max:255'],             
+        ];
     }
 
     /**
@@ -38,7 +49,7 @@ class AttendeesImport implements OnEachRow, WithHeadingRow
         $firstName = $rowArr['first_name'];
         $lastName = $rowArr['last_name'];
         $email = $rowArr['email'];
-
+        Logger([$firstName,$lastName,$email]);
         // Create a new order for the attendee
         $order = Order::create([
             'first_name' => $firstName,

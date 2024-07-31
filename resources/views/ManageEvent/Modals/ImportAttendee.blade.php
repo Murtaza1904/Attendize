@@ -11,6 +11,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
+                        <ul class="validation-errors text-danger"></ul>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

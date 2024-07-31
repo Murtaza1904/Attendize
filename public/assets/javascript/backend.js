@@ -9897,6 +9897,7 @@ function processFormErrors($form, errors)
             $input.after('<div class="help-block error">' + error + '</div>')
                 .parent()
                 .addClass('has-error');
+            $('.validation-errors').html('<li>'+error+'</li>');
         }
         if ($form.context.id == 'cancel-order') {
           console.log($form, $form.context.id);
