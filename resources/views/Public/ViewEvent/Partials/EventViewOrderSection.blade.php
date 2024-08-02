@@ -89,8 +89,20 @@
                 border-radius: 5px;
                 color: #fff;
             }
+
+            @media only screen and (min-width: 769px) and (max-width: 1024px) {
+                .donate-btn-container {
+                    gap: 10px;
+                    justify-content: space-around;
+                }
+                .donate-btn-container a {
+                    padding-inline: 7.25rem;
+                }
+            }
+
             @media screen and (max-width: 768px) {
                 .donate-btn-container {
+                    gap: 10px;
                     flex-direction: column;
                 }
             }
