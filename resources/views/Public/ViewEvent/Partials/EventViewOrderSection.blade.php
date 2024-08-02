@@ -66,6 +66,44 @@
                     {{ @trans("Public_ViewEvent.tickets") }}</a> {{ @trans("Public_ViewEvent.confirmation_email") }}
             </h2>
         </div>
+        <style>
+            .donate-img {
+                width: 100%;
+            }
+            .help-text {
+                display: flex;
+                justify-content: center;
+                font-size: 2.5rem;
+                margin-block: 10px;
+            }
+            .donate-btn-container {
+                display: flex;
+                gap: 40px;
+                text-align: center;
+            }
+            .donate-btn-container a {
+                background: #fc2222;
+                padding-inline: 10.25rem;
+                padding-block: 1.25rem;
+                text-decoration: none;
+                border-radius: 5px;
+                color: #fff;
+            }
+            @media screen and (max-width: 768px) {
+                .donate-btn-container {
+                    flex-direction: column;
+                }
+            }
+        </style>
+        <img src="{{ asset('assets/images/donate.jpg') }}" alt="Donate image" class="donate-img">
+        <div class="help-text">
+            Help Palestine: Your Donation Can Save Lives!
+        </div>
+        <div class="donate-btn-container">
+            <a href="https://hrf.events/palestine-tickets-5" target="__blank">Donate $5</a>
+            <a href="https://hrf.events/palestine-tickets-10" target="__blank">Donate $10</a>
+            <a href="https://hrf.events/palestine-tickets-15" target="__blank">Donate $15</a>
+        </div>
     </div>
 
     <div class="row">
