@@ -11,7 +11,60 @@
     </div>
     {!! Form::token() !!}
 
-    <input class="btn btn-lg btn-success card-submit" style="width:100%;" type="submit" value="@lang("Public_ViewEvent.complete_payment")">
+    <input class="btn btn-lg btn-success card-submit" style="width:100%;" type="submit" value="@lang("Public_ViewEvent.complete_payment")"
+    onclick="document.getElementById('loader').style.display = 'block';">
+
+    <style>
+        .loading-container {
+            position: relative;
+            height: 12rem;
+            width: 12rem;
+            z-index: 100;
+            margin-top: -150px;
+            margin-left: 250px;
+        }
+
+        .loading-progress {
+            position: absolute;
+            height: 130%;
+            width: 130%;
+        }
+
+        .loading-progress::before {
+            content: "";
+            position: absolute;
+            height: 120%;
+            width: 120%;
+            border-radius: 50%;
+            border: 8px solid transparent;
+            border-top-color: #FD313C;
+            top: -130px;
+            left: -5px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            /* Your CSS rules here */
+            .loading-container {
+
+                margin-left: 70px;
+            }
+        }
+    </style>
+    <div class="loading-container" id="loader" style="display: none">
+        <div class="loading-progress"></div>
+    </div>
 
 </form>
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
@@ -44,6 +97,7 @@
         var displayError = document.getElementById('card-errors');
         if (event.error) {
             displayError.textContent = event.error.message;
+            document.getElementById('loader').style.display = 'none';
         } else {
             displayError.textContent = '';
         }
