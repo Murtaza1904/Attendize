@@ -45,7 +45,48 @@
         border-bottom: 3px solid;
     }
 </style>
+<style>
+    .donate-img {
+        height: 500px;
+        width: 100%;
+        display: flex;
+        justify-content: end;
+        background-size: cover;
+        background-position: center 
+    }
+    .help-text {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        margin-top: 50px;
+    }
+    .donate-btn-container {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+        margin-right: 3rem;
+    }
+    .donate-btn-container a {
+        background: #fc2222;
+        padding-inline: 5.25rem;
+        padding-block: 1.25rem;
+        text-decoration: none;
+        border-radius: 5px;
+        color: #fff;
+    }
 
+    @media screen and (max-width: 768px) {
+        .donate-img {
+            justify-content: center;
+        }
+
+        .donate-btn-container {
+            margin-top: 330px;
+        }
+    }
+</style>
 <section id="order_form" class="container">
     <div class="row">
         <div class="col-md-12 order_header">
@@ -66,56 +107,18 @@
                     {{ @trans("Public_ViewEvent.tickets") }}</a> {{ @trans("Public_ViewEvent.confirmation_email") }}
             </h2>
         </div>
-        <style>
-            .donate-img {
-                width: 100%;
-            }
-            .help-text {
-                display: flex;
-                justify-content: center;
-                font-size: 2.5rem;
-                margin-block: 10px;
-            }
-            .donate-btn-container {
-                display: flex;
-                gap: 40px;
-                text-align: center;
-            }
-            .donate-btn-container a {
-                background: #fc2222;
-                padding-inline: 10.25rem;
-                padding-block: 1.25rem;
-                text-decoration: none;
-                border-radius: 5px;
-                color: #fff;
-            }
-
-            @media only screen and (min-width: 769px) and (max-width: 1024px) {
-                .donate-btn-container {
-                    gap: 10px;
-                    justify-content: space-around;
-                }
-                .donate-btn-container a {
-                    padding-inline: 7.25rem;
-                }
-            }
-
-            @media screen and (max-width: 768px) {
-                .donate-btn-container {
-                    gap: 10px;
-                    flex-direction: column;
-                }
-            }
-        </style>
-        <img src="{{ asset('assets/images/donate.jpg') }}" alt="Donate image" class="donate-img">
-        <div class="help-text">
-            Help Palestine: Your Donation Can Save Lives!
+        <div class="col-md-12">
+            <div class="help-text">
+                Help Palestine: Your Donation Can Save Lives!
+            </div>
         </div>
-        <div class="donate-btn-container">
-            <a href="https://hrf.events/palestine-tickets-5" target="__blank">Donate $5</a>
-            <a href="https://hrf.events/palestine-tickets-10" target="__blank">Donate $10</a>
-            <a href="https://hrf.events/palestine-tickets-15" target="__blank">Donate $15</a>
-        </div>
+    </div>
+    <div class="donate-img" style="background-image: url({{ asset('assets/images/donate.jpg') }})">
+            <div class="donate-btn-container">
+                <a href="https://hrf.events/palestine-tickets-5" target="__blank">Donate $5</a>
+                <a href="https://hrf.events/palestine-tickets-10" target="__blank">Donate $10</a>
+                <a href="https://hrf.events/palestine-tickets-15" target="__blank">Donate $15</a>
+            </div>
     </div>
 
     <div class="row">
