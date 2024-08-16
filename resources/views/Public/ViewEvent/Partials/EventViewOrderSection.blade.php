@@ -60,6 +60,7 @@
         margin-bottom: 10px;
         margin-top: 50px;
     }
+    
     .donate-btn-container {
         display: flex;
         justify-content: center;
