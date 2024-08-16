@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Mail\SendOrderNotificationMail;
+use App\Mail\SendOttawaNotificationMail;
 use App\Models\Order;
 use App\Services\Order as OrderService;
 use Illuminate\Bus\Queueable;
@@ -42,5 +43,11 @@ class SendOrderNotificationJob implements ShouldQueue
         Mail::to($this->order->event->organiser->email)
             ->locale(Config::get('app.locale'))
             ->send($mail);
+
+        if ($this->order->event_id === 11) {
+            Mail::to($this->order->event->organiser->email)
+            ->locale(Config::get('app.locale'))
+            ->send(new SendOttawaNotificationMail($this->order, $this->orderService));
+        }
     }
 }
